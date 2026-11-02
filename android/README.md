@@ -1,4 +1,4 @@
-# Pestinha Android 0.7 (experimental)
+# Pestinha Android 0.8 (experimental)
 
 Adaptação independente de mille-okws/pestinha. Interface Android em Java/Canvas;
 rede neural e memória originais em Python, integradas por Chaquopy. Sem Termux,

@@ -1,6 +1,6 @@
 # Pestinha Android — fork duOCELOT
 
-Versão Android experimental **0.7**, desenvolvida neste fork a partir de
+Versão Android experimental **0.8**, desenvolvida neste fork a partir de
 [mille-okws/pestinha](https://github.com/mille-okws/pestinha). A adaptação está
 na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
 O texto original de desktop foi preservado abaixo.

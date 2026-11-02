@@ -14,6 +14,7 @@ import java.util.*;
 public class MemoryActivity extends Activity {
     static final String[] FILES = {"nervous.json","drives.json","conditioning.json","protest.json","sad_protest.json","preferences.json","episodes.jsonl","android.json","snapshot.json"};
     private TextView body,identity,summary;
+    private PetView portrait;
     private String inspected,pendingPet;
     private MetricChart needs,motors,habituation,temperament,usage,interactions;
     private File inspectedDirectory(){return new File(getFilesDir(),"memory/"+inspected);}
@@ -61,6 +62,7 @@ public class MemoryActivity extends Activity {
         Design.label(layout,"MEMÓRIA E CÉREBRO");TextView heading=Design.text(this,"Como ele aprende",28,Design.TEXT);heading.setPadding(0,0,0,Design.dp(this,20));layout.addView(heading);
         Spinner selector=new Spinner(this);selector.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,Characters.names(this)));selector.setSelection(Characters.index(inspected));layout.addView(selector);
         selector.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener(){public void onNothingSelected(android.widget.AdapterView<?> p){}public void onItemSelected(android.widget.AdapterView<?> p,android.view.View v,int position,long id){inspected=Characters.id(position);if(body!=null)render();}});
+        portrait=new PetView(this);layout.addView(portrait,new LinearLayout.LayoutParams(-1,Design.dp(this,150)));
         identity=Design.text(this,"",16,Design.MUTED);identity.setPadding(0,Design.dp(this,16),0,Design.dp(this,20));layout.addView(identity);
         Design.label(layout,"Os contadores do pet medem tempo ativo com a tela ligada desde esta versão. Contextos e atividades podem se sobrepor; não some todas as barras.");
         summary=Design.text(this,"",20,Design.TEXT);layout.addView(summary);
@@ -135,7 +137,7 @@ public class MemoryActivity extends Activity {
     private void render() {
         try {
             boolean live=PetService.running&&inspected.equals(petId(this));
-            JSONObject definition=Characters.definition(this,inspected);identity.setText(definition.optString("nome")+" • "+(live?"ao vivo":"último estado salvo")+"\n"+definition.optString("descricao","")+"\nConsultar este painel não troca o pet solto.");
+            JSONObject definition=Characters.definition(this,inspected);portrait.jorge=inspected.equals("jorge");portrait.appearance(definition.optJSONObject("aparencia"));portrait.invalidate();identity.setText(definition.optString("nome")+" • "+(live?"ao vivo":"último estado salvo")+"\n"+definition.optString("descricao","")+"\nConsultar este painel não troca o pet solto.");
             objectChart(temperament,definition.optJSONObject("temperamento"),1,android.graphics.Color.rgb(79,179,255),"×");
             String raw=live?PetService.liveSnapshot:"";
             if(raw.isEmpty()) { File f=new File(inspectedDirectory(),"snapshot.json"); if(!f.exists()){summary.setText("Ainda sem estado salvo para "+Characters.name(this,inspected));for(MetricChart c:new MetricChart[]{needs,motors,habituation,usage,interactions})objectChart(c,null,1,Design.ACCENT,"");body.setText("MEMÓRIA • "+inspected+"\n\nSolte o pet para começar a acompanhar o cérebro. A memória antiga será carregada automaticamente.");return;} raw=read(f); }
@@ -149,18 +151,11 @@ public class MemoryActivity extends Activity {
                 .append("\nEmoção: ").append(s.optString("emotion")).append("\nEnergia: ").append(pct(s,"energy"))
                 .append("\nEstimulação: ").append(pct(s,"stimulation")).append("\nCarência: ").append(pct(s,"contact"))
                 .append("\nHumor: ").append(String.format(java.util.Locale.ROOT,"%+.2f",s.optDouble("valence")))
-                .append("\nContexto: ").append(s.optString("context")).append("\nProtesto: ").append(s.optString("protest"))
-                .append("\nTristeza (estágio): ").append(s.optInt("sad_stage"))
-                .append("\n\nRede original: ").append(s.optInt("neurons")).append(" neurônios / ").append(s.optInt("synapses")).append(" sinapses\n");
-            b.append("\nINTERAÇÕES\n").append(s.optJSONObject("counts"));
-            b.append("\n\nASSOCIAÇÕES APRENDIDAS\nCanal → alvo: peso (não é um pensamento em texto)\n");
-            JSONArray learned=s.optJSONArray("learned");
-            if(learned==null||learned.length()==0)b.append("Ainda sem associações fortes. Faça carinho durante as atividades.\n");
-            else for(int i=0;i<learned.length();i++){JSONArray row=learned.getJSONArray(i);b.append(row.getString(0)).append(" → ").append(row.getString(1)).append(": ").append(String.format(java.util.Locale.ROOT,"%+.5f",row.getDouble(2))).append('\n');}
+                .append("\nContexto: ").append(s…224 tokens truncated…ring(0)).append(" → ").append(row.getString(1)).append(": ").append(String.format(java.util.Locale.ROOT,"%+.5f",row.getDouble(2))).append('\n');}
             b.append("\nCONDICIONAMENTO\n").append(s.optJSONObject("conditioning"));
             b.append("\n\nPREFERÊNCIAS (contexto, ação, resultado médio, experiências)\n").append(s.optJSONArray("preferences"));
-            b.append("\n\nMOTORES • atividade em Hz\n").append(s.optJSONObject("motors").toString(2));
-            b.append("\n\nHABITUAÇÃO • 1 = sensibilidade cheia\n").append(s.optJSONObject("habituation").toString(2));
+            b.append("\n\nMOTORES • atividade em Hz\n").append(String.valueOf(s.optJSONObject("motors")));
+            b.append("\n\nHABITUAÇÃO • 1 = sensibilidade cheia\n").append(String.valueOf(s.optJSONObject("habituation")));
             b.append("\n\nÚLTIMOS EPISÓDIOS\n");
             JSONArray recent=s.optJSONArray("recent");
             if(recent!=null) for(int i=recent.length()-1;i>=0;i--){JSONObject ep=recent.getJSONObject(i);b.append(ep.optString("quando")).append(" • ").append(ep.optString("contexto")).append("\n").append(ep.optString("acao")).append(" → ").append(ep.optString("resultado")).append("\n\n");}

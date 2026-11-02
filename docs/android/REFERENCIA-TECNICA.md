@@ -276,3 +276,25 @@ capacidades cognitivas: temperamento, conteúdo e ferramentas são partes distin
 Para adicionar ferramentas ou um LLM, preserve a separação entre apresentação,
 interpretação e execução de ações. A versão 0.8 não implementa esse modelo ou
 acesso geral ao celular; essa expansão precisa de um trabalho próprio.
+
+
+## Painéis e lembretes da versão 0.8
+
+`Hydration` mantém uma única tarefa recorrente (ID reservado 2) no agendador local.
+A janela diária usa o fuso local, é restrita ao mesmo dia e o próximo aviso é
+calculado a partir da entrega. A repetição troca o token, rejeitando broadcasts antigos.
+Preferências `hydration`: ativação, início, fim, intervalo e registro manual diário de copos.
+Não estão no backup do cérebro. Alarmes exatos continuam opcionais.
+
+`MetricChart` desenha barras nativas com descrição de acessibilidade, rótulo e valor.
+`MemoryActivity` usa um personagem consultado independente do personagem solto;
+apenas o personagem ativo recebe o snapshot ao vivo. Os demais leem seus arquivos.
+A descrição e os multiplicadores de temperamento são configuração de origem;
+necessidades, motores, habituação e contadores vêm do snapshot real.
+`android.json` e `snapshot.json` agora preservam `durations` por personagem,
+com segundos acumulados apenas nos ticks ativos. Contextos e atividades se sobrepõem.
+Não há extrapolação retroativa de contadores nem raster neural simulado.
+
+Testes adicionais: janela de hidratação, repetição e tokens, isolamento do timer de foco,
+contagem manual diária, persistência dos tempos e isolamento do painel de Mimir
+quando Bryan está ativo. O teste visual emite uma prévia do monitor renderizado.
