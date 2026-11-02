@@ -151,7 +151,14 @@ public class MemoryActivity extends Activity {
                 .append("\nEmoção: ").append(s.optString("emotion")).append("\nEnergia: ").append(pct(s,"energy"))
                 .append("\nEstimulação: ").append(pct(s,"stimulation")).append("\nCarência: ").append(pct(s,"contact"))
                 .append("\nHumor: ").append(String.format(java.util.Locale.ROOT,"%+.2f",s.optDouble("valence")))
-                .append("\nContexto: ").append(s…224 tokens truncated…ring(0)).append(" → ").append(row.getString(1)).append(": ").append(String.format(java.util.Locale.ROOT,"%+.5f",row.getDouble(2))).append('\n');}
+                .append("\nContexto: ").append(s.optString("context")).append("\nProtesto: ").append(s.optString("protest"))
+                .append("\nTristeza (estágio): ").append(s.optInt("sad_stage"))
+                .append("\n\nRede original: ").append(s.optInt("neurons")).append(" neurônios / ").append(s.optInt("synapses")).append(" sinapses\n");
+            b.append("\nINTERAÇÕES\n").append(s.optJSONObject("counts"));
+            b.append("\n\nASSOCIAÇÕES APRENDIDAS\nCanal → alvo: peso (não é um pensamento em texto)\n");
+            JSONArray learned=s.optJSONArray("learned");
+            if(learned==null||learned.length()==0)b.append("Ainda sem associações fortes. Faça carinho durante as atividades.\n");
+            else for(int i=0;i<learned.length();i++){JSONArray row=learned.getJSONArray(i);b.append(row.getString(0)).append(" → ").append(row.getString(1)).append(": ").append(String.format(java.util.Locale.ROOT,"%+.5f",row.getDouble(2))).append('\n');}
             b.append("\nCONDICIONAMENTO\n").append(s.optJSONObject("conditioning"));
             b.append("\n\nPREFERÊNCIAS (contexto, ação, resultado médio, experiências)\n").append(s.optJSONArray("preferences"));
             b.append("\n\nMOTORES • atividade em Hz\n").append(String.valueOf(s.optJSONObject("motors")));
