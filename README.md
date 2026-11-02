@@ -5,6 +5,12 @@ Versão Android experimental **0.6**, desenvolvida neste fork a partir de
 na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
 O texto original de desktop foi preservado abaixo.
 
+## Documentação do APK
+
+- [Apresentação do projeto](docs/android/README.md): proposta, personagens e funções.
+- [Guia das telas e funções](docs/android/GUIA-DO-APK.md): instalação, gestos, menu rápido, Assistente e memória.
+- [Referência técnica](docs/android/REFERENCIA-TECNICA.md): arquitetura, dados, permissões e testes.
+
 ## Instalar no celular
 
 1. Abra as [compilações Android](https://github.com/duOCELOT/pestinha-duOCELOT/actions/workflows/android.yml?query=branch%3Aandroid).
