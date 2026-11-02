@@ -1,41 +1,23 @@
-# Links para divulgar o APK
+# Link para divulgar
 
-## Link do projeto
+**Passe este link para as pessoas:**
 
-https://github.com/duOCELOT/pestinha-duOCELOT
+https://github.com/duOCELOT/pestinha-duOCELOT#readme
 
-## Baixar o APK atual diretamente
+A página principal tem o botão de baixar, a versão atual e o acesso ao histórico.
+Esse é o link recomendado para conhecer o app e acompanhar as atualizações.
+
+## Se quiser enviar só o download
 
 https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk
 
-O download já é um APK, sem ZIP ou login. Esse link acompanha a Release marcada como mais recente,
-enquanto o repositório e o asset estiverem disponíveis.
+Já é um APK, sem ZIP ou login. Acompanha a Release marcada como mais recente,
+enquanto o repositório e o arquivo estiverem disponíveis.
 
-## Release com detalhes e integridade
+## Onde consultar as versões
 
-https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest
+[Central de versões](../../CHANGELOG.md) — novidades e disponibilidade de cada versão.
 
-Versão específica 0.13:
-https://github.com/duOCELOT/pestinha-duOCELOT/releases/tag/android-v0.13.0
+[Releases](https://github.com/duOCELOT/pestinha-duOCELOT/releases) — arquivos publicados, hashes e código correspondente.
 
-## Texto curto
-
-> Pestinha Android: um pet sobre os apps, com personalidade e memória, tarefas,
-> lembretes, notícias e Arkanoid transparente usando o próprio boneco como plataforma.
-> Android 8+, ARM64/x86_64. Projeto aberto, versão experimental. APK no GitHub Releases.
-
-## Campo About do GitHub
-
-O texto sugerido para a descrição lateral é:
-
-> Pet virtual Android com personalidade e memória: Bryan, Jorge e Mimir, tarefas,
-> lembretes, RSS e Arkanoid transparente sobre os apps. APK em Releases.
-
-Site: `https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest`
-
-A descrição lateral, o site, os tópicos e a ativação de Issues precisam de permissão
-administrativa. A integração usada na revisão recebeu HTTP 403 ao tentar alterar
-essas configurações; os arquivos e a Release não dependem disso. O proprietário
-pode editar o About pela engrenagem lateral e habilitar Issues em Settings → General → Features.
-
-[Voltar ao projeto](../../README.md)
+[Voltar à página principal](../../README.md).

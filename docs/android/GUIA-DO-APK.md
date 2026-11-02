@@ -335,7 +335,7 @@ de desktop. A personalidade combina regras, rede neural e conteúdo escrito;
 não implica acesso livre ao celular.
 
 
-## Novidades da versão 0.8: água, contadores e painel por personagem
+## Água, contadores e painel por personagem
 
 Em **Assistente → Água ao longo do dia**, ative notificações e os lembretes.
 Escolha intervalo (30, 60, 90 ou 120 minutos) e início/fim no mesmo dia.
@@ -366,14 +366,14 @@ as barras não devem ser somadas como se fossem categorias exclusivas.
 Os registros de água e configurações do assistente não fazem parte do backup neural.
 
 
-## Tarefas e prazos (0.9)
+## Tarefas e prazos
 
 O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
 defina a entrega e escolha a frequência de acompanhamento. O painel permite
 começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAREFAS.md).
 
 
-## Meu radar (0.10)
+## Meu radar
 
 Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
 comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](MEU-RADAR.md).
@@ -394,8 +394,10 @@ Se a orientação, o tamanho ou a área da tela mudar, a posição pode ser ajus
 para que o boneco continue dentro dos limites visíveis.
 
 
-## Arkanoid sobre os apps (0.12)
+## Arkanoid sobre os apps
 
 Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
 para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
 Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).
+
+[Histórico e versão disponível para download](../../CHANGELOG.md).

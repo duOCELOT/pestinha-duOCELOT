@@ -1,5 +1,7 @@
 # Pestinha Android 0.13 — experimental
 
+[Central de versões: novidades e disponibilidade dos APKs](https://github.com/duOCELOT/pestinha-duOCELOT/blob/main/CHANGELOG.md).
+
 **Baixe `Pestinha-Android.apk` nos Assets abaixo e abra no celular.**
 Não precisa de ZIP, login no GitHub, Termux, Ubuntu ou VNC.
 

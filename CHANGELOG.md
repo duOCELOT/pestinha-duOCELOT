@@ -1,52 +1,91 @@
-# Novidades do Android
+# Central de versões — Pestinha Android
 
-Versões experimentais do fork duOCELOT. [Baixar a versão mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk).
+Este é o lugar para consultar **o que mudou e qual APK baixar**.
 
-## 0.13 — Arkanoid com fundo transparente
+## Versão atual: 0.13 experimental
 
-- Campo do Arkanoid totalmente transparente sobre o app aberto.
-- Blocos, bola, pet e controles permanecem visíveis; fundos locais ajudam a ler o placar.
-- Preserva a física, as fases e os recordes da 0.12.
-- APK interno `0.13.0-alpha`, versionCode 14. Android 8+, ARM64 e x86_64.
-- Distribuição por GitHub Releases, com APK direto e SHA-256.
+**[Baixar o APK atual](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** ·
+[Release com hash e código-fonte](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest) ·
+[Como instalar ou atualizar](docs/android/GUIA-DO-APK.md)
 
-## 0.12 — Arkanoid com o próprio pet
+O APK atual inclui as funções das versões anteriores. Não é necessário instalar as versões em sequência.
+Android 8.0+, ARM64 ou x86_64. O arquivo já é `.apk`, sem ZIP ou login.
 
-- O pet vira a plataforma, movendo-se apenas horizontalmente.
+## Resumo das versões
+
+| Versão | Principal novidade | APK público |
+| --- | --- | --- |
+| **0.13 — atual** | Fundo transparente no Arkanoid | **[Baixar 0.13](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.13.0/Pestinha-Android.apk)** |
+| 0.12 | Arkanoid com o próprio pet como plataforma | Histórico de desenvolvimento |
+| 0.11 | Fixar o pet onde ele for solto | Histórico de desenvolvimento |
+| 0.10 | Meu radar: interesses do dia e manchetes | Histórico de desenvolvimento |
+| 0.9 | Tarefas com prazo e acompanhamento | Histórico de desenvolvimento |
+| 0.8 | Água, gráficos e contadores por pet | Histórico de desenvolvimento |
+| 0.7 | Biblioteca RSS e pausas conscientes | Histórico de desenvolvimento |
+| Anteriores | Pet nativo, personagens, memória e interações | Histórico de desenvolvimento |
+
+**Só a 0.13 tem uma Release pública nesta organização atual.** As entradas anteriores
+registram a evolução do app; não são pacotes separados para instalar. Seus antigos
+artefatos de teste não são o canal de download. Para novas instalações, use o APK atual.
+
+## Detalhes das mudanças
+
+### 0.13 — Arkanoid transparente
+
+- As áreas vazias do jogo deixam o app aberto visível, sem cobrir a tela com um fundo escuro.
+- Blocos, bola, pet e controles continuam visíveis, com fundos locais para textos/placar.
+- Mantém a física, as fases e os recordes da 0.12.
+- APK interno `0.13.0-alpha`, versionCode 14. [Release específica](https://github.com/duOCELOT/pestinha-duOCELOT/releases/tag/android-v0.13.0), com APK e SHA-256.
+
+### 0.12 — Arkanoid com o próprio pet
+
+- O boneco desce para a parte de baixo e se move apenas para os lados.
 - Três vidas, 28 blocos por fase, velocidade progressiva, partículas e reações.
-- Recorde por personagem; pausa ao apagar a tela/rotacionar e restauração do pet ao fechar.
+- Recorde por personagem, pausa com tela apagada/rotação e restauração do pet ao fechar.
+- [Guia do Arkanoid](docs/android/ARKANOID.md).
 
-## 0.11 — Fixar posição
+### 0.11 — Posição fixa
 
-- Atalho Fixar no lugar / Soltar posição no menu de segurar.
-- Impede gravidade, inclinação, passeio e impulso de arremesso; a preferência é salva.
+- **Segurar → Fixar no lugar / Soltar posição**.
+- Desativa gravidade, passeio, inclinação e impulso de arremesso enquanto fixo.
+- A preferência fica salva; arrastar para outra posição continua permitido.
 
-## 0.10 — Meu radar
+### 0.10 — Meu radar
 
-- Seleção diária de interesses por cartões e configuração de RSS por área.
-- Manchetes comentadas em balões, com fonte e cartão da matéria.
-- Atualização automática opcional com pet solto/tela desbloqueada, pausa e intervalo configuráveis.
+- Cartões de assuntos na primeira abertura do dia, com fontes RSS configuradas por área.
+- Manchetes em balões, com fonte e cartão da matéria.
+- Atualização opcional com pet solto/tela desbloqueada, pausa e intervalo configuráveis.
+- [Guia do radar](docs/android/MEU-RADAR.md).
 
-## 0.9 — Tarefas e prazos
+### 0.9 — Tarefas e prazos
 
-- Convite do pet para cadastrar tarefa e entrega.
-- Acompanhamento periódico, avisos de prazo/atraso, começar, concluir, adiar aviso e editar prazo.
+- Convite para cadastrar uma tarefa e sua entrega.
+- Perguntas de andamento, avisos de prazo/atraso, começar, concluir, adiar aviso e mudar prazo.
+- [Guia de tarefas](docs/android/TAREFAS.md).
 
-## 0.8 — Água, gráficos e contadores
+### 0.8 — Água, gráficos e contadores
 
-- Lembretes de água em janela diária, intervalo e registro manual de copos.
-- Painel gráfico de personalidade/memória por personagem e tempos acumulados de atividades.
-- Gráficos do uso estimado dos apps escolhidos.
+- Água com intervalo e janela diária, além do registro manual de copos.
+- Painel por personagem com gráficos de necessidades, temperamento e atividade.
+- Tempos acumulados das atividades e gráficos do uso estimado dos apps escolhidos.
 
-## 0.7 — RSS e pausas conscientes
+### 0.7 — RSS e pausas conscientes
 
 - Biblioteca com 14 feeds dos próprios veículos.
-- Acompanhamento opcional de uso, consentimento, seleção de apps e recados por personagem.
+- Acompanhamento opcional de uso, com autorização, seleção de apps e recados por personagem.
+- [Fontes RSS](docs/android/FONTES-RSS.md) · [Pausas conscientes](docs/android/PAUSAS-CONSCIENTES.md).
 
-## Versões anteriores
+### Base anterior
 
-A base anterior trouxe a interface nativa, os personagens Bryan/Jorge/Mimir, memória
-independente, menu rápido, interações, brinquedos, sensores e o assistente local.
-A assinatura de desenvolvimento estável é usada desde 0.2; a 0.1 exige cuidado na migração.
+Interface Android nativa, Bryan/Jorge/Mimir, memórias independentes, menu de segurar,
+interações, brinquedos, sensores e assistente local. A assinatura estável de desenvolvimento
+é usada desde 0.2. A 0.1 pode exigir migração antes de desinstalar; veja a [documentação técnica](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md#memória).
 
-[Histórico original de desktop preservado](CHANGELOG-DESKTOP.md).
+## Como acompanhar as próximas versões
+
+- **Novidades:** esta página.
+- **Instalar:** botão de download da página principal, sempre apontando para a Release mais recente.
+- **Conferir um APK:** notas, hash e código-fonte na sua Release.
+- **Código e testes:** área de desenvolvimento; GitHub Actions não é necessário para instalar.
+
+[Voltar ao projeto](README.md) · [Histórico original de desktop](CHANGELOG-DESKTOP.md).
