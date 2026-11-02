@@ -31,6 +31,17 @@ class AndroidBrain:
         self.conditioning.load()
         self.memory = EpisodicMemory(self.root / 'episodes.jsonl', self.root / 'preferences.json')
         self.memory.load()
+        if self.name == 'Mimir':
+            (self.root/'cartazes.txt').write_text(
+                '[reclamacao]\nHmpf. Mais tato, menos cutucadas.\n'
+                '[manifestacao]\nATÉ UM SÁBIO TEM LIMITES\n'
+                '[greve]\nMEU CONSELHO ESTÁ EM GREVE\n'
+                '[revolucao]\nPELOS GALHOS DE YGGDRASIL, CHEGA!\n'
+                '[castigo]\nJá vi salões mais hospitaleiros em Jotunheim.\n'
+                '[saudade]\nHmpf. Até este velho sente falta de companhia.\n'
+                '[chorando]\nO salão ficou silencioso demais.\n'
+                '[abandonado]\nAs sagas não se contam sozinhas, sabia?\n'
+                '[volto]\nFinalmente. Sente-se, temos histórias a contar.\n', encoding='utf-8')
         self.protest = Protesto(self.root / 'cartazes.txt', self.root / 'protest.json')
         self.protest.load(self.prof)
         self.sad = Protesto(self.root / 'cartazes.txt', self.root / 'sad_protest.json', 'tristeza')
@@ -82,6 +93,13 @@ class AndroidBrain:
             phrases = ['Pausa para um carinho?', 'Estou de olho em você.', 'Bora brincar?', 'Seu pequeno caos está aqui.']
             if self.name == 'Jorge':
                 phrases = ['Minha mentoria custa um carinho.', 'Diversifique seus investimentos em bolinhas.', 'Retorno garantido: mais travessuras.']
+            if self.name == 'Mimir':
+                phrases = ['Pelos galhos de Yggdrasil... faça uma pausa antes de inventar outra tarefa.',
+                           'Até Odin fazia perguntas. Tente uma boa, para variar.',
+                           'Hmpf. Uma boa ideia. Não deixe que isso lhe suba ao elmo.',
+                           'Nem as Nornas desembaraçam uma lista de tarefas desse tamanho.',
+                           'Carinho? Está bem. Mas não amasse o elmo.',
+                           'Thor tem um martelo. Você tem uma bolinha. Use-a com juízo.']
             self._action('image' if action == 'meme' else 'note', random.choice(phrases))
         elif action == 'atravessar':
             self.memory.start(ctx, action)

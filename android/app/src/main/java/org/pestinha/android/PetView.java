@@ -13,14 +13,14 @@ public class PetView extends View {
     public float bodyAngle=0;
     public boolean jorge=false,notebook=false,corner=false,caressing=false,autoAnimate=false;
     private int frame=Color.parseColor("#63e56f"),shell=Color.parseColor("#101512"),screen=Color.parseColor("#171e19"),eye=Color.parseColor("#3ee877"),shine=Color.parseColor("#c8ffd8");
-    private int tie=0,glasses=0;
+    private int tie=0,glasses=0,helmet=0;
     private final float[] shape={30,40,.14f,0,0,0};
     private float[] target={30,40,.14f,0,0,0};
     private long previous=0;
     public PetView(Context c){super(c);setLayerType(View.LAYER_TYPE_SOFTWARE,null);setContentDescription("Pestinha");}
     public void appearance(JSONObject data){
-        frame=Color.parseColor("#63e56f");shell=Color.parseColor("#101512");screen=Color.parseColor("#171e19");eye=Color.parseColor("#3ee877");shine=Color.parseColor("#c8ffd8");tie=glasses=0;
-        if(data!=null){frame=color(data,"moldura",frame);shell=color(data,"casca",shell);screen=color(data,"tela",screen);eye=color(data,"olho",eye);shine=color(data,"brilho",shine);JSONObject accessories=data.optJSONObject("acessorios");if(accessories!=null){if(accessories.has("gravata"))tie=color(accessories,"gravata",Color.parseColor("#b3261e"));if(accessories.has("oculos"))glasses=color(accessories,"oculos",Color.LTGRAY);}}invalidate();
+        frame=Color.parseColor("#63e56f");shell=Color.parseColor("#101512");screen=Color.parseColor("#171e19");eye=Color.parseColor("#3ee877");shine=Color.parseColor("#c8ffd8");tie=glasses=helmet=0;
+        if(data!=null){frame=color(data,"moldura",frame);shell=color(data,"casca",shell);screen=color(data,"tela",screen);eye=color(data,"olho",eye);shine=color(data,"brilho",shine);JSONObject accessories=data.optJSONObject("acessorios");if(accessories!=null){if(accessories.has("gravata"))tie=color(accessories,"gravata",Color.parseColor("#b3261e"));if(accessories.has("oculos"))glasses=color(accessories,"oculos",Color.LTGRAY);if(accessories.has("elmo_viking"))helmet=color(accessories,"elmo_viking",Color.rgb(119,146,156));}}invalidate();
     }
     private int color(JSONObject d,String key,int fallback){try{String value=d.optString(key);return value.matches("#[0-9a-fA-F]{6}")?Color.parseColor(value):fallback;}catch(Exception e){return fallback;}}
     public void face(JSONObject data,boolean caring){caressing=caring;if(data!=null)target=new float[]{(float)data.optDouble("w",30),(float)data.optDouble("h",40),(float)data.optDouble("inner",.14),(float)data.optDouble("outer",0),(float)data.optDouble("smile",0),(float)data.optDouble("dy",0)};else target=new float[]{30,40,.14f,0,0,0};}
@@ -28,6 +28,7 @@ public class PetView extends View {
         super.onDraw(canvas);long now=SystemClock.uptimeMillis();float dt=previous==0?.033f:Math.min(.1f,(now-previous)/1000f);previous=now;
         float k=1-(float)Math.exp(-dt/.12);for(int i=0;i<shape.length;i++)shape[i]+=(target[i]-shape[i])*k;
         float scale=Math.min(getWidth()/160f,getHeight()/130f);canvas.save();canvas.translate(getWidth()/2f,getHeight()/2f);canvas.scale(scale,scale);
+        if(helmet!=0){canvas.translate(0,4);canvas.scale(.78f,.78f);}
         canvas.rotate(bodyAngle);if(emotion.equals("dormindo"))canvas.translate(0,(float)Math.sin(now/1000.0*1.6)*1.5f);
         p.setStyle(Paint.Style.FILL);p.setColor(shell);canvas.drawRoundRect(-60,-45,60,45,20,20,p);
         p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(5);p.setColor(frame);canvas.drawRoundRect(-60,-45,60,45,20,20,p);
@@ -44,12 +45,29 @@ public class PetView extends View {
             p.setColor(eye);p.setStyle(Paint.Style.FILL);canvas.drawPath(eyePath,p);
             if(blink>.5f&&h>=8){canvas.save();canvas.clipPath(eyePath);p.setColor(shine);canvas.drawCircle(cx-w*.18f,top+h*(.24f+Math.max(shape[2],shape[3])*.6f),3.6f,p);canvas.restore();}
         }
+        if(helmet!=0)drawHelmet(canvas);
         if(glasses!=0){p.setColor(glasses);p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(2);for(int side:new int[]{-1,1}){canvas.drawRoundRect(side*24-21,-25,side*24+21,27,10,10,p);p.setStrokeWidth(5);canvas.drawLine(side*24-17,-25,side*24+17,-25,p);p.setStrokeWidth(2);}canvas.drawLine(-3,-18,3,-18,p);}
         p.setStyle(Paint.Style.FILL);
         if(notebook){p.setColor(Color.rgb(95,110,103));canvas.drawRoundRect(-42,16,42,49,4,4,p);p.setColor(Color.rgb(30,42,33));canvas.drawCircle(0,32,4,p);p.setColor(Color.rgb(160,179,164));canvas.drawRoundRect(-48,47,48,52,3,3,p);}
         if(corner){p.setColor(frame);p.setTextSize(10);p.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));canvas.drawText("CANTINHO",-25,-52,p);}
         if(emotion.equals("dormindo")){for(int i=0;i<3;i++){float t=((now/2500f)+i/3f)%1;p.setColor(eye);p.setAlpha((int)(255*Math.min(1,t*5)*Math.pow(1-t,.6)));p.setTextSize(8+9*t);canvas.drawText("Z",38+25*t,-38-17*t,p);}p.setAlpha(255);}
         canvas.restore();if(autoAnimate&&isShown())postInvalidateDelayed(33);
+    }
+    private int shade(int color,float factor){return Color.rgb(Math.round(Color.red(color)*factor),Math.round(Color.green(color)*factor),Math.round(Color.blue(color)*factor));}
+    private void drawHelmet(Canvas c){
+        final int brass=Color.rgb(211,180,125),ivory=Color.rgb(234,223,195),outline=Color.rgb(48,63,68);
+        Path horn=new Path();horn.moveTo(-42,-42);horn.cubicTo(-60,-38,-75,-48,-67,-65);horn.cubicTo(-66,-53,-57,-48,-44,-51);horn.close();
+        for(int side:new int[]{1,-1}){c.save();c.scale(side,1);p.setStyle(Paint.Style.FILL);p.setColor(ivory);c.drawPath(horn,p);p.setStyle(Paint.Style.STROKE);p.setColor(outline);p.setStrokeWidth(1.6f);c.drawPath(horn,p);c.restore();}
+        Path cap=new Path();cap.moveTo(-47,-35);cap.cubicTo(-45,-53,-27,-65,0,-64);cap.cubicTo(27,-65,45,-53,47,-35);cap.lineTo(47,-30);cap.lineTo(-47,-30);cap.close();
+        p.setStyle(Paint.Style.FILL);p.setColor(helmet);c.drawPath(cap,p);
+        c.save();c.clipPath(cap);p.setColor(shade(helmet,.82f));c.drawRect(0,-66,50,-29,p);c.restore();
+        p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(1.8f);p.setColor(outline);c.drawPath(cap,p);
+        p.setStyle(Paint.Style.FILL);p.setColor(shade(helmet,.75f));c.drawRoundRect(-49,-39,49,-29,4,4,p);
+        p.setStyle(Paint.Style.STROKE);p.setColor(brass);p.setStrokeWidth(1.7f);c.drawRoundRect(-49,-39,49,-29,4,4,p);
+        p.setStyle(Paint.Style.FILL);p.setColor(brass);c.drawRoundRect(-5,-63,5,-29,2,2,p);
+        for(int x:new int[]{-40,-25,25,40})c.drawCircle(x,-34,2,p);
+        p.setColor(outline);p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(1.5f);c.drawLine(-2,-54,-2,-43,p);c.drawLine(-2,-54,3,-48,p);c.drawLine(-2,-43,3,-48,p);
+        p.setStyle(Paint.Style.FILL);
     }
     private void drawTie(Canvas c){p.setColor(tie);Path path=new Path();path.moveTo(-4,21);path.lineTo(4,21);path.lineTo(3.5f,27);path.lineTo(-3.5f,27);path.close();c.drawPath(path,p);path.reset();path.moveTo(-3,26);path.lineTo(3,26);path.lineTo(5.5f,38);path.lineTo(0,42);path.lineTo(-5.5f,38);path.close();c.drawPath(path,p);}
 }

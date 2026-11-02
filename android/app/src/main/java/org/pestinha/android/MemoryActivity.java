@@ -17,7 +17,7 @@ public class MemoryActivity extends Activity {
     private final Handler ui = new Handler(Looper.getMainLooper());
     private final Runnable refresh = new Runnable() { public void run() { render(); ui.postDelayed(this, 1500); } };
     public static String petId(Context c) {
-        return "jorge".equals(c.getSharedPreferences("pet",0).getString("character","bryan")) ? "jorge" : "bryan";
+        return Characters.normalize(c.getSharedPreferences("pet",0).getString("character","bryan"));
     }
     static File directory(Context c) { return new File(c.getFilesDir(), "memory/"+petId(c)); }
     static String read(InputStream in) throws IOException {
@@ -99,7 +99,7 @@ public class MemoryActivity extends Activity {
                 else for(String line:value.split("\n")) if(!line.trim().isEmpty()) new JSONObject(line);
             }
             JSONObject neural=new JSONObject(files.getString("nervous.json"));
-            if(neural.optInt("seed")!=(petId(this).equals("bryan")?7:1729)||neural.optInt("version")!=1)throw new IOException("Rede incompatível");
+            if(neural.optInt("seed")!=Characters.definition(this,petId(this)).getInt("seed")||neural.optInt("version")!=1)throw new IOException("Rede incompatível");
             File dest=directory(this), parent=dest.getParentFile(); if(!parent.exists()&&!parent.mkdirs())throw new IOException("Falha ao preparar pasta");
             File stage=new File(parent,"restore-"+System.nanoTime()); if(!stage.mkdir())throw new IOException("Falha ao preparar backup");
             for(String key:allowed) if(files.has(key))write(new File(stage,key),files.getString(key));

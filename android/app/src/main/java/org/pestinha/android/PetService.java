@@ -78,7 +78,7 @@ public class PetService extends Service {
         PendingIntent panel = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_IMMUTABLE);
         PendingIntent stop = PendingIntent.getService(this, 1, new Intent(this, PetService.class).setAction("stop"), PendingIntent.FLAG_IMMUTABLE);
         Notification note = new Notification.Builder(this, "pet").setSmallIcon(org.pestinha.android.R.drawable.ic_notification)
-                .setContentTitle((petId.equals("jorge")?"Jorge":"Bryan")+" está por aqui").setContentText("Toque para abrir os controles.")
+                .setContentTitle(Characters.name(this,petId)+" está por aqui").setContentText("Toque para abrir os controles.")
                 .setContentIntent(panel).setOngoing(true)
                 .addAction(new Notification.Action.Builder(null, "Guardar", stop).build()).build();
         if (Build.VERSION.SDK_INT >= 34) startForeground(1, note, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);

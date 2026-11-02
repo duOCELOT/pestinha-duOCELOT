@@ -1,8 +1,29 @@
-# Pestinha Android 0.5 (experimental)
+# Pestinha Android 0.6 (experimental)
 
 Adaptação independente de mille-okws/pestinha. Interface Android em Java/Canvas;
 rede neural e memória originais em Python, integradas por Chaquopy. Sem Termux,
 Ubuntu, Qt ou VNC no aparelho. Código de desktop preservado.
+
+## Mimir e personagens (0.6)
+
+Em **Personagem e aparência**, escolha Bryan, Jorge ou Mimir. Guarde o pet e
+aguarde o salvamento antes de trocar; depois use Soltar. A seleção fica salva,
+a prévia muda na hora, e cada personagem mantém memória, rede, episódios e
+imagem de meme separados. A validação de backup usa a semente do JSON do
+personagem selecionado, sem confundir Mimir com Jorge ou Bryan.
+
+Mimir mantém o corpo e as expressões originais, com paleta azul-gelo, olhos
+claros e elmo viking de metal, detalhes de latão e chifres estilizados. O elmo
+é desenhado no Canvas do Android e tem espaço para o balanço sem cortar as
+pontas. Acessórios não substituem nem cobrem as expressões dos olhos.
+
+Personalidade solicitada: **sábio, resmungão, inteligente no tom e com referências
+nórdicas**. Isso é implementado por temperamento neural e bilhetes/cartazes
+próprios, com humor seco e alusões a Odin, Yggdrasil, Thor e às Nornas. Não há
+LLM nem conversa livre: “inteligente” descreve a personalidade escrita, não um
+novo modelo de linguagem. A definição está em `pets/mimir.json` (semente 104729).
+No desktop, o JSON usa o mecanismo original de pets; o elmo novo é renderizado
+pela adaptação Android, sem alterar o desenho Qt original.
 
 ## Interface e menu rápido (0.5)
 
@@ -24,7 +45,7 @@ outros painéis seguem a mesma paleta, com margens para as barras do Android.
 
 ## Funções
 
-- Bryan e Jorge, com sementes, temperamentos e memórias separados.
+- Bryan, Jorge e Mimir, com sementes, temperamentos e memórias separados.
 - Pet transparente sobre apps, gravidade, quique, arraste e arremesso por toque.
 - Toque para cutucar, toque duplo para carinho, segurar para abrir os ícones rápidos.
 - Bolinha arrastável, chute por proximidade, notebook para trabalhar junto.
@@ -123,7 +144,7 @@ fixa de desenvolvimento desde 0.2.
 Abra **Memória e cérebro** no painel. Mostra energia, estimulação, carência,
 humor, motores em Hz, pesos aprendidos, habituação, condicionamento, preferências
 e últimos episódios. Pesos numéricos não são pensamentos, frases ou conversa.
-Os arquivos ficam em `files/memory/bryan/` ou `files/memory/jorge/`, na área
+Os arquivos ficam em `files/memory/bryan/`, `files/memory/jorge/` ou `files/memory/mimir/`, na área
 privada do aplicativo. Salva a cada 15 s, ao apagar a tela e ao guardar.
 
 Exportar grava um JSON no destino escolhido pelo seletor do Android; quando o

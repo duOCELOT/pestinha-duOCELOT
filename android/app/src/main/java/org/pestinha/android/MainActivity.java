@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.*;
 
 public class MainActivity extends Activity {
-    private TextView status,nameTitle,energyLabel;
+    private TextView status,nameTitle,energyLabel,characterDescription;
     private PetView preview;
     private ProgressBar energyBar;
     private Button launch,permission;
@@ -60,15 +60,16 @@ public class MainActivity extends Activity {
         LinearLayout appearance=expandable(layout,"Personagem e aparência");
         text(appearance,"Guarde o pet antes de trocar de personagem. Cada um tem sua própria memória.",14,Design.MUTED);
         Spinner character=new Spinner(this);
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"Bryan","Jorge"}){
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,Characters.names(this)){
             @Override public View getView(int position,View convert,android.view.ViewGroup parent){View v=super.getView(position,convert,parent);if(v instanceof TextView){((TextView)v).setTextColor(Design.TEXT);((TextView)v).setTextSize(18);}return v;}
             @Override public View getDropDownView(int position,View convert,android.view.ViewGroup parent){View v=super.getDropDownView(position,convert,parent);v.setBackgroundColor(Design.RAISED);if(v instanceof TextView)((TextView)v).setTextColor(Design.TEXT);return v;}
         };
-        character.setAdapter(adapter);character.setSelection(MemoryActivity.petId(this).equals("jorge")?1:0);appearance.addView(character);
+        character.setAdapter(adapter);character.setSelection(Characters.index(MemoryActivity.petId(this)));appearance.addView(character);
+        characterDescription=text(appearance,"",14,Design.MUTED);
         character.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onNothingSelected(AdapterView<?> p){}
-            public void onItemSelected(AdapterView<?> p,View v,int index,long id){String selected=index==1?"jorge":"bryan";if(selected.equals(MemoryActivity.petId(MainActivity.this)))return;
-                if(PetService.busy){Toast.makeText(MainActivity.this,"Guarde o pet antes de trocar.",Toast.LENGTH_LONG).show();character.setSelection(MemoryActivity.petId(MainActivity.this).equals("jorge")?1:0);return;}
+            public void onItemSelected(AdapterView<?> p,View v,int index,long id){String selected=Characters.id(index);if(selected.equals(MemoryActivity.petId(MainActivity.this)))return;
+                if(PetService.busy){Toast.makeText(MainActivity.this,"Guarde o pet antes de trocar.",Toast.LENGTH_LONG).show();character.setSelection(Characters.index(MemoryActivity.petId(MainActivity.this)));return;}
                 getSharedPreferences("pet",0).edit().putString("character",selected).remove("error").apply();loadAppearance();updateStatus();
             }
         });
@@ -85,7 +86,7 @@ public class MainActivity extends Activity {
         button(physics,"Calibrar nesta posição",()->send("calibrate"));button(physics,"Restaurar gravidade natural",()->send("reset_tilt"));
         LinearLayout about=expandable(layout,"Privacidade e informações");
         text(about,"A memória fica no aparelho. A internet só é consultada ao atualizar os feeds escolhidos. Não há leitura de tela ou dos seus compromissos. Sensores desligam com a tela apagada.",14,Design.MUTED);
-        text(about,"Pestinha Android • 0.5 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
+        text(about,"Pestinha Android • 0.6 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
         button(about,"Modo de teste • tempos curtos",()->send("fast"));
         button(about,"Licença e projeto original",()->new AlertDialog.Builder(this).setTitle("Pestinha • GPL-3.0-or-later").setMessage("Adaptação independente de mille-okws/pestinha. Código-fonte: github.com/duOCELOT/pestinha-duOCELOT, branch android.\n\n"+license()).setPositiveButton("Fechar",null).show());
         Design.button(layout,"Guardar o pet","danger",()->stopService(new Intent(this,PetService.class)));
@@ -97,7 +98,7 @@ public class MainActivity extends Activity {
         if(Build.VERSION.SDK_INT>=33&&checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},7);
         try{startForegroundService(new Intent(this,PetService.class));}catch(RuntimeException e){new AlertDialog.Builder(this).setMessage("Não foi possível iniciar: "+e.getMessage()).setPositiveButton("OK",null).show();}
     }
-    private void loadAppearance(){try(java.io.InputStream in=getAssets().open("pets/"+MemoryActivity.petId(this)+".json")){org.json.JSONObject pet=new org.json.JSONObject(readText(in));preview.jorge=MemoryActivity.petId(this).equals("jorge");preview.appearance(pet.optJSONObject("aparencia"));nameTitle.setText(pet.optString("nome","Bryan"));}catch(Exception ignored){preview.appearance(null);}}
+    private void loadAppearance(){try(java.io.InputStream in=getAssets().open("pets/"+MemoryActivity.petId(this)+".json")){org.json.JSONObject pet=new org.json.JSONObject(readText(in));preview.jorge=MemoryActivity.petId(this).equals("jorge");preview.appearance(pet.optJSONObject("aparencia"));nameTitle.setText(pet.optString("nome","Bryan"));if(characterDescription!=null)characterDescription.setText(pet.optString("descricao",pet.optString("nome")+" tem temperamento e memória próprios."));}catch(Exception ignored){preview.appearance(null);}}
     private CheckBox check(LinearLayout box,String title,String key,boolean fallback){CheckBox b=new CheckBox(this);b.setText(title);b.setChecked(getSharedPreferences("pet",0).getBoolean(key,fallback));box.addView(b);return b;}
     private LinearLayout expandable(LinearLayout parent,String title){LinearLayout card=Design.card(this,parent);TextView heading=Design.text(this,title+"   +",17,Design.TEXT);heading.setMinHeight(dp(46));heading.setGravity(android.view.Gravity.CENTER_VERTICAL);heading.setFocusable(true);card.addView(heading);LinearLayout body=Design.column(this);body.setVisibility(View.GONE);card.addView(body);heading.setOnClickListener(v->{boolean open=body.getVisibility()!=View.VISIBLE;body.setVisibility(open?View.VISIBLE:View.GONE);heading.setText(title+(open?"   −":"   +"));});return body;}
     private void navigation(LinearLayout parent,String icon,String title,String subtitle,Runnable action){LinearLayout row=new LinearLayout(this);row.setGravity(android.view.Gravity.CENTER_VERTICAL);row.setPadding(dp(18),dp(18),dp(16),dp(18));row.setBackground(Design.touch(this,Design.CARD,Design.BORDER));row.setFocusable(true);row.setContentDescription(title+". "+subtitle);

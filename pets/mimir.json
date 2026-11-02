@@ -1,0 +1,34 @@
+{
+  "nome": "Mimir",
+  "descricao": "Sábio, perspicaz e resmungão. Tem humor seco e referências nórdicas; gosta de boas ideias, carinho discreto e um pouco de sossego.",
+  "seed": 104729,
+  "temperamento": {
+    "CURIOUS": 1.35,
+    "WORK->FOCUS": 1.4,
+    "WORK->CALM": 1.2,
+    "CARESS->CALM": 1.35,
+    "NOVELTY->CURIOUS": 1.3,
+    "BOREDOM->CURIOUS": 1.3,
+    "DISMISS->FRUSTRATION": 1.35,
+    "IMPACT->FRUSTRATION": 1.2,
+    "LONELY->GLOOM": 1.1,
+    "DRAG->FRUSTRATION": 1.15,
+    "CARESS->PLAYFUL": 0.85
+  },
+  "brincadeira": {
+    "bola": 0.9,
+    "arremesso": 0.4,
+    "postit": 1.2
+  },
+  "reacao_notebook": "triste",
+  "aparencia": {
+    "moldura": "#8bbcc7",
+    "casca": "#111a20",
+    "tela": "#18252b",
+    "olho": "#8be7f2",
+    "brilho": "#e3fcff",
+    "acessorios": {
+      "elmo_viking": "#77929c"
+    }
+  }
+}

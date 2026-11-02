@@ -98,5 +98,25 @@ class FullAndroidFeaturesTest(unittest.TestCase):
             brain.save()
             self.assertTrue((Path(directory)/'snapshot.json').exists())
 
+class MimirPersonalityTest(unittest.TestCase):
+    def test_mimir_has_own_reactions_phrases_and_persisted_memory(self):
+        definition=(Path(__file__).resolve().parents[2]/'pets/mimir.json').read_text()
+        with tempfile.TemporaryDirectory() as directory:
+            mimir=AndroidBrain(str(Path(directory)/'mimir'),definition)
+            self.assertEqual(mimir.brain.seed,104729)
+            mimir.event('caress')
+            for _ in range(8): state=json.loads(mimir.tick(.2))
+            self.assertEqual(state['name'],'Mimir')
+            mimir.event('note')
+            note=mimir.action['text']
+            self.assertTrue(any(word in note for word in ['Yggdrasil','Odin','elmo','Nornas','Thor']))
+            self.assertIn('SÁBIO',mimir.protest.pick('manifestacao'))
+            mimir.save()
+            restored=AndroidBrain(str(Path(directory)/'mimir'),definition)
+            self.assertEqual(restored.counts['caress'],1)
+            np.testing.assert_allclose(restored.brain.learned,mimir.brain.learned,atol=1e-6)
+            bryan=AndroidBrain(str(Path(directory)/'bryan'),DEFINITION)
+            self.assertEqual(bryan.counts,{})
+
 if __name__ == '__main__':
     unittest.main()
