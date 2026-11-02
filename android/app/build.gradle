@@ -10,8 +10,8 @@ android {
         applicationId 'org.pestinha.android'
         minSdk 26
         targetSdk 35
-        versionCode 1
-        versionName '0.1.0-alpha'
+        versionCode 2
+        versionName '0.1.1-alpha'
         ndk { abiFilters 'arm64-v8a', 'x86_64' }
     }
     compileOptions {
@@ -56,4 +56,32 @@ def syncPetAssets = tasks.register('syncPetAssets', Sync) {
     from('../..') { include 'LICENSE', 'pets/bryan.json' }
     into layout.buildDirectory.dir('generated-pet-assets')
 }
-android.sourceSets.main.assets.srcDir(syncPetAssets)
+android.sourceSets.main.assets.srcDir(layout.buildDirectory.dir('generated-pet-assets'))
+// AGP does not infer this producer dependency from assets.srcDir(TaskProvider).
+// Explicitly run the copy before the asset merge on every build variant.
+tasks.named('preBuild').configure { dependsOn syncPetAssets }
+tasks.configureEach {
+    if (name.startsWith('merge') && name.endsWith('Assets')) {
+        dependsOn syncPetAssets
+    }
+}
+
+// A successful compile alone does not guarantee the runtime resources exist.
+tasks.register('verifyDebugPayload') {
+    dependsOn 'assembleDebug'
+    doLast {
+        def apk = layout.buildDirectory.file('outputs/apk/debug/app-debug.apk').get().asFile
+        new java.util.zip.ZipFile(apk).withCloseable { zip ->
+            ['assets/pets/bryan.json', 'assets/LICENSE', 'assets/chaquopy/app.imy'].each { path ->
+                if (zip.getEntry(path) == null) {
+                    throw new GradleException("Required APK entry missing: $path")
+                }
+            }
+            def pet = new groovy.json.JsonSlurper().parse(zip.getInputStream(zip.getEntry('assets/pets/bryan.json')))
+            if (pet.nome != 'Bryan' || pet.seed != 7) {
+                throw new GradleException('Invalid Bryan definition in APK')
+            }
+            logger.lifecycle('APK payload verified: Bryan definition, license and Python application present')
+        }
+    }
+}
