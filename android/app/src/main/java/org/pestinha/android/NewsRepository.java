@@ -26,6 +26,7 @@ final class NewsRepository {
         if(feeds.length()>10)throw new IllegalArgumentException("Há URLs personalizadas demais para estes temas. Remova algumas no Assistente (limite total: 10 feeds).");
         boolean saved=prefs(c).edit().putString("radarTopics",topics.toString()).putBoolean("radarAuto",automatic&&topics.length()>0).putString("feeds",feeds.toString()).putString("radarAsked",today()).putString("radarGeneration",UUID.randomUUID().toString()).remove("news").remove("newsAt").remove("newsAttempt").remove("newsError").commit();if(!saved)throw new IllegalStateException("Não foi possível salvar os assuntos.");PetService.newsSettingsChanged();
     }
+    static synchronized void sourcesChanged(Context c){prefs(c).edit().putString("radarGeneration",UUID.randomUUID().toString()).remove("news").remove("newsAt").remove("newsAttempt").remove("newsError").commit();PetService.newsSettingsChanged();}
     static synchronized void automatic(Context c,boolean enabled){prefs(c).edit().putBoolean("radarAuto",enabled).putString("radarGeneration",UUID.randomUUID().toString()).commit();PetService.newsSettingsChanged();}
     static boolean needsRefresh(Context c,long now){return now-prefs(c).getLong("newsAt",0)>=3600000&&now-prefs(c).getLong("newsAttempt",0)>=300000;}
     static String plain(String text){return Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY).toString().replaceAll("\\s+"," ").trim();}

@@ -33,7 +33,7 @@ public class AssistantActivity extends Activity {
         ScrollView scroll=new ScrollView(this);scroll.setBackgroundColor(Design.BG);
         layout=new LinearLayout(this);layout.setOrientation(LinearLayout.VERTICAL);layout.setPadding(dp(22),dp(36),dp(22),dp(50));scroll.addView(layout);
         text(layout,"Seu assistente",28);
-        text(layout,"Timers e lembretes ficam neste aparelho. Notícias usam apenas os feeds HTTPS que você adicionar. Agenda e relógio abrem para você revisar e confirmar.",15);
+        text(layout,"Timers e lembretes ficam neste aparelho. Notícias usam apenas os feeds HTTPS que você escolher. Agenda e relógio abrem para você revisar e confirmar.",15);
         LinearLayout tasks=section("Tarefas e prazos");
         text(tasks,"O que você tem para fazer? Conte a tarefa, defina o prazo e me diga como está indo.",16);
         button(tasks,"Minhas tarefas / contar uma tarefa",()->startActivity(new Intent(this,TaskActivity.class)));
@@ -137,33 +137,21 @@ public class AssistantActivity extends Activity {
         try{JSONArray catalog=FeedCatalog.entries(this),current=feedUrls();String[] labels=new String[catalog.length()];boolean[] chosen=new boolean[catalog.length()];
             java.util.HashSet<String> library=new java.util.HashSet<>();for(int i=0;i<catalog.length();i++){JSONObject row=catalog.getJSONObject(i);String url=row.getString("url");library.add(url);labels[i]=row.getString("category")+" • "+row.getString("name")+" ("+row.getString("language")+")";for(int j=0;j<current.length();j++)if(url.equals(current.optString(j)))chosen[i]=true;}
             new AlertDialog.Builder(this).setTitle("Fontes dos próprios veículos").setMultiChoiceItems(labels,chosen,(d,which,value)->chosen[which]=value).setNegativeButton("Cancelar",null).setPositiveButton("Salvar seleção",(d,w)->{
-                try{JSONArray next=new JSONArray();java.util.HashSet<String> seen=new java.util.HashSet<>();JSONArray latest=feedUrls();for(int i=0;i<latest.length();i++){String url=latest.optString(i);if(!library.contains(url)&&seen.add(url))next.put(url);}for(int i=0;i<catalog.length();i++)if(chosen[i]){String url=catalog.getJSONObject(i).getString("url");if(seen.add(url))next.put(url);}if(next.length()>10){toast("Escolha até 10 feeds no total, incluindo os adicionados manualmente.");return;}prefs().edit().putString("feeds",next.toString()).remove("news").remove("newsAt").apply();renderFeeds();showCache();toast("Fontes salvas. Toque em Atualizar notícias agora para consultar.");}catch(Exception e){toast("Não foi possível salvar: "+e.getMessage());}
+                try{JSONArray next=new JSONArray();java.util.HashSet<String> seen=new java.util.HashSet<>();JSONArray latest=feedUrls();for(int i=0;i<latest.length();i++){String url=latest.optString(i);if(!library.contains(url)&&seen.add(url))next.put(url);}for(int i=0;i<catalog.length();i++)if(chosen[i]){String url=catalog.getJSONObject(i).getString("url");if(seen.add(url))next.put(url);}if(next.length()>10){toast("Escolha até 10 feeds no total, incluindo os adicionados manualmente.");return;}prefs().edit().putString("feeds",next.toString()).remove("news").remove("newsAt").apply();NewsRepository.sourcesChanged(this);renderFeeds();showCache();toast("Fontes salvas. Toque em Atualizar notícias agora para consultar.");}catch(Exception e){toast("Não foi possível salvar: "+e.getMessage());}
             }).show();
         }catch(Exception e){toast("Não foi possível abrir a biblioteca de fontes.");}
     }
     private void addFeed(){
         try{String url=FeedParser.https(address.getText().toString()).toString();JSONArray list=feedUrls();if(list.length()>=10){toast("Limite de 10 feeds.");return;}
             for(int i=0;i<list.length();i++)if(url.equals(list.optString(i))){toast("Esse feed já está na lista.");return;}
-            list.put(url);prefs().edit().putString("feeds",list.toString()).apply();address.setText("");renderFeeds();
+            list.put(url);prefs().edit().putString("feeds",list.toString()).apply();NewsRepository.sourcesChanged(this);address.setText("");renderFeeds();showCache();
         }catch(Exception e){toast("Informe o endereço HTTPS do feed RSS ou Atom.");}
     }
-    private void renderFeeds(){feeds.removeAllViews();JSONArray list=feedUrls();for(int i=0;i<list.length();i++){String url=list.optString(i);text(feeds,FeedCatalog.name(this,url)+"\n"+url,14);button(feeds,"Remover este feed",()->{JSONArray next=new JSONArray();JSONArray current=feedUrls();for(int j=0;j<current.length();j++)if(!url.equals(current.optString(j)))next.put(current.optString(j));prefs().edit().putString("feeds",next.toString()).remove("news").remove("newsAt").apply();renderFeeds();showCache();});}}
+    private void renderFeeds(){feeds.removeAllViews();JSONArray list=feedUrls();for(int i=0;i<list.length();i++){String url=list.optString(i);text(feeds,FeedCatalog.name(this,url)+"\n"+url,14);button(feeds,"Remover este feed",()->{JSONArray next=new JSONArray();JSONArray current=feedUrls();for(int j=0;j<current.length();j++)if(!url.equals(current.optString(j)))next.put(current.optString(j));prefs().edit().putString("feeds",next.toString()).remove("news").remove("newsAt").apply();NewsRepository.sourcesChanged(this);renderFeeds();showCache();});}}
     private void fetchNews(){
-        if(loading){toast("Atualização em andamento.");return;}JSONArray list=feedUrls();if(list.length()==0){toast("Adicione pelo menos um feed.");return;}
+        if(loading){toast("Atualização em andamento.");return;}if(feedUrls().length()==0){toast("Adicione pelo menos um feed.");return;}
         loading=true;feedStatus.setText("Consultando os feeds escolhidos…");
-        network.execute(()->{
-            JSONArray rows=new JSONArray();StringBuilder errors=new StringBuilder();int succeeded=0;
-            for(int i=0;i<list.length()&&!Thread.currentThread().isInterrupted();i++){
-                if(!prefs().getString("feeds","[]").equals(list.toString()))break;
-                String source=list.optString(i);try{for(FeedParser.Item item:FeedClient.fetch(source))rows.put(new JSONObject().put("title",item.title).put("link",item.link).put("snippet",item.snippet).put("date",item.date).put("source",source));succeeded++;}
-                catch(Exception e){errors.append(source).append(": ").append(e.getMessage()).append('\n');}
-            }
-            // If the user removed a source during the request, discard that result.
-            boolean hasResults=succeeded>0;
-            ui.post(()->{if(isDestroyed())return;
-                if(hasResults&&prefs().getString("feeds","[]").equals(list.toString()))prefs().edit().putString("news",rows.toString()).putLong("newsAt",System.currentTimeMillis()).apply();
-                loading=false;showCache();if(errors.length()>0)feedStatus.append("\nNão foi possível atualizar:\n"+errors);});
-        });
+        network.execute(()->{try{boolean completed=NewsRepository.refresh(this);ui.post(()->{if(isDestroyed())return;loading=false;showCache();String errors=prefs().getString("newsError","");if(!errors.isEmpty())feedStatus.append("\nNão foi possível atualizar:\n"+errors);if(!completed&&errors.isEmpty())toast("Outra consulta pode estar em andamento ou a seleção mudou.");});}catch(Exception error){ui.post(()->{if(!isDestroyed()){loading=false;showCache();feedStatus.append("\nNão foi possível atualizar: "+error.getMessage());}});}});
     }
     private String plain(String value){return Html.fromHtml(value,Html.FROM_HTML_MODE_LEGACY).toString().trim();}
     private void showCache(){
