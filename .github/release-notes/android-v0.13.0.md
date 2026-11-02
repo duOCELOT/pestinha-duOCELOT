@@ -51,6 +51,6 @@ as fontes escolhidas. Não há LLM, voz ou leitura de conteúdo da tela/agenda.
 
 `SHA256SUMS.txt` contém o hash do APK. No computador: `sha256sum -c SHA256SUMS.txt`.
 
-[Novidades por versão](https://github.com/duOCELOT/pestinha-duOCELOT/blob/main/CHANGELOG.md) · [Relatar problema](https://github.com/duOCELOT/pestinha-duOCELOT/issues)
+[Novidades por versão](https://github.com/duOCELOT/pestinha-duOCELOT/blob/main/CHANGELOG.md) · [Projeto e guias](https://github.com/duOCELOT/pestinha-duOCELOT)
 
 Adaptação independente por duOCELOT de [mille-okws/pestinha](https://github.com/mille-okws/pestinha), sob GPL-3.0-or-later.

@@ -155,8 +155,10 @@ def publish(data, folder):
         sums.write_text(data['apk_sha256'] + '  Pestinha-Android.apk\n')
         expected = {p.name: (p.stat().st_size, hashlib.sha256(p.read_bytes()).hexdigest())
                     for p in (staged, sums)}
-        route = f"releases/tags/{data['tag']}"
-        release = api(route)
+        matches = [r for r in api('releases?per_page=100') if r['tag_name'] == data['tag']]
+        if len(matches) > 1:
+            raise ValueError('Ambiguous duplicate Release drafts; review them before publishing')
+        release = matches[0] if matches else None
         if release and not release['draft']:
             check_assets(release, expected)
             print('Release already public with the expected assets; leaving it unchanged.')
@@ -168,6 +170,12 @@ def publish(data, folder):
             command('release', 'create', data['tag'], '--repo', REPOSITORY,
                     '--target', data['source_sha'], '--draft', '--title', data['title'],
                     '--notes-file', data['notes'])
+        matches = [r for r in api('releases?per_page=100') if r['tag_name'] == data['tag']]
+        if len(matches) != 1:
+            raise ValueError('Expected exactly one Release draft after creation')
+        route = f"releases/{matches[0]['id']}"
+        command('release', 'edit', data['tag'], '--repo', REPOSITORY,
+                '--title', data['title'], '--notes-file', data['notes'])
         command('release', 'upload', data['tag'], str(staged), str(sums),
                 '--repo', REPOSITORY, '--clobber')
         release = api(route)
