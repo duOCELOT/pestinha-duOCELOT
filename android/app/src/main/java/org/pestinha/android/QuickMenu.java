@@ -24,6 +24,9 @@ final class QuickMenu {
         LinearLayout header=new LinearLayout(context);header.setGravity(Gravity.CENTER_VERTICAL);
         TextView title=Design.text(context,"O que vamos fazer?",13,Design.MUTED);title.setPadding(Design.dp(context,5),0,0,0);header.addView(title,new LinearLayout.LayoutParams(0,Design.dp(context,32),1));title.setGravity(Gravity.CENTER_VERTICAL);
         ActionIcon close=new ActionIcon(context,"close");close.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);close.setContentDescription("Fechar menu");close.setBackground(Design.touch(context,Design.CARD,0));header.addView(close,new LinearLayout.LayoutParams(Design.dp(context,48),Design.dp(context,48)));close.setOnClickListener(v->dismiss());box.addView(header);
+        boolean fixed=context.getSharedPreferences("pet",0).getBoolean("fixed",false);
+        LinearLayout pin=new LinearLayout(context);pin.setGravity(Gravity.CENTER_VERTICAL);pin.setPadding(Design.dp(context,12),Design.dp(context,8),Design.dp(context,12),Design.dp(context,8));pin.setBackground(Design.touch(context,fixed?Design.RAISED:Design.CARD,Design.BORDER));pin.setTag("pin");pin.setFocusable(true);pin.setSelected(fixed);pin.setContentDescription(fixed?"Soltar posição. Reativar movimento do pet.":"Fixar no lugar. Sem gravidade ou movimento automático.");
+        ActionIcon pinIcon=new ActionIcon(context,"pin");pin.addView(pinIcon,new LinearLayout.LayoutParams(Design.dp(context,26),Design.dp(context,26)));LinearLayout pinText=Design.column(context);pinText.setPadding(Design.dp(context,10),0,0,0);pinText.addView(Design.text(context,fixed?"Soltar posição":"Fixar no lugar",14,Design.TEXT));pinText.addView(Design.text(context,fixed?"Voltar ao movimento normal":"Ficar onde você soltar • sem gravidade",11,Design.MUTED));pin.addView(pinText,new LinearLayout.LayoutParams(0,-2,1));LinearLayout.LayoutParams pinParams=new LinearLayout.LayoutParams(-1,-2);pinParams.bottomMargin=Design.dp(context,8);box.addView(pin,pinParams);pin.setOnClickListener(v->{dismiss();action.selected("pin");});
         String[] ids={"caress","ball","sleep","work","memory","assistant","panel","stop"};
         String[] labels={"Carinho",ball?"Sem bola":"Bolinha",sleeping?"Acordar":"Dormir",working?"Parar":"Notebook","Memória","Assistente","Painel","Guardar"};
         LinearLayout row=null;
@@ -41,11 +44,13 @@ final class QuickMenu {
         dismiss();Rect bounds;if(Build.VERSION.SDK_INT>=30)bounds=wm.getCurrentWindowMetrics().getBounds();else{android.util.DisplayMetrics d=new android.util.DisplayMetrics();wm.getDefaultDisplay().getMetrics(d);bounds=new Rect(0,0,d.widthPixels,d.heightPixels);}
         int gap=Design.dp(context,12),width=Math.min(Design.dp(context,280),bounds.width()-gap*2),columns=width<Design.dp(context,260)?3:4;
         LinearLayout box=content(asleep,working,ball,columns);box.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
-        int height=box.getMeasuredHeight();int[] position=place(bounds.width(),bounds.height(),width,height,petX,petY,petWidth,petHeight,gap);
+        int height=box.getMeasuredHeight();View popup=box;
+        int available=Math.max(1,bounds.height()-gap*2);if(height>available){ScrollView scroll=new ScrollView(context);scroll.addView(box);scroll.setBackground(Design.shape(context,Design.CARD,24,Design.BORDER));scroll.setOnTouchListener((v,e)->{if(e.getAction()==MotionEvent.ACTION_OUTSIDE){dismiss();return false;}return false;});popup=scroll;height=available;}
+        int[] position=place(bounds.width(),bounds.height(),width,height,petX,petY,petWidth,petHeight,gap);
         WindowManager.LayoutParams p=new WindowManager.LayoutParams(width,height,WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL|WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,android.graphics.PixelFormat.TRANSLUCENT);
         p.gravity=Gravity.TOP|Gravity.LEFT;p.x=position[0];p.y=position[1];
-        try{wm.addView(box,p);root=box;box.setAlpha(0);box.setScaleX(.92f);box.setScaleY(.92f);box.animate().alpha(1).scaleX(1).scaleY(1).setDuration(140).start();}catch(RuntimeException e){root=null;}
+        try{wm.addView(popup,p);root=popup;popup.setAlpha(0);popup.setScaleX(.92f);popup.setScaleY(.92f);popup.animate().alpha(1).scaleX(1).scaleY(1).setDuration(140).start();}catch(RuntimeException e){root=null;}
     }
     void dismiss(){if(root!=null){View old=root;root=null;old.animate().cancel();if(old.isAttachedToWindow())wm.removeView(old);}}
 }

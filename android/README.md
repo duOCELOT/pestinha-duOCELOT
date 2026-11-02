@@ -1,4 +1,4 @@
-# Pestinha Android 0.10 (experimental)
+# Pestinha Android 0.11 (experimental)
 
 Adaptação independente de mille-okws/pestinha. Interface Android em Java/Canvas;
 rede neural e memória originais em Python, integradas por Chaquopy. Sem Termux,
@@ -254,3 +254,18 @@ começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](../
 
 Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
 comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](../docs/android/MEU-RADAR.md).
+
+
+## Fixar o pet no lugar (0.11)
+
+Segure o boneco e toque em **Fixar no lugar** no menu rápido.
+Agora você pode arrastá-lo e soltá-lo: ele permanece nessa posição, sem cair,
+passear, girar com a inclinação ou continuar o impulso de um arremesso.
+Segure novamente e escolha **Soltar posição** para restaurar o movimento normal.
+A opção e a posição são mantidas ao guardar/abrir o pet e valem para o personagem solto.
+
+O rosto, as reações, os lembretes, as notícias e a interação continuam ativos.
+A bolinha mantém sua própria física, inclusive inclinação quando habilitada.
+A preferência de inclinação é preservada para quando você soltar a posição.
+Se a orientação, o tamanho ou a área da tela mudar, a posição pode ser ajustada
+para que o boneco continue dentro dos limites visíveis.

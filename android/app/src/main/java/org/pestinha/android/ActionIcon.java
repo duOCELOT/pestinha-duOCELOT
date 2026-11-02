@@ -20,6 +20,7 @@ final class ActionIcon extends View {
             case "panel":c.drawRoundRect(3,3,10,10,2,2,p);c.drawRoundRect(14,3,21,10,2,2,p);c.drawRoundRect(3,14,10,21,2,2,p);c.drawRoundRect(14,14,21,21,2,2,p);break;
             case "stop":c.drawRoundRect(5,5,19,19,4,4,p);c.drawLine(9,12,15,12,p);break;
             case "close":c.drawLine(7,7,17,17,p);c.drawLine(17,7,7,17,p);break;
+            case "pin":c.drawLine(8,3,16,3,p);c.drawLine(9,3,9,9,p);c.drawLine(15,3,15,9,p);path.moveTo(9,9);path.lineTo(5,14);path.lineTo(19,14);path.lineTo(15,9);c.drawPath(path,p);c.drawLine(12,14,12,22,p);break;
             case "note":c.drawRoundRect(5,3,19,21,2,2,p);c.drawLine(8,8,16,8,p);c.drawLine(8,12,16,12,p);c.drawLine(8,16,13,16,p);break;
             default:c.drawCircle(12,12,7,p);c.drawLine(12,8,12,12,p);c.drawLine(12,12,15,14,p);
         }c.restore();}

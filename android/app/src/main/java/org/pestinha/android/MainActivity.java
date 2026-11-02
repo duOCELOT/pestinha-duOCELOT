@@ -81,6 +81,7 @@ public class MainActivity extends Activity {
         CheckBox mischief=check(appearance,"Travessuras automáticas","mischief",false);mischief.setOnCheckedChangeListener((b,value)->{getSharedPreferences("pet",0).edit().putBoolean("mischief",value).apply();if(PetService.running)send("mischief");});
         CheckBox fireworks=check(appearance,"Fogos quando ficar feliz","fireworks",true);fireworks.setOnCheckedChangeListener((b,value)->getSharedPreferences("pet",0).edit().putBoolean("fireworks",value).apply());
         LinearLayout physics=expandable(layout,"Movimento e inclinação");
+        text(physics,"Segure o pet → Fixar no lugar. Ele fica onde você soltar ao arrastar. Use Soltar posição para voltar ao movimento normal.",14,Design.MUTED);
         android.hardware.SensorManager sensors=getSystemService(android.hardware.SensorManager.class);
         boolean hasTilt=sensors!=null&&(sensors.getDefaultSensor(android.hardware.Sensor.TYPE_GRAVITY)!=null||sensors.getDefaultSensor(android.hardware.Sensor.TYPE_ACCELEROMETER)!=null);
         CheckBox tilt=check(physics,"Mover ao inclinar o celular","tilt",false);tilt.setEnabled(hasTilt);
@@ -89,8 +90,8 @@ public class MainActivity extends Activity {
         slider(physics,"Sensibilidade","sensitivity",25,200);
         button(physics,"Calibrar nesta posição",()->send("calibrate"));button(physics,"Restaurar gravidade natural",()->send("reset_tilt"));
         LinearLayout about=expandable(layout,"Privacidade e informações");
-        text(about,"A memória fica no aparelho. A internet só é consultada ao atualizar os feeds escolhidos. Sem leitura de tela ou da agenda. O acompanhamento de apps usa estatísticas do Android somente se você autorizar e ativar. Sensores desligam com a tela apagada.",14,Design.MUTED);
-        text(about,"Pestinha Android • 0.10 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
+        text(about,"A memória fica no aparelho. A internet consulta somente os feeds escolhidos, manualmente ou pelo radar opcional. Sem leitura de tela ou da agenda. O acompanhamento de apps usa estatísticas do Android somente se você autorizar e ativar. Sensores desligam com a tela apagada.",14,Design.MUTED);
+        text(about,"Pestinha Android • 0.11 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
         button(about,"Modo de teste • tempos curtos",()->send("fast"));
         button(about,"Licença e projeto original",()->new AlertDialog.Builder(this).setTitle("Pestinha • GPL-3.0-or-later").setMessage("Adaptação independente de mille-okws/pestinha. Código-fonte: github.com/duOCELOT/pestinha-duOCELOT, branch android.\n\n"+license()).setPositiveButton("Fechar",null).show());
         Design.button(layout,"Guardar o pet","danger",()->stopService(new Intent(this,PetService.class)));

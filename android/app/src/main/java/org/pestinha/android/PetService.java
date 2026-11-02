@@ -60,7 +60,7 @@ public class PetService extends Service {
     private QuickMenu quickMenu;
     private boolean menuOpenedByHold=false;
     private MotionSensors motion;
-    private boolean tiltEnabled=false;
+    private boolean tiltEnabled=false,fixed=false;
     private float tiltSensitivity=1;
     private long lastImpact=0;
     private String petId;
@@ -116,6 +116,7 @@ public class PetService extends Service {
         usageMonitor=new UsageMonitor(this);newsMonitor=new NewsMonitor(this);
         quickMenu = new QuickMenu(this,wm,action->{
             if(action.equals("stop"))stopSelf();
+            else if(action.equals("pin"))setFixed(!fixed);
             else if(action.equals("panel")||action.equals("memory")||action.equals("assistant")){
                 Class<?> screen=action.equals("panel")?MainActivity.class:action.equals("memory")?MemoryActivity.class:AssistantActivity.class;
                 startActivity(new Intent(this,screen).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -123,7 +124,7 @@ public class PetService extends Service {
             else event(action);
         });
         motion = new MotionSensors(this, () -> {
-            if(!closed && running && !dragging && !pressed && !inCorner && !notebook){
+            if(!closed && !fixed && running && !dragging && !pressed && !inCorner && !notebook){
                 vy=-180*getResources().getDisplayMetrics().density;event("motion");
             }
         });
@@ -174,7 +175,7 @@ public class PetService extends Service {
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-                        if(!menuOpenedByHold && dragging && e.getEventTime()-movedAt<150 && Math.hypot(flingX,flingY)>500*density){
+                        if(!fixed && !menuOpenedByHold && dragging && e.getEventTime()-movedAt<150 && Math.hypot(flingX,flingY)>500*density){
                             vx=Math.max(-1500*density,Math.min(1500*density,flingX));
                             vy=Math.max(-1500*density,Math.min(1500*density,flingY)); event("throw");
                         }
@@ -228,13 +229,13 @@ public class PetService extends Service {
                         liveSnapshot=snapshot; emotion=next; energy=en; speed=sp; drive=dr; pet.emotion=next;pet.face(data.optJSONObject("face"),data.optBoolean("caressing"));
                         boolean wasCorner=inCorner; inCorner=data.optBoolean("corner"); notebook=data.optBoolean("notebook");
                         pet.notebook=notebook; pet.corner=inCorner;
-                        if(inCorner&&!wasCorner){pos.x=0;clamp();xFloat=pos.x;yFloat=pos.y;}
+                        if(!fixed&&inCorner&&!wasCorner){pos.x=0;clamp();xFloat=pos.x;yFloat=pos.y;}
                         if(celebrate&&getSharedPreferences("pet",0).getBoolean("fireworks",true))world.fireworks(pos.x,pos.y);
                         JSONObject action=data.optJSONObject("action");
                         if(action!=null&&action.optLong("id")!=lastAction){
                             lastAction=action.optLong("id");String kind=action.optString("kind");
                             if(kind.equals("note")||kind.equals("sign")||kind.equals("image"))world.message(action.optString("text"),kind.equals("image"),pos.x,pos.y,()->event("dismiss"));
-                            if(kind.equals("roam"))vx=(float)(getResources().getDisplayMetrics().density*speed);
+                            if(!fixed&&kind.equals("roam"))vx=(float)(getResources().getDisplayMetrics().density*speed);
                         }
                     } });
                 }
@@ -250,9 +251,10 @@ public class PetService extends Service {
             if (closed || pet == null || !screenOn) return;
             long now = SystemClock.uptimeMillis(); float dt = Math.min(0.05f, (now-lastFrame)/1000f); lastFrame = now;
             boolean useTilt=tiltEnabled && motion!=null && motion.active;
+            if(fixed){vx=vy=0;xFloat=pos.x;yFloat=pos.y;}
             float density=getResources().getDisplayMetrics().density;
             float[] force=useTilt?motion.force(displayRotation()):new float[]{0,0};
-            if (!dragging && !pressed && running && !inCorner && !notebook && !quickMenu.isShowing() && (useTilt || !emotion.equals("dormindo"))) {
+            if (!fixed && !dragging && !pressed && running && !inCorner && !notebook && !quickMenu.isShowing() && (useTilt || !emotion.equals("dormindo"))) {
                 if(useTilt){
                     vx=TiltPhysics.velocity(vx,force[0]*90*density*tiltSensitivity,dt,650*density);
                     vy=TiltPhysics.velocity(vy,force[1]*90*density*tiltSensitivity,dt,650*density);
@@ -263,7 +265,7 @@ public class PetService extends Service {
                 xFloat+=vx*dt;yFloat+=vy*dt;
                 pos.x=Math.round(xFloat);pos.y=Math.round(yFloat);clamp();
             }
-            float angle=useTilt&&!dragging&&!pressed&&!quickMenu.isShowing()?motion.angle(displayRotation()):0;
+            float angle=!fixed&&useTilt&&!dragging&&!pressed&&!quickMenu.isShowing()?motion.angle(displayRotation()):0;
             pet.bodyAngle+=(angle-pet.bodyAngle)*Math.min(1,dt*8);
             world.gravity(useTilt,force[0]*90*tiltSensitivity,force[1]*90*tiltSensitivity);
             world.frame(dt,pos.x,pos.y,pos.width,pos.height);
@@ -285,12 +287,18 @@ public class PetService extends Service {
     }
     private void applySettings() {
         android.content.SharedPreferences prefs=getSharedPreferences("pet",0);
+        boolean nextFixed=prefs.getBoolean("fixed",false);if(nextFixed!=fixed){vx=vy=0;xFloat=pos.x;yFloat=pos.y;if(pet!=null)pet.bodyAngle=0;}fixed=nextFixed;
         float scale=prefs.getInt("size",100)/100f, density=getResources().getDisplayMetrics().density;
         pos.width=Math.round(150*density*scale);pos.height=Math.round(122*density*scale);
         userSpeed=prefs.getInt("speed",100)/100f;
         tiltEnabled=prefs.getBoolean("tilt",false);
         tiltSensitivity=prefs.getInt("sensitivity",100)/100f;
         updateMotion();
+    }
+    private void setFixed(boolean enabled){
+        getSharedPreferences("pet",0).edit().putBoolean("fixed",enabled).apply();
+        vx=vy=0;xFloat=pos.x;yFloat=pos.y;storePosition();applySettings();
+        android.widget.Toast.makeText(this,enabled?"Posição fixa. Arraste para escolher outro lugar.":"Posição solta. Movimento normal restaurado.",android.widget.Toast.LENGTH_SHORT).show();
     }
     private int displayRotation(){return wm.getDefaultDisplay().getRotation();}
     private void updateMotion(){if(motion!=null){if(tiltEnabled&&screenOn&&!closed)motion.start();else motion.stop();}}
