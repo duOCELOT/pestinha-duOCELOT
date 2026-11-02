@@ -1,6 +1,6 @@
 # Pestinha Android — apresentação do projeto
 
-**Material da versão 0.7 experimental.** Este diretório apresenta o APK, suas
+**Material da versão 0.8 experimental.** Este diretório apresenta o APK, suas
 interfaces e funções. Foi conferido com o código da branch `android`.
 
 | Para quem | Material |
@@ -34,7 +34,7 @@ nativa para Android. **O APK instalado não precisa de Termux, Ubuntu, Qt ou VNC
 | --- | --- |
 | <img src="images/inicio.png" width="270" alt="Tela principal: pet, energia, botão para soltar e cartões de Assistente e Memória"> | <img src="images/menu-rapido.png" width="280" alt="Menu compacto com Carinho, Bolinha, Dormir, Notebook, Memória, Assistente, Painel e Guardar"> |
 
-A versão 0.7 também acrescenta o cartão Pausas conscientes à tela principal.
+A versão 0.8 também acrescenta o cartão Pausas conscientes à tela principal.
 As imagens são renderizações da interface real em testes Android, não capturas
 de um telefone. [Origem e contexto das imagens](images/README.md).
 

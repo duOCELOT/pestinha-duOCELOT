@@ -330,3 +330,34 @@ Não há chat por LLM, voz, leitura das notificações de outros apps, leitura d
 agenda, busca geral na web, análise da tela ou reprodução completa das funções
 de desktop. A personalidade combina regras, rede neural e conteúdo escrito;
 não implica acesso livre ao celular.
+
+
+## Novidades da versão 0.8: água, contadores e painel por personagem
+
+Em **Assistente → Água ao longo do dia**, ative notificações e os lembretes.
+Escolha intervalo (30, 60, 90 ou 120 minutos) e início/fim no mesmo dia.
+O padrão é 08h–22h a cada 60 minutos. Não há avisos fora dessa janela;
+um aviso atrasado agenda o próximo a partir da entrega, sem disparar todos os atrasados.
+Economia de bateria pode atrasar notificações. O agendamento é local e é rearmado
+no reinício. Forçar a parada do app no Android exige reabri-lo para retomar.
+O botão **Bebi água** registra manualmente um copo, com contador que muda a cada dia.
+Não é uma medição automática nem recomendação de volume diário. Pausar cancela o próximo aviso.
+
+Em **Pausas conscientes**, as medições dos apps escolhidos agora têm barras
+comparativas e duração em horas, minutos e segundos. Dependem de Acesso ao uso
+e continuam sendo estimativas do Android. Atualize para obter uma nova leitura.
+
+Em **Memória e cérebro**, escolha Bryan, Jorge ou Mimir para consultar sua personalidade,
+sem alterar o pet solto. O monitor usa a paleta escura e as barras do monitor original:
+necessidades, temperamento de origem, atividade dos motores em Hz, habituação e interações.
+O temperamento de origem vem do JSON do personagem; não é uma inferência de personalidade por IA.
+O estado do pet solto é atualizado ao vivo; os demais mostram o último estado salvo.
+Sem estado salvo, o painel informa a ausência de medições em vez de inventar números.
+Os dados técnicos, associações aprendidas e episódios continuam acessíveis em um painel expansível.
+Exportar, restaurar e apagar se referem ao personagem consultado, com as proteções anteriores.
+
+Os novos **contadores do pet** acumulam tempo ativo na tela: acordado, dormindo,
+caderninho, cantinho e contextos. Começam nesta versão e acompanham o backup de cada personagem.
+Não contam tempo com o pet guardado ou a tela apagada. Contextos e atividades se sobrepõem;
+as barras não devem ser somadas como se fossem categorias exclusivas.
+Os registros de água e configurações do assistente não fazem parte do backup neural.

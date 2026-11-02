@@ -1,6 +1,6 @@
 # Pestinha Android — fork duOCELOT
 
-Versão Android experimental **0.7**, desenvolvida neste fork a partir de
+Versão Android experimental **0.8**, desenvolvida neste fork a partir de
 [mille-okws/pestinha](https://github.com/mille-okws/pestinha). A adaptação está
 na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
 O texto original de desktop foi preservado abaixo.
@@ -270,3 +270,12 @@ As imagens e os textos de `assets/` não estão cobertos por esta licença
 - Pouco testado com escala de tela acima de 100% e com vários monitores.
 - Jogos em janela sem borda podem não ser detectados como tela cheia.
 - O executável não é assinado; o Windows pode avisar na primeira execução.
+
+
+### Novidades Android 0.8
+
+Lembretes recorrentes de água com intervalo e janela diária, registro manual de copos,
+gráficos do tempo de uso e monitor de personalidade/memória separado por personagem.
+As barras mostram dados reais da rede, necessidades e novos tempos acumulados do pet;
+o temperamento inicial é identificado separadamente do aprendizado.
+Consulte o [guia das telas](docs/android/GUIA-DO-APK.md) para ativar e entender os contadores.
