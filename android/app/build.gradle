@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.application'
+    id 'com.chaquo.python'
+}
+
+android {
+    namespace 'org.pestinha.android'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'org.pestinha.android'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '0.1.0-alpha'
+        ndk { abiFilters 'arm64-v8a', 'x86_64' }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    sourceSets {
+        main {
+            python.srcDir "$buildDir/generated-python"
+            assets.srcDir '../..'
+            assets.includes = ['LICENSE', 'pets/bryan.json']
+        }
+    }
+}
+
+chaquopy {
+    defaultConfig {
+        version '3.11'
+        pip { install 'numpy==1.26.2' }
+    }
+}
+
+// Package only the headless original modules; Qt and desktop dependencies stay out.
+tasks.register('syncBrain', Sync) {
+    from('../..') {
+        include 'pestinha/__init__.py', 'pestinha/core/__init__.py'
+        include 'pestinha/core/nervous_system.py', 'pestinha/core/emotion.py'
+        include 'pestinha/core/homeostasis.py', 'pestinha/core/motor.py'
+        include 'pestinha/mathutil.py', 'pestinha/store.py', 'pestinha/log.py'
+        include 'pestinha/config.py', 'pestinha/paths.py'
+    }
+    into "$buildDir/generated-python"
+}
+tasks.named('preBuild').configure { dependsOn 'syncBrain' }
+tasks.configureEach {
+    if (name.toLowerCase().contains('python') && name != 'syncBrain') {
+        dependsOn 'syncBrain'
+    }
+}
