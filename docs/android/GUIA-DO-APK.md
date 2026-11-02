@@ -1,14 +1,14 @@
 # Guia do APK: telas, funções e uso
 
-**Pestinha Android 0.7 experimental.**
+**Pestinha Android 0.13 experimental.**
 [Apresentação](README.md) · [Referência técnica](REFERENCIA-TECNICA.md)
 
 ## 1. Primeiro uso
 
-1. Instale o APK extraído do artefato `pestinha-android-debug` no GitHub Actions.
+1. [Baixe `Pestinha-Android.apk` diretamente da Release](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) e abra para instalar. Não precisa de login nem ZIP.
 2. Abra **Pestinha**.
 3. Se aparecer **Permitir aparecer sobre outros apps**, toque e autorize no Android.
-4. Volte ao app e toque em **Soltar Bryan** ou no nome do personagem escolhido.
+4. Volte ao app e toque em **Soltar o pet**.
 5. Permita notificações para acessar os controles e receber avisos.
 
 O personagem deve aparecer em uma pequena janela transparente. O restante da
@@ -32,7 +32,9 @@ necessária. Quando o pet já está ativo, o botão indica que ele está solto.
 | Nome e desenho do pet | Conferir qual personagem está selecionado |
 | Estado e energia | Acompanhar a emoção atual e a reserva de energia do pet |
 | Soltar o personagem | Iniciar o pet flutuante e seu serviço com notificação |
-| Assistente | Abrir timers, lembretes, agenda, relógio e notícias |
+| Meu radar | Selecionar os assuntos do dia, fontes e comentários de notícias |
+| Tarefas e prazos | Cadastrar entregas e informar o andamento |
+| Assistente | Abrir água, timers, lembretes, agenda, relógio e notícias |
 | Pausas conscientes | Configurar medição opcional de uso e consultar os recados do pet |
 | Memória e cérebro | Consultar estado, aprendizado, histórico e backups |
 | Brincar e interagir | Abrir ações e escolher o contexto de atividade |
@@ -64,10 +66,12 @@ existem suavização, habituação e necessidades internas.
 
 ### Menu rápido
 
-<img src="images/menu-rapido.png" width="280" alt="Os oito atalhos do menu que abre ao segurar o pet">
+<img src="images/menu-rapido.png" width="280" alt="Menu ao segurar, com posição fixa e nove atalhos incluindo Arkanoid">
 
 | Ícone / rótulo | Descrição |
 | --- | --- |
+| Fixar no lugar / Soltar posição | Mantém o pet onde for solto ou restaura seu movimento |
+| Arkanoid | Abre o jogo sobre os apps, usando o próprio pet como plataforma |
 | Carinho | Faz carinho sem sair do aplicativo em uso |
 | Bolinha / Sem bola | Mostra ou guarda a bolinha |
 | Dormir / Acordar | Alterna o sono do personagem |
