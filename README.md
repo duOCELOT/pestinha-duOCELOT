@@ -1,6 +1,6 @@
 # Pestinha Android — fork duOCELOT
 
-Versão Android experimental **0.6**, desenvolvida neste fork a partir de
+Versão Android experimental **0.7**, desenvolvida neste fork a partir de
 [mille-okws/pestinha](https://github.com/mille-okws/pestinha). A adaptação está
 na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
 O texto original de desktop foi preservado abaixo.
@@ -10,6 +10,8 @@ O texto original de desktop foi preservado abaixo.
 - [Apresentação do projeto](docs/android/README.md): proposta, personagens e funções.
 - [Guia das telas e funções](docs/android/GUIA-DO-APK.md): instalação, gestos, menu rápido, Assistente e memória.
 - [Referência técnica](docs/android/REFERENCIA-TECNICA.md): arquitetura, dados, permissões e testes.
+- [Fontes RSS verificadas](docs/android/FONTES-RSS.md): notícias, bolsa, cripto e outros assuntos.
+- [Pausas conscientes](docs/android/PAUSAS-CONSCIENTES.md): tempo nos apps e recados opcionais do pet.
 
 ## Instalar no celular
 
@@ -35,12 +37,16 @@ experimentais, não uma release de produção/Play Store.
 - Física opcional por inclinação, acelerômetro/gravidade e balanço pelo giroscópio.
 - Painel **Memória e cérebro**: associações aprendidas, necessidades, motores,
   episódios, exportação e restauração do estado por personagem.
+- Acompanhamento opcional de uso dos apps escolhidos, com recados por sessão ou total diário.
+- Biblioteca de 14 feeds dos próprios veículos, escolhidos por categoria.
 - Painel **Assistente**: foco e pausas, lembretes locais, atalhos para criar
   eventos/alarmes e leitor RSS/Atom de fontes escolhidas pelo usuário.
 
 Internet apenas ao atualizar feeds manualmente; memória do pet fica no aparelho.
 Não há LLM instalado, busca geral, leitura de tela ou leitura dos compromissos.
-Notícias são títulos/trechos dos feeds com fontes, não resumos por IA. O Android
+Notícias são títulos/trechos dos feeds com fontes, não resumos por IA.
+O tempo nos apps usa Acesso ao uso somente após autorização e ativação; as
+medições e recados ficam no aparelho. O Android
 controla permissões de notificações, overlays e horários precisos de lembretes.
 
 [Instruções, permissões, backups e limitações Android](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md).

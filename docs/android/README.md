@@ -1,12 +1,14 @@
 # Pestinha Android — apresentação do projeto
 
-**Material da versão 0.6 experimental.** Este diretório apresenta o APK, suas
+**Material da versão 0.7 experimental.** Este diretório apresenta o APK, suas
 interfaces e funções. Foi conferido com o código da branch `android`.
 
 | Para quem | Material |
 | --- | --- |
 | Quer conhecer o projeto | Esta apresentação |
 | Quer instalar, usar e entender cada tela | [Guia do APK e das telas](GUIA-DO-APK.md) |
+| Quer escolher fontes de notícias, bolsa e cripto | [Biblioteca de RSS](FONTES-RSS.md) |
+| Quer receber recados sobre tempo nos apps | [Pausas conscientes](PAUSAS-CONSCIENTES.md) |
 | Quer entender a implementação e os dados | [Referência técnica](REFERENCIA-TECNICA.md) |
 | Quer compilar ou migrar uma versão antiga | [README de desenvolvimento Android](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md) |
 
@@ -32,6 +34,7 @@ nativa para Android. **O APK instalado não precisa de Termux, Ubuntu, Qt ou VNC
 | --- | --- |
 | <img src="images/inicio.png" width="270" alt="Tela principal: pet, energia, botão para soltar e cartões de Assistente e Memória"> | <img src="images/menu-rapido.png" width="280" alt="Menu compacto com Carinho, Bolinha, Dormir, Notebook, Memória, Assistente, Painel e Guardar"> |
 
+A versão 0.7 também acrescenta o cartão Pausas conscientes à tela principal.
 As imagens são renderizações da interface real em testes Android, não capturas
 de um telefone. [Origem e contexto das imagens](images/README.md).
 
@@ -61,7 +64,8 @@ solte novamente. Trocar de personagem não apaga a memória dos demais.
 | Memória | Monitor, associações aprendidas, episódios, consolidação e backup por personagem |
 | Produtividade | Foco de 25 minutos, pausa de 5, duração personalizada e lembretes locais |
 | Integrações | Solicitar criação de eventos e alarmes nos aplicativos de agenda e relógio |
-| Notícias | Leitura manual de RSS/Atom HTTPS, trechos, fontes, links e cache local |
+| Notícias | Biblioteca opcional de 14 feeds dos próprios veículos; leitura manual, trechos, fontes, links e cache local |
+| Pausas conscientes | Uso estimado dos apps escolhidos, com autorização, limite e recados do personagem |
 
 ## Mapa das telas
 
