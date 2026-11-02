@@ -1,6 +1,6 @@
 # Guia do APK: telas, funções e uso
 
-**Pestinha Android 0.6 experimental.**
+**Pestinha Android 0.7 experimental.**
 [Apresentação](README.md) · [Referência técnica](REFERENCIA-TECNICA.md)
 
 ## 1. Primeiro uso
@@ -33,6 +33,7 @@ necessária. Quando o pet já está ativo, o botão indica que ele está solto.
 | Estado e energia | Acompanhar a emoção atual e a reserva de energia do pet |
 | Soltar o personagem | Iniciar o pet flutuante e seu serviço com notificação |
 | Assistente | Abrir timers, lembretes, agenda, relógio e notícias |
+| Pausas conscientes | Configurar medição opcional de uso e consultar os recados do pet |
 | Memória e cérebro | Consultar estado, aprendizado, histórico e backups |
 | Brincar e interagir | Abrir ações e escolher o contexto de atividade |
 | Personagem e aparência | Trocar o pet, ajustar tamanho e velocidade e habilitar travessuras/fogos |
@@ -216,7 +217,9 @@ lista alarmes existentes e não altera/exclui eventos já salvos.
 4. Leia título, trecho, fonte, data informada pelo feed e horário da consulta.
 5. Use **Abrir matéria no navegador** ou **Trazer manchete com o pet**.
 
-A lista começa vazia e aceita até dez feeds. Cada consulta aceita até 30 itens
+A lista de assinaturas começa vazia. **Escolher fontes oficiais por categoria**
+oferece uma biblioteca de 14 endereços; você escolhe até dez feeds ativos.
+Veja a [lista de fontes e referências dos editores](FONTES-RSS.md). Cada consulta aceita até 30 itens
 por fonte, com limites de tamanho e tempo de conexão/leitura. Não há consultas
 automáticas em segundo plano, resumo por LLM ou busca geral na web.
 
@@ -228,6 +231,17 @@ responderam. Se todas falharem, a cópia anterior pode continuar visível.
 Remover um feed limpa a cópia de notícias salva. **Apagar notícias salvas** limpa
 o cache sem remover a lista de feeds. Notícias são dados exibidos como texto:
 não têm poder de executar ações do app.
+
+### Pausas conscientes e recados
+
+O cartão **Pausas conscientes** na tela principal e o botão correspondente no
+Assistente abrem a medição opcional de uso. Autorize Acesso ao uso no Android,
+escolha os apps e ative os recados. O pet pode dizer quanto tempo foi usado em
+uma sessão ou no total do dia, com limite e intervalo configuráveis.
+
+A função vem desligada, não lê conteúdo e funciona automaticamente com pet
+solto e tela desbloqueada. As estimativas e os recados ficam locais; ainda não
+é conversa livre por LLM. [Instruções completas e limitações](PAUSAS-CONSCIENTES.md).
 
 ## 8. Tela Memória e cérebro
 
@@ -271,7 +285,7 @@ Para restaurar:
 
 O backup inclui os arquivos de aprendizado, necessidades e histórico do
 personagem. **Não inclui imagem de meme, configurações gerais, feeds, cache,
-timers ou lembretes.** Atualizar normalmente o APK conserva esses dados, mas
+timers, lembretes ou dados de acompanhamento de apps.** Atualizar normalmente o APK conserva esses dados, mas
 desinstalar/limpar dados apaga a área privada do app.
 
 **Apagar memória deste personagem** pede confirmação e apaga seus arquivos de
@@ -286,6 +300,7 @@ manter uma cópia do aprendizado.
 | Notificações | Avisos e acesso aos controles | Necessária para criar os avisos locais pelo app |
 | Horário preciso | Agendar avisos com maior precisão | Opcional; há alternativa aproximada |
 | Internet | Consultar os feeds que você atualizar | Sem envio da memória do pet aos feeds |
+| Acesso ao uso | Estimar tempo nos apps escolhidos | Opcional, exige autorização e ativação; não lê conteúdo |
 | Sensores de movimento | Inclinação e balanço | Opcionais; param com tela apagada |
 | Seletor de imagem | Ler a imagem escolhida por você | Não abre acesso geral à galeria |
 | Agenda/relógio | Encaminhar pedidos ao app de destino | Não dá leitura completa da agenda ao Pestinha |

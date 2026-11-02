@@ -1,4 +1,4 @@
-# Pestinha Android 0.6 (experimental)
+# Pestinha Android 0.7 (experimental)
 
 Adaptação independente de mille-okws/pestinha. Interface Android em Java/Canvas;
 rede neural e memória originais em Python, integradas por Chaquopy. Sem Termux,
@@ -14,6 +14,25 @@ Ubuntu, Qt ou VNC no aparelho. Código de desktop preservado.
 O guia inclui imagens renderizadas, o mapa das telas e a descrição das funções
 implementadas, com instruções de uso, memória, permissões e limitações.
 
+
+## RSS e pausas conscientes (0.7)
+
+No Assistente, **Escolher fontes oficiais por categoria** oferece 14 feeds de
+notícias, economia, bolsa, cripto, tecnologia e ciência. A seleção aceita até dez
+fontes ativas e só consulta ao tocar Atualizar. Endereços verificados com HTTPS
+200 e RSS com itens em 02/11/2026. [Lista e referências dos editores](../docs/android/FONTES-RSS.md).
+
+**Pausas conscientes** acompanha apps escolhidos, com autorização especial de
+Acesso ao uso (`PACKAGE_USAGE_STATS`) e opção desligada por padrão. Pode comentar
+o tempo da sessão atual ou o total de hoje, usando o tom do pet selecionado.
+O histórico de recados é local e limitado a 40 registros, sem LLM. O monitor
+consulta a cada cerca de 30 segundos, somente com o pet solto e tela desbloqueada.
+Você escolhe até 20 apps, limite, intervalo e silêncio temporário, e pode
+desativar/apagar os dados locais. Não usa acessibilidade nem lê conteúdo.
+[Guia e limitações das medições](../docs/android/PAUSAS-CONSCIENTES.md).
+
+Estatísticas, recados e seleção do acompanhamento ficam nas preferências `usage`,
+separadas de feeds e memória neural; não entram no backup JSON do cérebro.
 
 ## Mimir e personagens (0.6)
 
@@ -75,8 +94,9 @@ outros painéis seguem a mesma paleta, com margens para as barras do Android.
 
 As travessuras automáticas são opcionais. A seleção aprende entre bilhete,
 atravessar, nada e meme (se houver imagem). O contexto é escolhido pelo usuário,
-não inferido de outros apps. Não há leitura de tela, histórico de apps, captura
-ou acessibilidade. A rede decide as emoções; algumas ações solicitadas pelo
+não inferido de outros apps. Não há leitura de tela, captura ou acessibilidade.
+O acompanhamento opcional de uso é um módulo separado, autorizado pelo usuário,
+que consulta eventos do Android e gera recados sem entregar conteúdo ao cérebro. A rede decide as emoções; algumas ações solicitadas pelo
 painel e os controles de movimento são adaptações explícitas para o Android.
 
 ## Limites em relação ao desktop
@@ -133,7 +153,7 @@ Abra **Assistente • foco, lembretes, agenda e notícias** no painel.
   salvamento. Não lê os compromissos e não pede READ_CALENDAR/WRITE_CALENDAR.
 - Relógio: abre o app do sistema para confirmar um alarme ou timer; requer um
   aplicativo compatível instalado. Não usa confirmação automática/skip UI.
-- RSS/Atom: até dez feeds HTTPS escolhidos por você, sem fontes pré-configuradas.
+- RSS/Atom: até dez feeds HTTPS escolhidos por você, com biblioteca opcional de 14 fontes dos próprios veículos; nenhuma assinatura é ativada automaticamente.
   A rede só é consultada ao tocar **Atualizar notícias agora**. Cada resposta
   tem timeout, limite de 1,5 MB, até 30 itens, e redirecionamentos só para HTTPS.
   Não aceita credenciais na URL, DTDs ou links que executam ações no aparelho.

@@ -61,7 +61,12 @@ final class PetWorld {
         if(image){ImageView view=new ImageView(context); view.setScaleType(ImageView.ScaleType.FIT_CENTER);
             File f=new File(MemoryActivity.directory(context),"custom-meme.png");view.setImageBitmap(BitmapFactory.decodeFile(f.toString()));bubble=view;
         }else{ TextView view=new TextView(context);view.setText(text+"\n\nToque para dispensar");view.setTextColor(Color.rgb(35,32,20));view.setTextSize(15);view.setGravity(Gravity.CENTER);view.setPadding(dp(12),dp(6),dp(12),dp(6));bubble=view; }
-        bubble.setBackground(bg);bubble.setOnClickListener(v->{dismissed.run();clearMessage();});
+        bubble.setBackground(bg);
+        bubblePos.width=Math.min(bubblePos.width,Math.max(dp(100),width-dp(20)));
+        if(!image){bubble.measure(View.MeasureSpec.makeMeasureSpec(bubblePos.width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(Math.max(dp(80),height-dp(24)),View.MeasureSpec.AT_MOST));bubblePos.height=bubble.getMeasuredHeight();}
+        bubblePos.x=Math.max(0,Math.min(width-bubblePos.width,x));
+        int above=y-bubblePos.height-dp(8);bubblePos.y=Math.max(0,Math.min(height-bubblePos.height,above>=0?above:y+dp(90)));
+        bubble.setOnClickListener(v->{dismissed.run();clearMessage();});
         wm.addView(bubble,bubblePos);bubble.setVisibility(visible?View.VISIBLE:View.INVISIBLE);
         ui.postDelayed(this::clearMessage,19000);
     }

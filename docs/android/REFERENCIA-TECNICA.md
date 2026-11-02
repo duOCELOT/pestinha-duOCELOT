@@ -1,6 +1,6 @@
 # Referência técnica do APK
 
-**Base: Pestinha Android 0.6 experimental.**
+**Base: Pestinha Android 0.7 experimental.**
 [Apresentação](README.md) · [Guia das telas](GUIA-DO-APK.md)
 
 ## 1. Estrutura da aplicação
@@ -123,6 +123,10 @@ pendentes, não são uma garantia de retomada do mesmo frame após encerrar o ap
 
 ### Preferências gerais e Assistente
 
+As preferências `usage` guardam opções, seleção, a última medição dos apps
+escolhidos e até 40 recados, sem histórico bruto de eventos. Não entram no
+backup do cérebro e não são enviadas aos feeds.
+
 As preferências `pet` guardam seleção, posição e opções de interface. As
 preferências `assistant` guardam avisos, feeds e cache. São dados privados do
 app, separados da memória neural. Atualizar um APK com a mesma assinatura
@@ -192,6 +196,26 @@ O servidor do feed recebe a conexão normal, incluindo IP e cabeçalhos HTTP.
 O cliente não envia memória neural, imagem personalizada, agenda ou lembretes.
 Os trechos são do conteúdo publicado pelo feed, não de um modelo de linguagem.
 
+## 7.1. Biblioteca e acompanhamento opcional de apps
+
+`feed-catalog.json` reúne 14 feeds verificados dos próprios editores; não faz
+assinaturas nem consultas automaticamente. [Lista e referências](FONTES-RSS.md).
+
+O acompanhamento usa `UsageStatsManager.queryEvents`, com autorização de Acesso
+ao uso e ativação explícita. `UsageLedger` acumula períodos de primeiro plano,
+encerra sessões em trocas de app/bloqueio e limita totais ao dia local.
+`UsageRepository` filtra o que persiste aos pacotes escolhidos, compõe recados,
+limita o histórico e aplica intervalo/silêncio. `UsageMonitor` acompanha o ciclo
+de vida do serviço e da tela, consultando aproximadamente a cada 30 segundos.
+
+A enumeração do seletor usa apenas apps com atividade de launcher neste perfil,
+com uma declaração de `queries` por intent; não pede `QUERY_ALL_PACKAGES`.
+Os eventos podem incluir transições de apps não selecionados para encerrar uma
+sessão corretamente, mas a sequência bruta não é persistida. Não há leitura de
+conteúdo, acessibilidade nem envio dessas medições à rede. A função não oferece
+precisão garantida em tela dividida, PiP ou históricos incompletos do fabricante.
+[Guia de consentimento, dados e limites](PAUSAS-CONSCIENTES.md).
+
 ## 8. Permissões declaradas
 
 | Permissão | Uso |
@@ -199,6 +223,7 @@ Os trechos são do conteúdo publicado pelo feed, não de um modelo de linguagem
 | `SYSTEM_ALERT_WINDOW` | Pequenas janelas do pet, objetos e menu |
 | `FOREGROUND_SERVICE` / `FOREGROUND_SERVICE_SPECIAL_USE` | Serviço interativo do pet com notificação |
 | `POST_NOTIFICATIONS` | Avisos e notificações no Android que exige autorização |
+| `PACKAGE_USAGE_STATS` | Acesso especial opcional ao histórico de uso; depende de autorização do usuário e ativação no app |
 | `INTERNET` | Consultas manuais aos feeds configurados |
 | `RECEIVE_BOOT_COMPLETED` | Reagendar avisos; não soltar o pet automaticamente |
 | `SCHEDULE_EXACT_ALARM` | Precisão opcional, sujeita à autorização do sistema |
@@ -226,6 +251,7 @@ O workflow também executa o teste independente da matemática de inclinação.
 definições e a licença. `verifyDebugPayload` abre o APK e confere os três pets,
 sementes distintas, definição do elmo, licença e aplicação Python.
 
+Os testes também cobrem sessões/totais diários, bloqueio, consentimento, silêncio, intervalo entre recados e catálogo de feeds.
 Os testes cobrem o adaptador, aprendizado/restauração, isolamento por personagem,
 feeds e URLs, avisos duplicados/obsoletos, cancelamento, física, cores, desenho
 do elmo e encaminhamento das ações do menu. As [imagens do guia](images/README.md)
@@ -248,5 +274,5 @@ verificações de pacote e testes. Não basta mudar a cor para obter novas
 capacidades cognitivas: temperamento, conteúdo e ferramentas são partes distintas.
 
 Para adicionar ferramentas ou um LLM, preserve a separação entre apresentação,
-interpretação e execução de ações. A versão 0.6 não implementa esse modelo ou
+interpretação e execução de ações. A versão 0.7 não implementa esse modelo ou
 acesso geral ao celular; essa expansão precisa de um trabalho próprio.
