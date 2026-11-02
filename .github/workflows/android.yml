@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [android]
-    paths: ['android/**', 'pestinha/**', 'pets/bryan.json', '.github/workflows/android.yml']
+    paths: ['android/**', 'pestinha/**', 'pets/*.json', '.github/workflows/android.yml']
 permissions:
   contents: read
 jobs:
