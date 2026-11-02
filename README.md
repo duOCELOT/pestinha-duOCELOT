@@ -1,6 +1,6 @@
 # Pestinha Android — fork duOCELOT
 
-Versão Android experimental **0.12**, desenvolvida neste fork a partir de
+Versão Android experimental **0.13**, desenvolvida neste fork a partir de
 [mille-okws/pestinha](https://github.com/mille-okws/pestinha). A adaptação está
 na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
 O texto original de desktop foi preservado abaixo.
@@ -314,3 +314,12 @@ para que o boneco continue dentro dos limites visíveis.
 Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
 para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
 Pausar/fechar ficam no topo. Veja o [guia do jogo](docs/android/ARKANOID.md).
+
+
+### Campo transparente (0.13)
+
+O Arkanoid agora deixa o fundo totalmente transparente: os aplicativos abertos
+continuam visíveis por baixo, sem uma camada escura cobrindo a tela. Blocos, bola,
+pet e controles continuam visíveis. Apenas textos/controles e os cartões temporários
+de instrução ou pausa têm fundos locais para manter a leitura.
+Os toques continuam controlando o jogo enquanto ele está aberto; use × para voltar ao app de baixo.
