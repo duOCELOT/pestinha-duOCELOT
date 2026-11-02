@@ -26,6 +26,10 @@ public class PetService extends Service {
     private WindowManager.LayoutParams pos;
     private PetView pet;
     private PetWorld world;
+    private MotionSensors motion;
+    private boolean tiltEnabled=false;
+    private float tiltSensitivity=1;
+    private long lastImpact=0;
     private String petId;
     private float xFloat, yFloat, userSpeed=1;
     private long lastAction=0;
@@ -38,6 +42,7 @@ public class PetService extends Service {
     private final BroadcastReceiver screen = new BroadcastReceiver() {
         public void onReceive(Context c, Intent i) {
             screenOn = Intent.ACTION_SCREEN_ON.equals(i.getAction());
+            updateMotion();
             ui.removeCallbacks(frame);
             if (screenOn) { lastFrame = SystemClock.uptimeMillis(); ui.post(frame); }
             if(world!=null)world.show(screenOn);
@@ -72,6 +77,11 @@ public class PetService extends Service {
         pet = new PetView(this);
         pet.jorge = petId.equals("jorge");
         world = new PetWorld(this, wm, this::event);
+        motion = new MotionSensors(this, () -> {
+            if(!closed && running && !dragging && !inCorner && !notebook){
+                vy=-180*getResources().getDisplayMetrics().density;event("motion");
+            }
+        });
         float density = getResources().getDisplayMetrics().density;
         pos = new WindowManager.LayoutParams((int)(150*density), (int)(122*density),
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
@@ -127,6 +137,7 @@ public class PetService extends Service {
         else registerReceiver(screen, filter);
         receiverRegistered = true;
         screenOn = getSystemService(PowerManager.class).isInteractive();
+        updateMotion();
         thread = new HandlerThread("PestinhaBrain"); thread.start(); worker = new Handler(thread.getLooper());
         worker.post(() -> {
             try {
@@ -182,15 +193,25 @@ public class PetService extends Service {
         public void run() {
             if (closed || pet == null || !screenOn) return;
             long now = SystemClock.uptimeMillis(); float dt = Math.min(0.05f, (now-lastFrame)/1000f); lastFrame = now;
-            if (!dragging && running && !emotion.equals("dormindo") && !inCorner && !notebook) {
-                if (Math.random() < dt * (0.12 + drive * 0.4)) vx = (float)((Math.random() < 0.5 ? -1 : 1) * speed * 0.4 * getResources().getDisplayMetrics().density * userSpeed);
-                vy += dt * 420 * getResources().getDisplayMetrics().density;
-                xFloat += vx*dt; yFloat += vy*dt;
-                pos.x=Math.round(xFloat); pos.y=Math.round(yFloat);
-                clamp();
+            boolean useTilt=tiltEnabled && motion!=null && motion.active;
+            float density=getResources().getDisplayMetrics().density;
+            float[] force=useTilt?motion.force(displayRotation()):new float[]{0,0};
+            if (!dragging && running && !inCorner && !notebook && (useTilt || !emotion.equals("dormindo"))) {
+                if(useTilt){
+                    vx=TiltPhysics.velocity(vx,force[0]*90*density*tiltSensitivity,dt,650*density);
+                    vy=TiltPhysics.velocity(vy,force[1]*90*density*tiltSensitivity,dt,650*density);
+                }else{
+                    if(Math.random()<dt*(.12+drive*.4))vx=(float)((Math.random()<.5?-1:1)*speed*.4*density*userSpeed);
+                    vy+=dt*420*density;
+                }
+                xFloat+=vx*dt;yFloat+=vy*dt;
+                pos.x=Math.round(xFloat);pos.y=Math.round(yFloat);clamp();
             }
+            float angle=useTilt&&!dragging?motion.angle(displayRotation()):0;
+            pet.bodyAngle+=(angle-pet.bodyAngle)*Math.min(1,dt*8);
+            world.gravity(useTilt,force[0]*90*tiltSensitivity,force[1]*90*tiltSensitivity);
             world.frame(dt,pos.x,pos.y,pos.width,pos.height);
-            pet.invalidate(); ui.postDelayed(this, emotion.equals("dormindo") ? 200 : 33);
+            pet.invalidate(); ui.postDelayed(this, emotion.equals("dormindo") && !useTilt ? 200 : 33);
         }
     };
     private void clamp() {
@@ -200,9 +221,9 @@ public class PetService extends Service {
         else { android.util.DisplayMetrics metrics = new android.util.DisplayMetrics(); wm.getDefaultDisplay().getMetrics(metrics); bounds = new android.graphics.Rect(0, 0, metrics.widthPixels, metrics.heightPixels); }
         int maxX = Math.max(0, bounds.width() - pos.width), maxY = Math.max(0, bounds.height() - pos.height - 36);
         world.bounds(bounds.width(),bounds.height());
-        if (pos.x <= 0 || pos.x >= maxX) { vx = -vx*.7f; xFloat=Math.max(0,Math.min(maxX,pos.x)); }
-        if (pos.y >= maxY) { if(vy>700*getResources().getDisplayMetrics().density)event("impact"); vy=vy>100?-vy*.3f:0; yFloat=maxY; }
-        if(pos.y<0){vy=Math.abs(vy)*.5f;yFloat=0;}
+        if (pos.x <= 0 || pos.x >= maxX) { impact(vx); vx = -vx*.7f; xFloat=Math.max(0,Math.min(maxX,pos.x)); }
+        if (pos.y >= maxY) { impact(vy); vy=tiltEnabled?-Math.abs(vy)*.4f:(vy>100?-vy*.3f:0); yFloat=maxY; }
+        if(pos.y<0){impact(vy);vy=Math.abs(vy)*.5f;yFloat=0;}
         pos.x = Math.max(0, Math.min(maxX, pos.x)); pos.y = Math.max(0, Math.min(maxY, pos.y));
         try { wm.updateViewLayout(pet, pos); } catch (IllegalArgumentException ignored) { }
     }
@@ -211,16 +232,26 @@ public class PetService extends Service {
         float scale=prefs.getInt("size",100)/100f, density=getResources().getDisplayMetrics().density;
         pos.width=Math.round(150*density*scale);pos.height=Math.round(122*density*scale);
         userSpeed=prefs.getInt("speed",100)/100f;
+        tiltEnabled=prefs.getBoolean("tilt",false);
+        tiltSensitivity=prefs.getInt("sensitivity",100)/100f;
+        updateMotion();
+    }
+    private int displayRotation(){return wm.getDefaultDisplay().getRotation();}
+    private void updateMotion(){if(motion!=null){if(tiltEnabled&&screenOn&&!closed)motion.start();else motion.stop();}}
+    private void impact(float velocity){
+        if(Math.abs(velocity)>350*getResources().getDisplayMetrics().density && SystemClock.uptimeMillis()-lastImpact>800){lastImpact=SystemClock.uptimeMillis();event("impact");}
     }
     private void storePosition() { if (pos != null) getSharedPreferences("pet", 0).edit().putInt("x", pos.x).putInt("y", pos.y).apply(); }
     private void fail(Exception e) {
         android.util.Log.e("Pestinha", "Pet failed", e);
         getSharedPreferences("pet", 0).edit().putString("error", String.valueOf(e.getMessage())).apply(); stopSelf();
     }
-    @Override public void onConfigurationChanged(Configuration c) { super.onConfigurationChanged(c); clamp(); }
+    @Override public void onConfigurationChanged(Configuration c) { super.onConfigurationChanged(c); if(motion!=null)motion.resetCalibration(); clamp(); }
     @Override public int onStartCommand(Intent i, int flags, int id) {
         if (i != null && "stop".equals(i.getAction())) stopSelf();
         else if(i!=null&&"ball".equals(i.getAction())&&world!=null) world.toggleBall(pos.x,pos.y);
+        else if(i!=null&&"calibrate".equals(i.getAction())&&motion!=null){motion.calibrate(displayRotation());vx=vy=0;}
+        else if(i!=null&&"reset_tilt".equals(i.getAction())&&motion!=null){motion.resetCalibration();vx=vy=0;}
         else if(i!=null&&"settings".equals(i.getAction())) { applySettings(); clamp(); }
         else if(i!=null&&"export".equals(i.getAction())&&worker!=null){
             String uri=i.getStringExtra("uri");worker.post(()->{save();try{
@@ -233,6 +264,7 @@ public class PetService extends Service {
     @Override public void onDestroy() {
         closed = true; running = false; ui.removeCallbacksAndMessages(null); storePosition();
         if (receiverRegistered) unregisterReceiver(screen);
+        if(motion!=null)motion.stop();
         if(world!=null)world.close();
         if (pet != null && pet.isAttachedToWindow()) wm.removeView(pet);
         if (worker != null) { worker.removeCallbacks(tick); worker.post(() -> { save(); busy=false; thread.quitSafely(); }); } else busy=false;

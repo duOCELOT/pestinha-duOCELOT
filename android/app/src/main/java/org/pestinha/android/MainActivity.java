@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         scroll.addView(layout);
         text(layout, "PESTINHA / ANDROID", 13, Color.rgb(115, 230, 202));
         text(layout, "Um pequeno caos.\nAgora no seu bolso.", 32, Color.WHITE);
-        text(layout, "Pestinha • versão experimental 0.2", 16, Color.LTGRAY);
+        text(layout, "Pestinha • versão experimental 0.3", 16, Color.LTGRAY);
         PetView preview = new PetView(this);
         layout.addView(preview, new LinearLayout.LayoutParams(dp(180), dp(140)));
         status = text(layout, "Pronto para conhecer você.", 17, Color.WHITE);
@@ -97,6 +97,15 @@ public class MainActivity extends Activity {
                 String value=new String[]{"livre","trabalho","jogo","musica","social"}[which];getSharedPreferences("pet",0).edit().putString("context",value).apply();if(PetService.running)send("context:"+value);
             }).show());
         button(layout,"Modo de teste • tempos curtos (sessão atual)",v->send("fast"));
+        android.hardware.SensorManager sensors=getSystemService(android.hardware.SensorManager.class);
+        boolean hasTilt=sensors!=null&&(sensors.getDefaultSensor(android.hardware.Sensor.TYPE_GRAVITY)!=null||sensors.getDefaultSensor(android.hardware.Sensor.TYPE_ACCELEROMETER)!=null);
+        CheckBox tilt=new CheckBox(this);tilt.setText("Física por inclinação do celular");tilt.setTextColor(Color.WHITE);tilt.setEnabled(hasTilt);
+        tilt.setChecked(getSharedPreferences("pet",0).getBoolean("tilt",false));layout.addView(tilt);
+        tilt.setOnCheckedChangeListener((b,checked)->{getSharedPreferences("pet",0).edit().putBoolean("tilt",checked).apply();if(PetService.running)send("settings");});
+        text(layout,hasTilt?"Incline devagar para mover o pet e a bolinha. O giroscópio acrescenta balanço, se disponível. A física pausa no notebook e cantinho. Sensores desligam com a tela apagada.":"Este aparelho não oferece sensor de inclinação. O arraste continua disponível.",14,Color.LTGRAY);
+        slider(layout,"Sensibilidade da inclinação", "sensitivity",25,200);
+        button(layout,"Calibrar • esta posição fica neutra",v->send("calibrate"));
+        button(layout,"Restaurar gravidade natural",v->send("reset_tilt"));
         slider(layout,"Tamanho", "size",60,160);
         slider(layout,"Velocidade", "speed",25,200);
         button(layout, "Guardar o pet", v -> stopService(new Intent(this, PetService.class)));

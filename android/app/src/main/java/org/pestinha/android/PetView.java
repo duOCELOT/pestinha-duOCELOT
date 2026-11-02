@@ -8,6 +8,7 @@ import android.view.View;
 public class PetView extends View {
     private final Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
     public String emotion = "observando";
+    public float bodyAngle=0;
     public boolean jorge=false, notebook=false, corner=false;
     public PetView(Context context) { super(context); setLayerType(View.LAYER_TYPE_SOFTWARE, null); }
     @Override protected void onDraw(Canvas canvas) {
@@ -16,6 +17,7 @@ public class PetView extends View {
         canvas.scale(getWidth() / 160f, getHeight() / 130f);
         p.setColor(Color.argb(40, 0, 0, 0));
         canvas.drawOval(28, 112, 132, 120, p);
+        canvas.rotate(bodyAngle,80,65);
         p.setColor(Color.rgb(45, 66, 78));
         canvas.drawRoundRect(11, 18, 149, 110, 25, 25, p);
         p.setColor(Color.rgb(13, 26, 33));

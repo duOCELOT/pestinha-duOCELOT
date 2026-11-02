@@ -142,6 +142,10 @@ class AndroidBrain:
         if kind == 'toy_taken':
             self.events['TOY_TAKEN'] = 1.2
             return
+        if kind == 'motion':
+            self.events['MOTION'] = 1.0
+            self.counts['motion'] = self.counts.get('motion', 0)+1
+            return
         if kind == 'impact':
             self.events['IMPACT'] = .5
             return

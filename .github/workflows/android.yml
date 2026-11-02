@@ -27,6 +27,11 @@ jobs:
           gradle-version: '8.13'
       - name: Install SDK
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Verify tilt physics
+        run: |
+          mkdir -p "$RUNNER_TEMP/pestinha-physics"
+          javac -d "$RUNNER_TEMP/pestinha-physics" android/app/src/main/java/org/pestinha/android/TiltPhysics.java android/tests/TiltPhysicsTest.java
+          java -cp "$RUNNER_TEMP/pestinha-physics" org.pestinha.android.TiltPhysicsTest
       - name: Verify brain adapter
         run: |
           pip install numpy==1.26.2

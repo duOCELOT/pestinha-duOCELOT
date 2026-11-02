@@ -1,4 +1,4 @@
-# Pestinha Android 0.2 (experimental)
+# Pestinha Android 0.3 (experimental)
 
 Adaptação independente de mille-okws/pestinha. Interface Android em Java/Canvas;
 rede neural e memória originais em Python, integradas por Chaquopy. Sem Termux,
@@ -41,6 +41,27 @@ imagem sua. Não há pet sobre telas protegidas que bloqueiam overlays.
 A animação e rede pausam com tela apagada; necessidades recuperam energia sem
 wake-lock. O Android ainda pode encerrar o serviço. Não reinicia sozinho após
 reboot; use Soltar o pet. Notificação tem botão Guardar.
+
+## Física do celular (0.3)
+
+Ative **Física por inclinação do celular** no painel. A translação usa o sensor
+GRAVITY ou acelerômetro filtrado, não integração do giroscópio (que acumularia
+erro). Giroscópio é opcional e acrescenta rotação visual ao corpo. Sensor ausente
+não impede o uso do app. Amostragem normal SENSOR_DELAY_GAME, sem permissão
+especial de alta frequência. Nenhum dado bruto é gravado ou transmitido.
+
+Incline devagar: pet e bolinha aceleram na direção da gravidade na tela, com
+atrito, teto de velocidade e colisões. Calibrar define a posição atual como
+neutra para usar inclinação relativa; Restaurar gravidade natural retira o
+zero. A calibração é temporária, zerada ao girar a orientação da tela. Arraste
+tem prioridade; notebook/cantinho mantêm o pet parado. Em modo inclinação o pet
+pode deslizar mesmo dormindo, sem acordar só por inclinar. Movimentos bruscos
+podem alimentar o canal MOTION da rede, com intervalo mínimo entre eventos.
+
+Os listeners param quando o modo é desativado, a tela apaga ou o serviço acaba.
+A tela volta a 30 fps com física ativa para manter resposta uniforme. O giroscópio
+não é usado para coletar deslocamentos ou atividades fora da interação com o pet.
+Aumente a sensibilidade aos poucos; não é necessário sacudir forte o aparelho.
 
 ## Memória
 

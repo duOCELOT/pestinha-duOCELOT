@@ -13,7 +13,7 @@ final class PetWorld {
     interface Events { void event(String value); }
     final Context context; final WindowManager wm; final Events events; final Handler ui=new Handler(Looper.getMainLooper());
     final float density; View ball,bubble,sparks; WindowManager.LayoutParams ballPos,bubblePos;
-    float bx,by,bvx=130,bvy; boolean held=false,visible=true; long lastNear=0; int width,height;
+    float bx,by,bvx=130,bvy,forceX=0,forceY=750;boolean tilted=false; boolean held=false,visible=true; long lastNear=0; int width,height;
     PetWorld(Context c,WindowManager w,Events e){context=c;wm=w;events=e;density=c.getResources().getDisplayMetrics().density;}
     int dp(float n){return Math.round(n*density);}
     WindowManager.LayoutParams params(int w,int h,boolean touchable){
@@ -38,9 +38,14 @@ final class PetWorld {
         wm.addView(ball,ballPos);ball.setVisibility(visible?View.VISIBLE:View.INVISIBLE);
     }
     void limitBall(){bx=Math.max(0,Math.min(Math.max(0,width-dp(46)),bx));by=Math.max(0,Math.min(Math.max(0,height-dp(80)),by));ballPos.x=Math.round(bx);ballPos.y=Math.round(by);if(ball!=null)wm.updateViewLayout(ball,ballPos);}
+    void gravity(boolean enabled,float x,float y){tilted=enabled;forceX=enabled?x:0;forceY=enabled?y:750;}
     void frame(float dt,int petX,int petY,int petW,int petH){
         if(ball==null)return;
-        if(!held){ bvy+=dp(750)*dt;bx+=bvx*dt;by+=bvy*dt;
+        if(!held){
+            if(tilted){bvx=TiltPhysics.velocity(bvx,forceX*density,dt,dp(650));bvy=TiltPhysics.velocity(bvy,forceY*density,dt,dp(650));}
+            else bvy+=dp(750)*dt;
+            bx+=bvx*dt;by+=bvy*dt;
+            if(by<0)bvy=Math.abs(bvy)*.55f;
             if(bx<0||bx>width-dp(46))bvx=-bvx*.8f;
             if(by>height-dp(80)){bvy=-Math.abs(bvy)*.55f;bvx*=.96f;}
             limitBall();
