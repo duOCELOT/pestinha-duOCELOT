@@ -1,6 +1,6 @@
 # Pestinha Android — fork duOCELOT
 
-Versão Android experimental **0.5**, desenvolvida neste fork a partir de
+Versão Android experimental **0.6**, desenvolvida neste fork a partir de
 [mille-okws/pestinha](https://github.com/mille-okws/pestinha). A adaptação está
 na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
 O texto original de desktop foi preservado abaixo.
@@ -22,7 +22,8 @@ experimentais, não uma release de produção/Play Store.
 
 - Visual original restaurado: moldura verde, olhos com brilho e expressões.
 - Segurar o pet abre um menu compacto de ícones antes do painel completo.
-- Bryan e Jorge, rede neural original, emoções e memória local separada.
+- Bryan, Jorge e Mimir selecionáveis, com temperamentos e memórias separados.
+- Mimir: paleta azul-gelo, elmo viking e personalidade sábia, resmungona e nórdica.
 - Carinho, cutucada, arraste/arremesso, bolinha, notebook, bilhetes, imagem
   personalizada, protestos, cantinho adaptado, fogos e configurações de tamanho.
 - Física opcional por inclinação, acelerômetro/gravidade e balanço pelo giroscópio.
