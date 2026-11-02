@@ -311,3 +311,16 @@ começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAR
 
 Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
 comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](MEU-RADAR.md).
+
+
+## Posição fixa (0.11)
+
+Preferência `pet.fixed`, acionada diretamente pelo menu rápido. O serviço zera
+velocidades ao alternar e bloqueia gravidade, passeio, deslocamento por inclinação,
+arremesso e reposicionamento automático do cantinho enquanto a posição está fixa.
+Arrastar continua permitido e atualiza a posição salva. A física da bolinha e a
+configuração original de inclinação são independentes. O menu usa rolagem quando
+seu conteúdo ultrapassa a altura disponível.
+
+Testes verificam posição após arrastar/soltar com impulso anterior, persistência,
+retomada da gravidade e o rótulo/ação do atalho no menu.

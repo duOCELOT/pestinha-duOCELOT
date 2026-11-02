@@ -1,6 +1,6 @@
 # Pestinha Android — apresentação do projeto
 
-**Material da versão 0.10 experimental.** Este diretório apresenta o APK, suas
+**Material da versão 0.11 experimental.** Este diretório apresenta o APK, suas
 interfaces e funções. Foi conferido com o código da branch `android`.
 
 | Para quem | Material |
