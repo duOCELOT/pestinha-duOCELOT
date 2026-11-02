@@ -33,7 +33,7 @@ jobs:
           PYTHONPATH=.:android/app/src/main/python python -m unittest discover -s android/tests -v
       - name: Build and check Android
         working-directory: android
-        run: gradle --no-daemon assembleDebug lintDebug
+        run: gradle --no-daemon assembleDebug lintDebug verifyDebugPayload
       - uses: actions/upload-artifact@v4
         with:
           name: pestinha-android-debug
