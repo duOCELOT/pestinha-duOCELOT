@@ -12,6 +12,7 @@ final class ActionIcon extends View {
         Path path=new Path();
         switch(kind){
             case "caress":path.moveTo(12,20);path.cubicTo(1,13,2,5,7,5);path.cubicTo(10,5,12,8,12,8);path.cubicTo(12,8,14,5,17,5);path.cubicTo(22,5,23,13,12,20);c.drawPath(path,p);break;
+            case "arcade":for(int row=0;row<2;row++)for(int col=0;col<3;col++)c.drawRoundRect(3+col*6,3+row*5,7+col*6,6+row*5,1,1,p);c.drawCircle(14,14,1.5f,p);c.drawRoundRect(7,20,18,22,1,1,p);break;
             case "ball":c.drawCircle(12,12,8,p);c.drawArc(0,4,13,20,-75,150,false,p);c.drawArc(11,4,24,20,105,150,false,p);break;
             case "sleep":path.moveTo(17,3);path.cubicTo(6,-1,-2,13,8,20);path.cubicTo(14,24,22,18,21,11);path.cubicTo(15,16,9,8,17,3);c.drawPath(path,p);break;
             case "work":c.drawRoundRect(5,4,19,16,2,2,p);c.drawLine(2,19,22,19,p);c.drawLine(5,16,2,19,p);c.drawLine(19,16,22,19,p);break;

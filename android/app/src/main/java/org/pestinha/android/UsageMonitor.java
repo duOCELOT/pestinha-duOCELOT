@@ -11,7 +11,7 @@ final class UsageMonitor {
         stop();
         if(!screenOn||!UsageRepository.prefs(context).getBoolean("enabled",false)||!UsageRepository.hasAccess(context))return;
         executor=Executors.newSingleThreadScheduledExecutor();executor.scheduleWithFixedDelay(()->{
-            if(!UsageRepository.prefs(context).getBoolean("enabled",false)||!UsageRepository.hasAccess(context)||!UsageRepository.interactive(context))return;
+            if(PetService.playing||!UsageRepository.prefs(context).getBoolean("enabled",false)||!UsageRepository.hasAccess(context)||!UsageRepository.interactive(context))return;
             try{String message=UsageRepository.automaticComment(context,UsageRepository.sample(context));if(message!=null&&!Thread.currentThread().isInterrupted())PetService.assistantNotice(message,null);}
             catch(InterruptedException interrupted){Thread.currentThread().interrupt();}
             catch(Exception error){if(!Thread.currentThread().isInterrupted()&&UsageRepository.prefs(context).getBoolean("enabled",false))UsageRepository.prefs(context).edit().putString("error",String.valueOf(error.getMessage())).apply();}

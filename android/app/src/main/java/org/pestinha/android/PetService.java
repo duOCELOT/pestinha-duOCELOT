@@ -17,13 +17,13 @@ public class PetService extends Service {
     private static volatile PetService instance;
     static void assistantNotice(String text,String event){
         PetService service=instance;if(service==null||service.closed)return;
-        if(event!=null)service.event(event);
+        if(event!=null)service.event(event);if(playing)return;
         service.ui.post(()->{if(!service.closed&&service.world!=null&&service.screenOn){lastNoticeAt=SystemClock.uptimeMillis();service.world.message(text,false,service.pos.x,service.pos.y,()->{});}});
     }
     private static volatile long lastNoticeAt=0;
     static void newsSettingsChanged(){PetService service=instance;if(service!=null)service.ui.post(()->{if(!service.closed&&service.newsMonitor!=null)service.newsMonitor.update(service.screenOn);});}
     static void newsNotice(JSONObject row,String generation,boolean manual){PetService service=instance;if(service==null||service.closed)return;
-        service.ui.post(()->{if(service.closed||!running||service.world==null||!service.screenOn||!UsageRepository.interactive(service)||InterestsDialog.visible||!generation.equals(NewsRepository.generation(service)))return;
+        service.ui.post(()->{if(service.closed||playing||!running||service.world==null||!service.screenOn||!UsageRepository.interactive(service)||InterestsDialog.visible||!generation.equals(NewsRepository.generation(service)))return;
             if(!manual&&(!NewsRepository.prefs(service).getBoolean("radarAuto",false)||service.pressed||service.dragging||(service.quickMenu!=null&&service.quickMenu.isShowing())||SystemClock.uptimeMillis()-lastNoticeAt<30000))return;
             if(!manual&&NewsRepository.candidate(service,System.currentTimeMillis())==null)return;
             NewsRepository.shown(service,row);lastNoticeAt=SystemClock.uptimeMillis();service.world.message(NewsRepository.message(service,row),false,service.pos.x,service.pos.y,()->service.startActivity(new Intent(service,NewsActivity.class).putExtra("article",row.toString()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
@@ -31,19 +31,19 @@ public class PetService extends Service {
     }
     static void taskNotice(String text,String taskId,boolean create){
         PetService service=instance;if(service==null||service.closed)return;
-        service.ui.post(()->{if(service.closed||service.world==null||!service.screenOn||service.getSystemService(KeyguardManager.class).isKeyguardLocked())return;
+        service.ui.post(()->{if(service.closed||playing||service.world==null||!service.screenOn||service.getSystemService(KeyguardManager.class).isKeyguardLocked())return;
             lastNoticeAt=SystemClock.uptimeMillis();service.world.message(text,false,service.pos.x,service.pos.y,()->service.startActivity(new Intent(service,TaskActivity.class).putExtra("task",taskId).putExtra("new",create).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
         });
     }
     private final Runnable taskInvitation=new Runnable(){public void run(){
         if(closed)return;
-        if(running&&screenOn&&world!=null&&!getSystemService(KeyguardManager.class).isKeyguardLocked()&&Tasks.invitationDue(PetService.this,System.currentTimeMillis())){
+        if(running&&!playing&&screenOn&&world!=null&&!getSystemService(KeyguardManager.class).isKeyguardLocked()&&Tasks.invitationDue(PetService.this,System.currentTimeMillis())){
             Tasks.prefs(PetService.this).edit().putLong("invitedAt",System.currentTimeMillis()).apply();taskNotice(TaskActivity.invitation(),null,true);
         }
         ui.postDelayed(this,60000);
     }};
     static void usageSettingsChanged(){PetService service=instance;if(service!=null)service.ui.post(()->{if(!service.closed&&service.usageMonitor!=null)service.usageMonitor.update(service.screenOn);});}
-    public static volatile boolean running = false, busy = false;
+    public static volatile boolean running = false, busy = false, playing=false;
     public static volatile String liveSnapshot = "";
     public static volatile String emotion = "observando";
     public static volatile double energy = 1.0;
@@ -58,6 +58,8 @@ public class PetService extends Service {
     private UsageMonitor usageMonitor;
     private NewsMonitor newsMonitor;
     private QuickMenu quickMenu;
+    private ArkanoidOverlay arcade;
+    private int beforeGameX,beforeGameY;
     private boolean menuOpenedByHold=false;
     private MotionSensors motion;
     private boolean tiltEnabled=false,fixed=false;
@@ -80,7 +82,8 @@ public class PetService extends Service {
             if(!screenOn){pressed=dragging=false;event("release");if(quickMenu!=null)quickMenu.dismiss();}
             ui.removeCallbacks(frame);
             if (screenOn) { lastFrame = SystemClock.uptimeMillis(); ui.post(frame); }
-            if(world!=null)world.show(screenOn);
+            if(arcade!=null)arcade.screen(screenOn);
+            if(world!=null)world.show(screenOn&&!playing);
             if(pet!=null)pet.setVisibility(screenOn?View.VISIBLE:View.INVISIBLE);
             if (worker != null) worker.post(() -> { if(brain!=null)brain.callAttr("event",screenOn?"resume":"pause"); save(); });
         }
@@ -117,6 +120,7 @@ public class PetService extends Service {
         quickMenu = new QuickMenu(this,wm,action->{
             if(action.equals("stop"))stopSelf();
             else if(action.equals("pin"))setFixed(!fixed);
+            else if(action.equals("arcade"))startArcade();
             else if(action.equals("panel")||action.equals("memory")||action.equals("assistant")){
                 Class<?> screen=action.equals("panel")?MainActivity.class:action.equals("memory")?MemoryActivity.class:AssistantActivity.class;
                 startActivity(new Intent(this,screen).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -124,7 +128,7 @@ public class PetService extends Service {
             else event(action);
         });
         motion = new MotionSensors(this, () -> {
-            if(!closed && !fixed && running && !dragging && !pressed && !inCorner && !notebook){
+            if(!closed && !playing && !fixed && running && !dragging && !pressed && !inCorner && !notebook){
                 vy=-180*getResources().getDisplayMetrics().density;event("motion");
             }
         });
@@ -152,6 +156,7 @@ public class PetService extends Service {
         pet.setOnTouchListener(new View.OnTouchListener() {
             float x, y, previousX, previousY, flingX, flingY; long movedAt; int initialX, initialY;
             public boolean onTouch(View v, android.view.MotionEvent e) {
+                if(playing&&arcade!=null)return arcade.touch(e);
                 gestures.onTouchEvent(e);
                 switch (e.getActionMasked()) {
                     case MotionEvent.ACTION_DOWN:
@@ -226,16 +231,16 @@ public class PetService extends Service {
                     String snapshot=data.toString();
                     ui.post(() -> { if (!closed) {
                         boolean celebrate=next.equals("feliz")&&!emotion.equals("feliz");
-                        liveSnapshot=snapshot; emotion=next; energy=en; speed=sp; drive=dr; pet.emotion=next;pet.face(data.optJSONObject("face"),data.optBoolean("caressing"));
+                        liveSnapshot=snapshot; emotion=next; energy=en; speed=sp; drive=dr; if(!playing){pet.emotion=next;pet.face(data.optJSONObject("face"),data.optBoolean("caressing"));}
                         boolean wasCorner=inCorner; inCorner=data.optBoolean("corner"); notebook=data.optBoolean("notebook");
-                        pet.notebook=notebook; pet.corner=inCorner;
-                        if(!fixed&&inCorner&&!wasCorner){pos.x=0;clamp();xFloat=pos.x;yFloat=pos.y;}
-                        if(celebrate&&getSharedPreferences("pet",0).getBoolean("fireworks",true))world.fireworks(pos.x,pos.y);
+                        if(!playing){pet.notebook=notebook; pet.corner=inCorner;}
+                        if(!playing&&!fixed&&inCorner&&!wasCorner){pos.x=0;clamp();xFloat=pos.x;yFloat=pos.y;}
+                        if(!playing&&celebrate&&getSharedPreferences("pet",0).getBoolean("fireworks",true))world.fireworks(pos.x,pos.y);
                         JSONObject action=data.optJSONObject("action");
                         if(action!=null&&action.optLong("id")!=lastAction){
                             lastAction=action.optLong("id");String kind=action.optString("kind");
-                            if(kind.equals("note")||kind.equals("sign")||kind.equals("image"))world.message(action.optString("text"),kind.equals("image"),pos.x,pos.y,()->event("dismiss"));
-                            if(!fixed&&kind.equals("roam"))vx=(float)(getResources().getDisplayMetrics().density*speed);
+                            if(!playing&&(kind.equals("note")||kind.equals("sign")||kind.equals("image")))world.message(action.optString("text"),kind.equals("image"),pos.x,pos.y,()->event("dismiss"));
+                            if(!playing&&!fixed&&kind.equals("roam"))vx=(float)(getResources().getDisplayMetrics().density*speed);
                         }
                     } });
                 }
@@ -249,6 +254,7 @@ public class PetService extends Service {
     private final Runnable frame = new Runnable() {
         public void run() {
             if (closed || pet == null || !screenOn) return;
+            if(playing){pet.invalidate();ui.postDelayed(this,100);return;}
             long now = SystemClock.uptimeMillis(); float dt = Math.min(0.05f, (now-lastFrame)/1000f); lastFrame = now;
             boolean useTilt=tiltEnabled && motion!=null && motion.active;
             if(fixed){vx=vy=0;xFloat=pos.x;yFloat=pos.y;}
@@ -273,7 +279,7 @@ public class PetService extends Service {
         }
     };
     private void clamp() {
-        if (pet == null || !pet.isAttachedToWindow()) return;
+        if (pet == null || !pet.isAttachedToWindow()||playing) return;
         android.graphics.Rect bounds;
         if (Build.VERSION.SDK_INT >= 30) bounds = wm.getCurrentWindowMetrics().getBounds();
         else { android.util.DisplayMetrics metrics = new android.util.DisplayMetrics(); wm.getDefaultDisplay().getMetrics(metrics); bounds = new android.graphics.Rect(0, 0, metrics.widthPixels, metrics.heightPixels); }
@@ -295,13 +301,27 @@ public class PetService extends Service {
         tiltSensitivity=prefs.getInt("sensitivity",100)/100f;
         updateMotion();
     }
+    private void startArcade(){
+        if(closed||!running||playing||pet==null)return;
+        beforeGameX=pos.x;beforeGameY=pos.y;storePosition();pressed=dragging=false;vx=vy=0;quickMenu.dismiss();world.clearMessage();world.show(false);playing=true;updateMotion();
+        arcade=new ArkanoidOverlay(this,wm,pet,(x,y,w,h)->{if(closed||!playing)return;pos.x=x;pos.y=y;pos.width=w;pos.height=h;xFloat=x;yFloat=y;if(pet.isAttachedToWindow())try{wm.updateViewLayout(pet,pos);}catch(IllegalArgumentException ignored){}},this::finishArcade,value->event(value.equals("restart")?"game_start":"game_"+value));
+        if(!arcade.show()){finishArcade();android.widget.Toast.makeText(this,"Não foi possível abrir o jogo. Confira a permissão de sobreposição.",android.widget.Toast.LENGTH_LONG).show();return;}
+        try{if(pet.isAttachedToWindow())wm.removeView(pet);wm.addView(pet,pos);}catch(RuntimeException error){arcade.close();return;}
+        event("release");event("game_start");
+    }
+    private void finishArcade(){
+        playing=false;arcade=null;pos.x=beforeGameX;pos.y=beforeGameY;xFloat=pos.x;yFloat=pos.y;vx=vy=0;pet.setScaleX(1);pet.setScaleY(1);pet.bodyAngle=0;pet.caressing=false;
+        if(closed)return;
+        applySettings();try{if(!pet.isAttachedToWindow())wm.addView(pet,pos);clamp();}catch(RuntimeException error){fail(error);return;}
+        pet.emotion=emotion;pet.notebook=notebook;pet.corner=inCorner;world.show(screenOn);updateMotion();storePosition();event("game_end");
+    }
     private void setFixed(boolean enabled){
         getSharedPreferences("pet",0).edit().putBoolean("fixed",enabled).apply();
         vx=vy=0;xFloat=pos.x;yFloat=pos.y;storePosition();applySettings();
         android.widget.Toast.makeText(this,enabled?"Posição fixa. Arraste para escolher outro lugar.":"Posição solta. Movimento normal restaurado.",android.widget.Toast.LENGTH_SHORT).show();
     }
     private int displayRotation(){return wm.getDefaultDisplay().getRotation();}
-    private void updateMotion(){if(motion!=null){if(tiltEnabled&&screenOn&&!closed)motion.start();else motion.stop();}}
+    private void updateMotion(){if(motion!=null){if(tiltEnabled&&screenOn&&!closed&&!playing)motion.start();else motion.stop();}}
     private void impact(float velocity){
         if(Math.abs(velocity)>350*getResources().getDisplayMetrics().density && SystemClock.uptimeMillis()-lastImpact>800){lastImpact=SystemClock.uptimeMillis();event("impact");}
     }
@@ -310,13 +330,14 @@ public class PetService extends Service {
         android.util.Log.e("Pestinha", "Pet failed", e);
         getSharedPreferences("pet", 0).edit().putString("error", String.valueOf(e.getMessage())).apply(); stopSelf();
     }
-    @Override public void onConfigurationChanged(Configuration c) { super.onConfigurationChanged(c); pressed=dragging=false; if(quickMenu!=null)quickMenu.dismiss(); if(motion!=null)motion.resetCalibration(); clamp(); }
+    @Override public void onConfigurationChanged(Configuration c) { super.onConfigurationChanged(c); pressed=dragging=false; if(quickMenu!=null)quickMenu.dismiss(); if(motion!=null)motion.resetCalibration();if(playing&&arcade!=null)arcade.resized();else clamp(); }
     @Override public int onStartCommand(Intent i, int flags, int id) {
         if (i != null && "stop".equals(i.getAction())) stopSelf();
         else if(i!=null&&"ball".equals(i.getAction())&&world!=null) world.toggleBall(pos.x,pos.y);
         else if(i!=null&&"calibrate".equals(i.getAction())&&motion!=null){motion.calibrate(displayRotation());vx=vy=0;}
         else if(i!=null&&"reset_tilt".equals(i.getAction())&&motion!=null){motion.resetCalibration();vx=vy=0;}
-        else if(i!=null&&"settings".equals(i.getAction())) { applySettings(); clamp(); }
+        else if(i!=null&&"settings".equals(i.getAction())) { if(!playing){applySettings();clamp();} }
+        else if(i!=null&&"arcade".equals(i.getAction()))startArcade();
         else if(i!=null&&"export".equals(i.getAction())&&worker!=null){
             String uri=i.getStringExtra("uri");worker.post(()->{save();try{
                 MemoryActivity.backup(this,android.net.Uri.parse(uri));ui.post(()->android.widget.Toast.makeText(this,"Backup salvo.",android.widget.Toast.LENGTH_LONG).show());
@@ -327,7 +348,7 @@ public class PetService extends Service {
     }
     @Override public void onDestroy() {
         if(instance==this)instance=null;
-        closed = true; running = false; ui.removeCallbacksAndMessages(null); storePosition();
+        closed = true; running = false;if(arcade!=null)arcade.close();playing=false;ui.removeCallbacksAndMessages(null); storePosition();
         if (receiverRegistered) unregisterReceiver(screen);
         if(usageMonitor!=null)usageMonitor.stop();if(newsMonitor!=null)newsMonitor.stop();
         if(motion!=null)motion.stop();

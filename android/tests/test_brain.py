@@ -135,3 +135,27 @@ class ActivityDurationTest(unittest.TestCase):
             before = dict(loaded.durations)
             loaded.rest(30)
             self.assertEqual(before, loaded.durations)
+
+class ArcadeBrainTest(unittest.TestCase):
+    def test_arcade_records_real_actions_without_overriding_context(self):
+        with tempfile.TemporaryDirectory() as directory:
+            brain = AndroidBrain(directory, DEFINITION)
+            brain.event('context:trabalho')
+            brain.event('game_start')
+            self.assertTrue(brain.gaming)
+            brain.event('game_hit')
+            brain.event('game_brick')
+            brain.event('game_win')
+            brain.mischief = True
+            brain.next_mischief = 0
+            state = json.loads(brain.tick(.2))
+            self.assertTrue(state['gaming'])
+            self.assertIsNone(state['action'])
+            brain.event('game_end')
+            self.assertFalse(brain.gaming)
+            self.assertEqual('trabalho', brain.context)
+            brain.save()
+            loaded = AndroidBrain(directory, DEFINITION)
+            self.assertFalse(loaded.gaming)
+            self.assertEqual(1, loaded.counts['game_hit'])
+            self.assertEqual(1, loaded.counts['game_win'])

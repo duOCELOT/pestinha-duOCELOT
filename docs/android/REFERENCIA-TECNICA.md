@@ -324,3 +324,10 @@ seu conteúdo ultrapassa a altura disponível.
 
 Testes verificam posição após arrastar/soltar com impulso anterior, persistência,
 retomada da gravidade e o rótulo/ação do atalho no menu.
+
+
+## Arkanoid sobre os apps (0.12)
+
+Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
+para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
+Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).

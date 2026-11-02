@@ -50,6 +50,7 @@ public class MainActivity extends Activity {
         navigation(layout,"memory","Memória e cérebro","Personalidade, gráficos e tempo de cada pet",()->startActivity(new Intent(this,MemoryActivity.class)));
         navigation(layout,"assistant","Pausas conscientes","Tempo nos apps e recados do pet",()->startActivity(new Intent(this,UsageActivity.class)));
         LinearLayout play=expandable(layout,"Brincar e interagir");
+        button(play,"Jogar Arkanoid • o pet é a plataforma",()->send("arcade"));
         button(play,"Fazer carinho",()->send("caress"));
         button(play,"Mostrar / guardar bolinha",()->send("ball"));
         button(play,"Dormir / acordar",()->send("sleep"));
@@ -91,7 +92,7 @@ public class MainActivity extends Activity {
         button(physics,"Calibrar nesta posição",()->send("calibrate"));button(physics,"Restaurar gravidade natural",()->send("reset_tilt"));
         LinearLayout about=expandable(layout,"Privacidade e informações");
         text(about,"A memória fica no aparelho. A internet consulta somente os feeds escolhidos, manualmente ou pelo radar opcional. Sem leitura de tela ou da agenda. O acompanhamento de apps usa estatísticas do Android somente se você autorizar e ativar. Sensores desligam com a tela apagada.",14,Design.MUTED);
-        text(about,"Pestinha Android • 0.11 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
+        text(about,"Pestinha Android • 0.12 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
         button(about,"Modo de teste • tempos curtos",()->send("fast"));
         button(about,"Licença e projeto original",()->new AlertDialog.Builder(this).setTitle("Pestinha • GPL-3.0-or-later").setMessage("Adaptação independente de mille-okws/pestinha. Código-fonte: github.com/duOCELOT/pestinha-duOCELOT, branch android.\n\n"+license()).setPositiveButton("Fechar",null).show());
         Design.button(layout,"Guardar o pet","danger",()->stopService(new Intent(this,PetService.class)));

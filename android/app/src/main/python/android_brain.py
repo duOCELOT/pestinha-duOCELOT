@@ -54,6 +54,7 @@ class AndroidBrain:
         durations = data.get('durations', {}) if isinstance(data, dict) else {}
         self.durations = {k: max(0.0, float(v)) for k, v in durations.items()
                           if isinstance(v, (int, float)) and math.isfinite(v)} if isinstance(durations, dict) else {}
+        self.gaming = False
         self.events = {}
         self.asleep = False
         self.manual_sleep = False
@@ -113,6 +114,19 @@ class AndroidBrain:
 
     def event(self, kind):
         now = time.monotonic()
+        if kind in ('game_start', 'game_end', 'game_hit', 'game_brick', 'game_life', 'game_win', 'game_over', 'game_launch'):
+            if kind == 'game_start':
+                self.gaming = True
+                self.asleep = self.manual_sleep = False
+                self.last_touch = now
+            elif kind == 'game_end':
+                self.gaming = False
+            if kind not in ('game_end', 'game_launch'):
+                self.counts[kind] = self.counts.get(kind, 0) + 1
+            if kind in ('game_hit', 'game_brick', 'game_win', 'game_start'):
+                self.events['TOY_NEAR'] = 1.0
+                self.events['NOVELTY'] = .6
+            return
         if kind == 'focus_start':
             self.context = 'trabalho'
             self.notebook = True
@@ -237,6 +251,8 @@ class AndroidBrain:
             self.asleep = False
         channels = self.drives.channels()
         channels['SILENCE'] = .35
+        if self.gaming:
+            channels['PLAY'] = .8
         channels['ANTICIPATE'] = self.conditioning.strength()
         context_channels = {'trabalho': 'WORK', 'jogo': 'PLAY', 'musica': 'SOUND', 'social': 'SOCIAL'}
         if self.context in context_channels:
@@ -275,7 +291,7 @@ class AndroidBrain:
         if self.mischief and active.stage and self.elapsed-self.last_sign > 15:
             self._action('sign', active.escolher_cartaz()['texto'])
             self.last_sign = self.elapsed
-        if self.mischief and not self.asleep and not self.corner and self.elapsed >= self.next_mischief:
+        if self.mischief and not self.gaming and not self.asleep and not self.corner and self.elapsed >= self.next_mischief:
             self._note()
             interval = 10 if self.as_fast else max(45, 300/(1+activity.get('TRAVESSURA', 0)))
             self.next_mischief = self.elapsed+interval
@@ -298,7 +314,7 @@ class AndroidBrain:
             'durations': self.durations, 'counts': self.counts, 'neurons': self.brain.N, 'synapses': int(self.brain.n_synapses),
             'protest': STAGE_NAMES[self.protest.stage], 'grievance': self.protest.grievance,
             'sad_stage': self.sad.stage, 'corner': self.corner, 'escapes': self.escapes,
-            'notebook': self.notebook, 'mischief': self.mischief, 'fast': self.as_fast,
+            'gaming': self.gaming, 'notebook': self.notebook, 'mischief': self.mischief, 'fast': self.as_fast,
             'context': self.context, 'action': self.action,
         }
         return json.dumps(self.snapshot)

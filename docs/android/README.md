@@ -1,6 +1,6 @@
 # Pestinha Android — apresentação do projeto
 
-**Material da versão 0.11 experimental.** Este diretório apresenta o APK, suas
+**Material da versão 0.12 experimental.** Este diretório apresenta o APK, suas
 interfaces e funções. Foi conferido com o código da branch `android`.
 
 | Para quem | Material |
@@ -141,3 +141,10 @@ começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAR
 
 Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
 comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](MEU-RADAR.md).
+
+
+## Arkanoid sobre os apps (0.12)
+
+Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
+para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
+Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).
