@@ -13,7 +13,19 @@ import java.util.*;
 /** Inspect and export actual persisted state, rather than inferred personality. */
 public class MemoryActivity extends Activity {
     static final String[] FILES = {"nervous.json","drives.json","conditioning.json","protest.json","sad_protest.json","preferences.json","episodes.jsonl","android.json","snapshot.json"};
-    private TextView body;
+    private TextView body,identity,summary;
+    private String inspected,pendingPet;
+    private MetricChart needs,motors,habituation,temperament,usage,interactions;
+    private File inspectedDirectory(){return new File(getFilesDir(),"memory/"+inspected);}
+    private MetricChart chart(LinearLayout parent,String title){LinearLayout card=Design.card(this,parent);Design.label(card,title);MetricChart v=new MetricChart(this);card.addView(v,new LinearLayout.LayoutParams(-1,-2));return v;}
+    private void objectChart(MetricChart chart,JSONObject data,double scale,int tint,String suffix){
+        if(data==null)data=new JSONObject();ArrayList<String> keys=new ArrayList<>();Iterator<String> it=data.keys();while(it.hasNext())keys.add(it.next());Collections.sort(keys);String[] labels=new String[keys.size()],formatted=new String[keys.size()];double[] values=new double[keys.size()];double max=scale;
+        for(int i=0;i<keys.size();i++){String key=keys.get(i);labels[i]=label(key);values[i]=data.optDouble(key);max=Math.max(max,values[i]);formatted[i]=suffix.equals("time")?duration(values[i]):String.format(Locale.ROOT,suffix.equals("%")?"%.0f%%":"%.2f%s",suffix.equals("%")?values[i]*100:values[i],suffix.equals("%")?"":suffix);}
+        chart.data(labels,values,formatted,max,tint);
+    }
+    static String label(String key){switch(key){case "awake_seconds":return "Acordado";case "sleep_seconds":return "Dormindo";case "notebook_seconds":return "Caderninho";case "corner_seconds":return "Cantinho";case "CURIOUS":return "Curiosidade";case "caress":return "Carinho";case "tap":return "Cutucadas";case "drag":return "Arrastos";default:return key.replace("_seconds","").replace("context_","Contexto: ").replace("->"," → ");}}
+    static String duration(double seconds){long n=Math.max(0,(long)seconds);return n>=3600?String.format(Locale.ROOT,"%dh %02dm",n/3600,n/60%60):String.format(Locale.ROOT,"%dm %02ds",n/60,n%60);}
+
     private final Handler ui = new Handler(Looper.getMainLooper());
     private final Runnable refresh = new Runnable() { public void run() { render(); ui.postDelayed(this, 1500); } };
     public static String petId(Context c) {
@@ -29,11 +41,12 @@ public class MemoryActivity extends Activity {
     static void write(File f,String s) throws IOException {
         try(OutputStream out=new FileOutputStream(f)) { out.write(s.getBytes(java.nio.charset.StandardCharsets.UTF_8)); }
     }
-    static void backup(Context c, Uri uri) throws Exception {
+    static void backup(Context c, Uri uri) throws Exception {backupFor(c,uri,petId(c));}
+    static void backupFor(Context c,Uri uri,String id) throws Exception {
         JSONObject root=new JSONObject(), entries=new JSONObject();
-        root.put("format","pestinha-android"); root.put("version",1); root.put("pet",petId(c));
+        root.put("format","pestinha-android"); root.put("version",1); root.put("pet",id);
         root.put("exported_at",System.currentTimeMillis());
-        for(String name:FILES) { File f=new File(directory(c),name); if(f.isFile()) entries.put(name,read(f)); }
+        for(String name:FILES) { File f=new File(new File(c.getFilesDir(),"memory/"+Characters.normalize(id)),name); if(f.isFile()) entries.put(name,read(f)); }
         root.put("files",entries);
         try(OutputStream out=c.getContentResolver().openOutputStream(uri,"wt")) {
             if(out==null) throw new IOException("Não foi possível abrir o destino");
@@ -41,43 +54,51 @@ public class MemoryActivity extends Activity {
         }
     }
     @Override public void onCreate(Bundle saved) {
-        super.onCreate(saved);
+        super.onCreate(saved);inspected=saved==null?petId(this):Characters.normalize(saved.getString("inspected",petId(this)));
+        if(saved!=null)pendingPet=saved.getString("pendingPet");
         ScrollView scroll=new ScrollView(this); scroll.setBackgroundColor(Design.BG);
         LinearLayout layout=new LinearLayout(this); layout.setOrientation(LinearLayout.VERTICAL); layout.setPadding(Design.dp(this,22),Design.dp(this,30),Design.dp(this,22),Design.dp(this,40)); scroll.addView(layout);
         Design.label(layout,"MEMÓRIA E CÉREBRO");TextView heading=Design.text(this,"Como ele aprende",28,Design.TEXT);heading.setPadding(0,0,0,Design.dp(this,20));layout.addView(heading);
+        Spinner selector=new Spinner(this);selector.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,Characters.names(this)));selector.setSelection(Characters.index(inspected));layout.addView(selector);
+        selector.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener(){public void onNothingSelected(android.widget.AdapterView<?> p){}public void onItemSelected(android.widget.AdapterView<?> p,android.view.View v,int position,long id){inspected=Characters.id(position);if(body!=null)render();}});
+        identity=Design.text(this,"",16,Design.MUTED);identity.setPadding(0,Design.dp(this,16),0,Design.dp(this,20));layout.addView(identity);
+        Design.label(layout,"Os contadores do pet medem tempo ativo com a tela ligada desde esta versão. Contextos e atividades podem se sobrepor; não some todas as barras.");
+        summary=Design.text(this,"",20,Design.TEXT);layout.addView(summary);
+        needs=chart(layout,"Necessidades • 0–100%");temperament=chart(layout,"Temperamento de origem • multiplicadores");motors=chart(layout,"Motores da rede • Hz");habituation=chart(layout,"Habituação • 1 = sensibilidade plena");usage=chart(layout,"Tempo acumulado deste pet");interactions=chart(layout,"Interações deste pet");
+        Design.button(layout,"Mostrar / ocultar dados técnicos e episódios","secondary",()->body.setVisibility(body.getVisibility()==android.view.View.GONE?android.view.View.VISIBLE:android.view.View.GONE));
         Button export=new Button(this); export.setText("Exportar memória / backup JSON"); layout.addView(export);
-        export.setOnClickListener(v -> startActivityForResult(new Intent(Intent.ACTION_CREATE_DOCUMENT).setType("application/json")
-                .addCategory(Intent.CATEGORY_OPENABLE).putExtra(Intent.EXTRA_TITLE,"pestinha-"+petId(this)+"-"+System.currentTimeMillis()+".json"),20));
+        export.setOnClickListener(v -> {pendingPet=inspected;startActivityForResult(new Intent(Intent.ACTION_CREATE_DOCUMENT).setType("application/json")
+                .addCategory(Intent.CATEGORY_OPENABLE).putExtra(Intent.EXTRA_TITLE,"pestinha-"+inspected+"-"+System.currentTimeMillis()+".json"),20);});
         Button restore=new Button(this); restore.setText("Restaurar backup (pet guardado)"); layout.addView(restore);
         restore.setOnClickListener(v -> { if(PetService.busy) { toast("Guarde o pet e aguarde alguns segundos."); return; }
-            startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).setType("application/json").addCategory(Intent.CATEGORY_OPENABLE),21); });
+            pendingPet=inspected;startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).setType("application/json").addCategory(Intent.CATEGORY_OPENABLE),21); });
         Button consolidate=new Button(this); consolidate.setText("Consolidar lembranças agora"); layout.addView(consolidate);
-        consolidate.setOnClickListener(v -> { if(PetService.running) startService(new Intent(this,PetService.class).setAction("consolidate")); else toast("Solte o pet primeiro."); });
+        consolidate.setOnClickListener(v -> { if(PetService.running&&inspected.equals(petId(this))) startService(new Intent(this,PetService.class).setAction("consolidate")); else toast("Solte este personagem para consolidar suas lembranças."); });
         Button clear=new Button(this);clear.setTag("danger"); clear.setText("Apagar memória deste personagem…"); layout.addView(clear);
         clear.setOnClickListener(v -> {
             if(PetService.busy) { toast("Guarde o pet e aguarde alguns segundos."); return; }
-            new AlertDialog.Builder(this).setTitle("Apagar memória de "+petId(this)+"?")
+            new AlertDialog.Builder(this).setTitle("Apagar memória de "+inspected+"?")
                 .setMessage("Isso apaga pesos aprendidos, necessidades e histórico deste personagem. Exporte um backup para guardar uma cópia.")
                 .setNegativeButton("Cancelar",null).setPositiveButton("Apagar",(d,w)-> {
                     if(PetService.busy) { toast("Guarde o pet primeiro."); return; }
-                    for(String name:FILES) new File(directory(this),name).delete();
+                    for(String name:FILES) new File(inspectedDirectory(),name).delete();
                     toast("Memória apagada."); render();
                 }).show();
         });
         body=new TextView(this); body.setTextColor(Color.WHITE); body.setTextSize(15); body.setTextIsSelectable(true); body.setPadding(Design.dp(this,16),Design.dp(this,18),Design.dp(this,16),Design.dp(this,18));body.setBackground(Design.shape(this,Design.CARD,20,Design.BORDER));LinearLayout.LayoutParams bodyParams=new LinearLayout.LayoutParams(-1,-2);bodyParams.topMargin=Design.dp(this,18);layout.addView(body,bodyParams);
-        setContentView(scroll);Design.install(this,scroll);
+        body.setVisibility(android.view.View.GONE);setContentView(scroll);Design.install(this,scroll);
     }
     private void toast(String s) { Toast.makeText(this,s,Toast.LENGTH_LONG).show(); }
     @Override protected void onActivityResult(int request,int result,Intent data) {
         super.onActivityResult(request,result,data); if(result!=RESULT_OK||data==null||data.getData()==null)return;
-        Uri uri=data.getData();
+        Uri uri=data.getData();if(pendingPet!=null)inspected=pendingPet;
         if(request==20) {
-            if(PetService.running) startService(new Intent(this,PetService.class).setAction("export").putExtra("uri",uri.toString()));
+            if(PetService.running&&inspected.equals(petId(this))) startService(new Intent(this,PetService.class).setAction("export").putExtra("uri",uri.toString()));
             else if(PetService.busy) toast("Aguarde o salvamento e tente novamente.");
-            else new Thread(()->{ try { backup(this,uri); ui.post(()->toast("Backup salvo.")); } catch(Exception e){ui.post(()->toast("Erro: "+e.getMessage()));} }).start();
+            else {String exportedPet=inspected;new Thread(()->{ try { backupFor(this,uri,exportedPet); ui.post(()->toast("Backup salvo.")); } catch(Exception e){ui.post(()->toast("Erro: "+e.getMessage()));} }).start();}
         } else if(request==21) {
             if(PetService.busy){toast("Guarde o pet antes de restaurar.");return;}
-            new AlertDialog.Builder(this).setTitle("Substituir a memória de "+petId(this)+"?")
+            new AlertDialog.Builder(this).setTitle("Substituir a memória de "+inspected+"?")
                 .setMessage("O backup deve ser do mesmo personagem. A memória atual será substituída.")
                 .setNegativeButton("Cancelar",null).setPositiveButton("Restaurar",(d,w)->restore(uri)).show();
         }
@@ -87,7 +108,7 @@ public class MemoryActivity extends Activity {
         try(InputStream in=getContentResolver().openInputStream(uri)) {
             if(in==null) throw new IOException("Arquivo indisponível");
             JSONObject data=new JSONObject(read(in));
-            if(!"pestinha-android".equals(data.optString("format"))||data.optInt("version")!=1||!petId(this).equals(data.optString("pet"))) throw new IOException("Formato ou personagem incompatível");
+            if(!"pestinha-android".equals(data.optString("format"))||data.optInt("version")!=1||!inspected.equals(data.optString("pet"))) throw new IOException("Formato ou personagem incompatível");
             JSONObject files=data.getJSONObject("files");
             if(!files.has("nervous.json")||!files.has("drives.json"))throw new IOException("Backup incompleto");
             Set<String> allowed=new HashSet<>(Arrays.asList(FILES));
@@ -99,8 +120,8 @@ public class MemoryActivity extends Activity {
                 else for(String line:value.split("\n")) if(!line.trim().isEmpty()) new JSONObject(line);
             }
             JSONObject neural=new JSONObject(files.getString("nervous.json"));
-            if(neural.optInt("seed")!=Characters.definition(this,petId(this)).getInt("seed")||neural.optInt("version")!=1)throw new IOException("Rede incompatível");
-            File dest=directory(this), parent=dest.getParentFile(); if(!parent.exists()&&!parent.mkdirs())throw new IOException("Falha ao preparar pasta");
+            if(neural.optInt("seed")!=Characters.definition(this,inspected).getInt("seed")||neural.optInt("version")!=1)throw new IOException("Rede incompatível");
+            File dest=inspectedDirectory(), parent=dest.getParentFile(); if(!parent.exists()&&!parent.mkdirs())throw new IOException("Falha ao preparar pasta");
             File stage=new File(parent,"restore-"+System.nanoTime()); if(!stage.mkdir())throw new IOException("Falha ao preparar backup");
             for(String key:allowed) if(files.has(key))write(new File(stage,key),files.getString(key));
             File previous=new File(parent,"previous-"+System.nanoTime());
@@ -113,11 +134,18 @@ public class MemoryActivity extends Activity {
     private String pct(JSONObject j,String key){return Math.round(j.optDouble(key)*100)+"%";}
     private void render() {
         try {
-            String raw=PetService.running?PetService.liveSnapshot:"";
-            if(raw.isEmpty()) { File f=new File(directory(this),"snapshot.json"); if(!f.exists()){body.setText("MEMÓRIA • "+petId(this)+"\n\nSolte o pet para começar a acompanhar o cérebro. A memória antiga será carregada automaticamente.");return;} raw=read(f); }
+            boolean live=PetService.running&&inspected.equals(petId(this));
+            JSONObject definition=Characters.definition(this,inspected);identity.setText(definition.optString("nome")+" • "+(live?"ao vivo":"último estado salvo")+"\n"+definition.optString("descricao","")+"\nConsultar este painel não troca o pet solto.");
+            objectChart(temperament,definition.optJSONObject("temperamento"),1,android.graphics.Color.rgb(79,179,255),"×");
+            String raw=live?PetService.liveSnapshot:"";
+            if(raw.isEmpty()) { File f=new File(inspectedDirectory(),"snapshot.json"); if(!f.exists()){summary.setText("Ainda sem estado salvo para "+Characters.name(this,inspected));for(MetricChart c:new MetricChart[]{needs,motors,habituation,usage,interactions})objectChart(c,null,1,Design.ACCENT,"");body.setText("MEMÓRIA • "+inspected+"\n\nSolte o pet para começar a acompanhar o cérebro. A memória antiga será carregada automaticamente.");return;} raw=read(f); }
             JSONObject s=new JSONObject(raw);
-            StringBuilder b=new StringBuilder("MEMÓRIA E CÉREBRO • ").append(s.optString("name",petId(this))).append("\n")
-                .append(PetService.running?"Ao vivo\n":"Último estado salvo • pet guardado\n")
+            summary.setText(s.optString("emotion","observando")+" • "+s.optInt("neurons")+" neurônios\n"+s.optInt("synapses")+" sinapses • "+s.optString("context","livre"));
+            needs.data(new String[]{"Energia","Estimulação","Carência"},new double[]{s.optDouble("energy"),s.optDouble("stimulation"),s.optDouble("contact")},new String[]{pct(s,"energy"),pct(s,"stimulation"),pct(s,"contact")},1,Design.ACCENT);
+            objectChart(motors,s.optJSONObject("motors"),1,Color.rgb(255,216,77)," Hz");objectChart(habituation,s.optJSONObject("habituation"),1,Color.rgb(255,179,71),"%");objectChart(usage,s.optJSONObject("durations"),1,Color.rgb(79,179,255),"time");objectChart(interactions,s.optJSONObject("counts"),1,Design.ACCENT,"");
+
+            StringBuilder b=new StringBuilder("MEMÓRIA E CÉREBRO • ").append(s.optString("name",inspected)).append("\n")
+                .append(live?"Ao vivo\n":"Último estado salvo • pet guardado\n")
                 .append("\nEmoção: ").append(s.optString("emotion")).append("\nEnergia: ").append(pct(s,"energy"))
                 .append("\nEstimulação: ").append(pct(s,"stimulation")).append("\nCarência: ").append(pct(s,"contact"))
                 .append("\nHumor: ").append(String.format(java.util.Locale.ROOT,"%+.2f",s.optDouble("valence")))
@@ -140,6 +168,7 @@ public class MemoryActivity extends Activity {
             body.setText(b);
         }catch(Exception e){body.setText("Ainda sem estado completo salvo. Solte o pet por alguns segundos.\n"+e.getMessage());}
     }
+    @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);state.putString("inspected",inspected);state.putString("pendingPet",pendingPet);}
     @Override protected void onResume(){super.onResume();ui.post(refresh);}
     @Override protected void onPause(){ui.removeCallbacks(refresh);super.onPause();}
 }

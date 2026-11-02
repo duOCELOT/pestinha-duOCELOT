@@ -26,14 +26,15 @@ final class LocalAssistant {
     static synchronized void schedule(Context c,String title,long when,String kind) throws Exception {
         if(!notificationsAllowed(c))throw new IllegalStateException("Permita as notificações antes de criar avisos.");
         if(when<=System.currentTimeMillis())throw new IllegalArgumentException("Escolha um horário futuro.");
-        JSONArray current=alarms(c),next=new JSONArray();boolean focus=kind.equals("focus")||kind.equals("break");
-        if(!focus&&current.length()>=30)throw new IllegalStateException("Limite de 30 avisos. Cancele algum antes.");
-        for(int i=0;i<current.length();i++){JSONObject r=current.getJSONObject(i);if(!focus||r.optInt("id")!=1)next.put(r);}
+        JSONArray current=alarms(c),next=new JSONArray();boolean focus=kind.equals("focus")||kind.equals("break"),water=kind.equals("water");
+        int reserved=focus?1:water?2:-1;
+        if(!focus&&!water&&current.length()>=30)throw new IllegalStateException("Limite de 30 avisos. Cancele algum antes.");
+        for(int i=0;i<current.length();i++){JSONObject r=current.getJSONObject(i);if(reserved<0||r.optInt("id")!=reserved)next.put(r);}
         android.content.SharedPreferences prefs=c.getSharedPreferences(PREFS,0);
-        int id=focus?1:prefs.getInt("nextId",1000);
+        int id=reserved>0?reserved:prefs.getInt("nextId",1000);
         JSONObject row=new JSONObject().put("id",id).put("title",title).put("kind",kind).put("when",when).put("token",UUID.randomUUID().toString());
         next.put(row);
-        if(!prefs.edit().putString("alarms",next.toString()).putInt("nextId",focus?prefs.getInt("nextId",1000):id+1).commit())throw new IllegalStateException("Falha ao salvar aviso.");
+        if(!prefs.edit().putString("alarms",next.toString()).putInt("nextId",reserved>0?prefs.getInt("nextId",1000):id+1).commit())throw new IllegalStateException("Falha ao salvar aviso.");
         try{arm(c,row);}catch(RuntimeException e){cancel(c,id);throw e;}
         if(focus)PetService.assistantNotice(kind.equals("focus")?"Hora de focar. Estou trabalhando junto!":"Hora de descansar um pouco.",kind.equals("focus")?"focus_start":"focus_end");
     }
@@ -51,6 +52,7 @@ final class LocalAssistant {
         // Remove the delivered row before posting, so duplicate broadcasts do not repeat it.
         JSONArray remaining=new JSONArray();for(int i=0;i<current.length();i++){JSONObject row=current.optJSONObject(i);if(row!=null&&row.optInt("id")!=id)remaining.put(row);}
         if(!c.getSharedPreferences(PREFS,0).edit().putString("alarms",remaining.toString()).commit())return;
+        if(id==2)Hydration.ensure(c,true);
         channel(c);String title=found.optString("title","Lembrete");
         PendingIntent open=PendingIntent.getActivity(c,0,new Intent(c,AssistantActivity.class),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
         Notification note=new Notification.Builder(c,CHANNEL).setSmallIcon(R.drawable.ic_notification).setContentTitle("Pestinha • "+title)
@@ -60,6 +62,6 @@ final class LocalAssistant {
         try{if(notificationsAllowed(c))c.getSystemService(NotificationManager.class).notify(id+100,note);}catch(SecurityException ignored){}
         PetService.assistantNotice(title,id==1?"focus_end":null);
     }
-    static void rearm(Context c){JSONArray a=alarms(c);for(int i=0;i<a.length();i++){JSONObject row=a.optJSONObject(i);if(row!=null)try{arm(c,row);}catch(RuntimeException ignored){}}}
+    static void rearm(Context c){Hydration.ensure(c,false);JSONArray a=alarms(c);for(int i=0;i<a.length();i++){JSONObject row=a.optJSONObject(i);if(row!=null)try{arm(c,row);}catch(RuntimeException ignored){}}}
     static JSONObject focus(Context c){JSONArray a=alarms(c);for(int i=0;i<a.length();i++){JSONObject r=a.optJSONObject(i);if(r!=null&&r.optInt("id")==1)return r;}return null;}
 }

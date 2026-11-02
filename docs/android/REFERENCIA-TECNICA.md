@@ -274,5 +274,5 @@ verificações de pacote e testes. Não basta mudar a cor para obter novas
 capacidades cognitivas: temperamento, conteúdo e ferramentas são partes distintas.
 
 Para adicionar ferramentas ou um LLM, preserve a separação entre apresentação,
-interpretação e execução de ações. A versão 0.7 não implementa esse modelo ou
+interpretação e execução de ações. A versão 0.8 não implementa esse modelo ou
 acesso geral ao celular; essa expansão precisa de um trabalho próprio.

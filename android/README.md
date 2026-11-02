@@ -233,3 +233,12 @@ tela apagada, revogação da permissão e manutenção de memória após atualiz
 
 GNU GPL-3.0-or-later, como o código original. Veja `../LICENSE`, incluída no APK.
 A adaptação desenha as próprias formas e não empacota as imagens de `assets/`.
+
+
+### Novidades Android 0.8
+
+Lembretes recorrentes de água com intervalo e janela diária, registro manual de copos,
+gráficos do tempo de uso e monitor de personalidade/memória separado por personagem.
+As barras mostram dados reais da rede, necessidades e novos tempos acumulados do pet;
+o temperamento inicial é identificado separadamente do aprendizado.
+Consulte o [guia das telas](../docs/android/GUIA-DO-APK.md) para ativar e entender os contadores.

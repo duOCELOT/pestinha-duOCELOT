@@ -2,6 +2,7 @@
 import json
 import random
 import time
+import math
 from pathlib import Path
 from pestinha.core.nervous_system import LIFBrain
 from pestinha.core.emotion import EmotionState, EYE_SHAPES
@@ -50,6 +51,9 @@ class AndroidBrain:
         data = read_json(self.root / 'android.json', {})
         counters = data.get('counts', {}) if isinstance(data, dict) else {}
         self.counts = {k: max(0, v) for k, v in counters.items() if type(v) is int} if isinstance(counters, dict) else {}
+        durations = data.get('durations', {}) if isinstance(data, dict) else {}
+        self.durations = {k: max(0.0, float(v)) for k, v in durations.items()
+                          if isinstance(v, (int, float)) and math.isfinite(v)} if isinstance(durations, dict) else {}
         self.events = {}
         self.asleep = False
         self.manual_sleep = False
@@ -278,6 +282,9 @@ class AndroidBrain:
         self.memory.tick(now, 18, self.prof['episode_window'])
         if self.pending_thing is not None and not any(e['thing'] is self.pending_thing for e in self.memory.open):
             self.pending_thing = None
+        for key in ['awake_seconds' if not self.asleep else 'sleep_seconds',
+                    'context_' + self.context] + (['notebook_seconds'] if self.notebook else []) + (['corner_seconds'] if self.corner else []):
+            self.durations[key] = self.durations.get(key, 0.0) + dt
         self.snapshot = {
             'name': self.name, 'emotion': 'dormindo' if self.asleep else emotion,
             'face': EYE_SHAPES['dormindo' if self.asleep else emotion], 'caressing': caring,
@@ -288,7 +295,7 @@ class AndroidBrain:
             'motors': activity, 'learned': self.brain.learned_summary(12),
             'habituation': self.brain.efficacy(), 'conditioning': self.conditioning.V,
             'preferences': self.memory.preferences(12), 'recent': self.memory.recent[-15:],
-            'counts': self.counts, 'neurons': self.brain.N, 'synapses': int(self.brain.n_synapses),
+            'durations': self.durations, 'counts': self.counts, 'neurons': self.brain.N, 'synapses': int(self.brain.n_synapses),
             'protest': STAGE_NAMES[self.protest.stage], 'grievance': self.protest.grievance,
             'sad_stage': self.sad.stage, 'corner': self.corner, 'escapes': self.escapes,
             'notebook': self.notebook, 'mischief': self.mischief, 'fast': self.as_fast,
@@ -310,6 +317,6 @@ class AndroidBrain:
         self.sad.save()
         self.memory.save()
         self.memory._trim_file(self.memory._read_episodes())
-        write_json(self.root/'android.json', {'counts': self.counts, 'escapes': self.escapes, 'saved_at': time.time()})
+        write_json(self.root/'android.json', {'durations': self.durations, 'counts': self.counts, 'escapes': self.escapes, 'saved_at': time.time()})
         if self.snapshot:
             write_json(self.root/'snapshot.json', dict(self.snapshot, saved_at=time.time()))

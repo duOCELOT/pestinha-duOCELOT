@@ -16,6 +16,7 @@ import java.util.concurrent.*;
 /** Explicit opt-in controls and a local conversation-like log of the pet's remarks. */
 public class UsageActivity extends Activity {
     private TextView status,report,messages,selection;
+    private MetricChart usageChart;
     private CheckBox enabled;
     private boolean adjusting=false,loading=false;
     private final Handler ui=new Handler(Looper.getMainLooper());
@@ -40,7 +41,7 @@ public class UsageActivity extends Activity {
         button(controls,"Silenciar os recados por 30 minutos",()->{UsageRepository.change(this,prefs().edit().putLong("snoozeUntil",System.currentTimeMillis()+1800000));render();});
         button(controls,"Retomar recados",()->{UsageRepository.change(this,prefs().edit().remove("snoozeUntil"));render();});
         text(controls,"Os avisos funcionam com o pet solto e a tela desbloqueada. A leitura é periódica (cerca de 30 s), não um cronômetro exato. Tela dividida, troca de atividades e restrições do fabricante podem mudar a estimativa.",14);
-        LinearLayout stats=Design.card(this,layout);Design.label(stats,"TEMPO DOS APPS ESCOLHIDOS");report=text(stats,"",15);
+        LinearLayout stats=Design.card(this,layout);Design.label(stats,"TEMPO DOS APPS ESCOLHIDOS");report=text(stats,"",15);usageChart=new MetricChart(this);stats.addView(usageChart,new LinearLayout.LayoutParams(-1,-2));
         button(stats,"Atualizar medições agora",()->sample(false));button(stats,"Pedir resumo de hoje ao pet",()->sample(true));
         LinearLayout conversation=Design.card(this,layout);Design.label(conversation,"RECADOS DO PET");messages=text(conversation,"",16);messages.setTextIsSelectable(true);
         text(conversation,"Comentários escritos no tom do personagem, com os tempos medidos. Ainda não é um chat com LLM. Guardar o pet pausa os avisos automáticos; a permissão pode ser revogada no Android.",14);
@@ -65,12 +66,13 @@ public class UsageActivity extends Activity {
         boolean access=UsageRepository.hasAccess(this),on=prefs().getBoolean("enabled",false);String mode=prefs().getBoolean("daily",false)?"total de hoje":"sessão atual";
         status.setText((!access?"Acesso ao uso não autorizado.":on?"Recados habilitados.":"Recados automáticos desligados.")+"\nLimite: "+prefs().getInt("limit",20)+" min • "+mode+"\nIntervalo: "+prefs().getInt("cooldown",15)+" min"+(prefs().getLong("snoozeUntil",0)>System.currentTimeMillis()?"\nRecados temporariamente silenciados.":"")+(on&&!PetService.running?"\nSolte o pet para receber avisos automáticos.":""));
         String error=prefs().getString("error","");if(!error.isEmpty())status.append("\nÚltima leitura: "+error);
-        try{JSONObject s=new JSONObject(prefs().getString("snapshot","{}"));if(!s.has("at")){report.setText("Autorize o acesso, escolha apps e atualize. Os totais usam o histórico de hoje fornecido pelo Android.");}else{
+        try{JSONObject s=new JSONObject(prefs().getString("snapshot","{}"));if(!s.has("at")){usageChart.data(new String[0],new double[0],new String[0],1,Design.ACCENT);report.setText("Autorize o acesso, escolha apps e atualize. Os totais usam o histórico de hoje fornecido pelo Android.");}else{
             StringBuilder b=new StringBuilder("Última leitura: ").append(DateFormat.getTimeInstance().format(new Date(s.getLong("at")))).append('\n');
             if(s.optLong("day")!=UsageRepository.dayStart(System.currentTimeMillis()))b.append("Leitura de outro dia; atualize para ver hoje.\n");
             String active=s.optString("current","");if(!active.isEmpty()&&!active.equals("null"))b.append("Na leitura: ").append(apps.optString(active,active)).append(" • sessão ≈ ").append(s.optLong("session_ms")/60000).append(" min\n");
             JSONObject totals=s.optJSONObject("totals");if(totals!=null){Iterator<String> it=totals.keys();while(it.hasNext()){String id=it.next();if(apps.has(id))b.append(apps.optString(id,id)).append(": ≈ ").append(totals.optLong(id)/60000).append(" min hoje\n");}}
             report.setText(b.toString());
+            ArrayList<String> ids=new ArrayList<>();Iterator<String> chartKeys=apps.keys();while(chartKeys.hasNext())ids.add(chartKeys.next());ids.sort((a,z)->Long.compare(totals==null?0:totals.optLong(z),totals==null?0:totals.optLong(a)));String[] labels=new String[ids.size()],values=new String[ids.size()];double[] durations=new double[ids.size()];double max=60000;for(int i=0;i<ids.size();i++){labels[i]=apps.optString(ids.get(i));durations[i]=totals==null?0:totals.optLong(ids.get(i));max=Math.max(max,durations[i]);values[i]=MemoryActivity.duration(durations[i]/1000);}usageChart.data(labels,durations,values,max,Design.ACCENT);
         }}catch(Exception e){report.setText("Atualize para obter uma nova leitura.");}
         try{JSONArray log=new JSONArray(prefs().getString("messages","[]"));StringBuilder b=new StringBuilder();for(int i=log.length()-1;i>=0;i--){JSONObject row=log.getJSONObject(i);b.append(row.optString("character")).append(" • ").append(DateFormat.getTimeInstance().format(new Date(row.optLong("at")))).append("\n").append(row.optString("text")).append("\n\n");}messages.setText(b.length()==0?"Ainda sem recados. Eles aparecem aqui e podem surgir junto do pet.":b.toString());}catch(Exception e){messages.setText("Ainda sem recados.");}
     }

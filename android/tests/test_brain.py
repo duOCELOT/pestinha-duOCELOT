@@ -120,3 +120,18 @@ class MimirPersonalityTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class ActivityDurationTest(unittest.TestCase):
+    def test_duration_is_measured_persisted_and_separate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            one = AndroidBrain(str(Path(directory)/'one'), DEFINITION)
+            two = AndroidBrain(str(Path(directory)/'two'), DEFINITION)
+            for _ in range(5): one.tick(.2)
+            self.assertAlmostEqual(one.snapshot['durations']['awake_seconds'], 1.0)
+            self.assertEqual(two.durations, {})
+            one.save()
+            loaded = AndroidBrain(str(Path(directory)/'one'), DEFINITION)
+            self.assertAlmostEqual(loaded.durations['awake_seconds'], 1.0)
+            before = dict(loaded.durations)
+            loaded.rest(30)
+            self.assertEqual(before, loaded.durations)

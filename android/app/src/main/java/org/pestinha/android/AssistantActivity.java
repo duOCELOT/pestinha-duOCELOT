@@ -16,12 +16,12 @@ import java.util.concurrent.*;
 
 public class AssistantActivity extends Activity {
     private LinearLayout layout,reminders,news,feeds;
-    private TextView countdown,feedStatus;
+    private TextView countdown,feedStatus,waterStatus;
     private EditText address;
     private final Handler ui=new Handler(Looper.getMainLooper());
     private final ExecutorService network=Executors.newSingleThreadExecutor();
     private boolean loading=false;
-    private final Runnable refresh=new Runnable(){public void run(){refreshTimer();ui.postDelayed(this,1000);}};
+    private final Runnable refresh=new Runnable(){public void run(){refreshTimer();refreshWater();ui.postDelayed(this,1000);}};
     private int dp(int n){return Math.round(n*getResources().getDisplayMetrics().density);}
     private android.content.SharedPreferences prefs(){return getSharedPreferences(LocalAssistant.PREFS,0);}
     private void toast(String s){Toast.makeText(this,s,Toast.LENGTH_LONG).show();}
@@ -37,6 +37,12 @@ public class AssistantActivity extends Activity {
         LinearLayout mindful=section("Pausas conscientes");
         text(mindful,"Escolha apps e receba comentários do pet sobre o tempo de uso. Requer Acesso ao uso autorizado por você; desligado por padrão.",14);
         button(mindful,"Uso de aplicativos e recados do pet",()->startActivity(new Intent(this,UsageActivity.class)));
+        LinearLayout water=section("Água ao longo do dia");waterStatus=text(water,"",18);
+        button(water,"Ativar / pausar lembretes de água",()->{boolean on=!Hydration.prefs(this).getBoolean("enabled",false);if(on&&!requireNotifications())return;Hydration.prefs(this).edit().putBoolean("enabled",on).apply();Hydration.ensure(this,true);refreshWater();});
+        button(water,"Intervalo entre lembretes",()->new AlertDialog.Builder(this).setTitle("Lembrar a cada…").setItems(new String[]{"30 minutos","60 minutos","90 minutos","120 minutos"},(d,w)->{Hydration.prefs(this).edit().putInt("interval",new int[]{30,60,90,120}[w]).apply();Hydration.ensure(this,true);refreshWater();}).show());
+        button(water,"Escolher início e fim do dia",this::waterWindow);
+        button(water,"Bebi água • registrar um copo",()->{Hydration.drank(this);refreshWater();});
+        text(water,"Registro manual de copos, sem meta médica de consumo. Padrão: 08h às 22h, a cada 60 min. Os avisos podem atrasar com economia de bateria e não se acumulam ao voltar. Funcionam por notificação mesmo com o pet guardado.",14);
         LinearLayout focus=section("Foco e pausas");countdown=text(focus,"",19);
         button(focus,"Focar por 25 minutos",()->startTimer(25,"focus"));
         button(focus,"Pausa de 5 minutos",()->startTimer(5,"break"));
@@ -73,6 +79,9 @@ public class AssistantActivity extends Activity {
         text(rss,"Os trechos vêm dos próprios feeds; ainda não há resumo por LLM nem busca geral na web. Notícias não podem acionar funções do app. Abrir uma matéria usa seu navegador.",14);
         setContentView(scroll);Design.install(this,scroll);renderFeeds();renderReminders();showCache();
     }
+    private String clock(int minute){return String.format(Locale.ROOT,"%02d:%02d",minute/60,minute%60);}
+    private void refreshWater(){if(waterStatus==null)return;android.content.SharedPreferences p=Hydration.prefs(this);waterStatus.setText((p.getBoolean("enabled",false)?"Lembretes ativos":"Lembretes pausados")+" • "+p.getInt("interval",60)+" min\n"+clock(p.getInt("start",480))+"–"+clock(p.getInt("end",1320))+" • "+Hydration.cups(this)+" copos registrados hoje");}
+    private void waterWindow(){android.content.SharedPreferences p=Hydration.prefs(this);int start=p.getInt("start",480),end=p.getInt("end",1320);new TimePickerDialog(this,(v,h,m)->{int from=h*60+m;new TimePickerDialog(this,(v2,h2,m2)->{int to=h2*60+m2;if(to<=from){toast("O fim deve ser depois do início, no mesmo dia.");return;}p.edit().putInt("start",from).putInt("end",to).apply();Hydration.ensure(this,true);refreshWater();},end/60,end%60,true).show();},start/60,start%60,true).show();}
     private boolean requireNotifications(){if(LocalAssistant.notificationsAllowed(this))return true;requestNotifications();toast("Permita as notificações e tente criar o aviso novamente.");return false;}
     private void requestNotifications(){
         if(Build.VERSION.SDK_INT>=33&&checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},12);
@@ -106,7 +115,7 @@ public class AssistantActivity extends Activity {
     }
     private void renderReminders(){
         reminders.removeAllViews();JSONArray list=LocalAssistant.alarms(this);int count=0;
-        for(int i=0;i<list.length();i++){JSONObject row=list.optJSONObject(i);if(row==null||row.optInt("id")==1)continue;count++;
+        for(int i=0;i<list.length();i++){JSONObject row=list.optJSONObject(i);if(row==null||row.optInt("id")==1||row.optInt("id")==2)continue;count++;
             text(reminders,row.optString("title")+"\n"+DateFormat.getDateTimeInstance().format(new Date(row.optLong("when"))),16);
             int id=row.optInt("id");button(reminders,"Cancelar este lembrete",()->{LocalAssistant.cancel(this,id);renderReminders();});
         }
