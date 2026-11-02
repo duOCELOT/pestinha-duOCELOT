@@ -14,6 +14,12 @@ import org.json.JSONObject;
 import java.nio.charset.StandardCharsets;
 
 public class PetService extends Service {
+    private static volatile PetService instance;
+    static void assistantNotice(String text,String event){
+        PetService service=instance;if(service==null||service.closed)return;
+        if(event!=null)service.event(event);
+        service.ui.post(()->{if(!service.closed&&service.world!=null&&service.screenOn)service.world.message(text,false,service.pos.x,service.pos.y,()->{});});
+    }
     public static volatile boolean running = false, busy = false;
     public static volatile String liveSnapshot = "";
     public static volatile String emotion = "observando";
@@ -59,6 +65,7 @@ public class PetService extends Service {
 
     @Override public void onCreate() {
         super.onCreate();
+        instance=this;
         busy = true; liveSnapshot = "";
         petId = MemoryActivity.petId(this);
         getSharedPreferences("pet", 0).edit().remove("error").apply();
@@ -150,6 +157,8 @@ public class PetService extends Service {
                         .call(new java.io.File(getFilesDir(), "memory/"+petId).toString(), definition);
                 brain.callAttr("event", "context:"+getSharedPreferences("pet",0).getString("context","livre"));
                 if(getSharedPreferences("pet",0).getBoolean("mischief",false))brain.callAttr("event","mischief");
+                JSONObject focus=LocalAssistant.focus(this);
+                if(focus!=null&&focus.optLong("when")>System.currentTimeMillis()&&focus.optString("kind").equals("focus"))brain.callAttr("event","focus_start");
                 if (!closed) { running = true; worker.post(tick); }
             } catch (Exception e) { ui.post(() -> fail(e)); }
         });
@@ -262,6 +271,7 @@ public class PetService extends Service {
         return START_NOT_STICKY;
     }
     @Override public void onDestroy() {
+        if(instance==this)instance=null;
         closed = true; running = false; ui.removeCallbacksAndMessages(null); storePosition();
         if (receiverRegistered) unregisterReceiver(screen);
         if(motion!=null)motion.stop();

@@ -1,4 +1,47 @@
-# Pestinha
+# Pestinha Android — fork duOCELOT
+
+Versão Android experimental **0.4**, desenvolvida neste fork a partir de
+[mille-okws/pestinha](https://github.com/mille-okws/pestinha). A adaptação está
+na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
+O texto original de desktop foi preservado abaixo.
+
+## Instalar no celular
+
+1. Abra as [compilações Android](https://github.com/duOCELOT/pestinha-duOCELOT/actions/workflows/android.yml?query=branch%3Aandroid).
+2. Escolha a execução mais recente que terminou com sucesso e baixe o artefato
+   `pestinha-android-debug` (é necessário entrar no GitHub).
+3. Extraia o ZIP e instale `app-debug.apk`. Android 8+, ARM64 ou x86_64.
+4. Abra Pestinha, permita aparecer sobre outros apps e toque em **Soltar o pet**.
+
+Não precisa de Termux, Ubuntu ou VNC. Versões 0.2+ usam uma assinatura fixa de
+**desenvolvimento** para permitir atualizações conservando dados. APKs 0.1 têm
+assinaturas diferentes: faça backup antes de desinstalar. Estes APKs são
+experimentais, não uma release de produção/Play Store.
+
+## O que já existe no Android
+
+- Bryan e Jorge, rede neural original, emoções e memória local separada.
+- Carinho, cutucada, arraste/arremesso, bolinha, notebook, bilhetes, imagem
+  personalizada, protestos, cantinho adaptado, fogos e configurações de tamanho.
+- Física opcional por inclinação, acelerômetro/gravidade e balanço pelo giroscópio.
+- Painel **Memória e cérebro**: associações aprendidas, necessidades, motores,
+  episódios, exportação e restauração do estado por personagem.
+- Painel **Assistente**: foco e pausas, lembretes locais, atalhos para criar
+  eventos/alarmes e leitor RSS/Atom de fontes escolhidas pelo usuário.
+
+Internet apenas ao atualizar feeds manualmente; memória do pet fica no aparelho.
+Não há LLM instalado, busca geral, leitura de tela ou leitura dos compromissos.
+Notícias são títulos/trechos dos feeds com fontes, não resumos por IA. O Android
+controla permissões de notificações, overlays e horários precisos de lembretes.
+
+[Instruções, permissões, backups e limitações Android](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md).
+Não é paridade completa com o desktop: o pet não observa janelas de outros apps
+nem pousa em suas barras. Compilação/testes automáticos não substituem validação
+em aparelho real. Código GPL-3.0-or-later; veja [LICENSE](LICENSE).
+
+---
+
+# Pestinha — documentação original de desktop
 
 Pets de tela para Windows, macOS e Linux, cada um com o próprio cérebro. São dois personagens por enquanto:
 

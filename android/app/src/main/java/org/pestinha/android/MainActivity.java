@@ -36,11 +36,12 @@ public class MainActivity extends Activity {
         scroll.addView(layout);
         text(layout, "PESTINHA / ANDROID", 13, Color.rgb(115, 230, 202));
         text(layout, "Um pequeno caos.\nAgora no seu bolso.", 32, Color.WHITE);
-        text(layout, "Pestinha • versão experimental 0.3", 16, Color.LTGRAY);
+        text(layout, "Pestinha • versão experimental 0.4", 16, Color.LTGRAY);
         PetView preview = new PetView(this);
         layout.addView(preview, new LinearLayout.LayoutParams(dp(180), dp(140)));
         status = text(layout, "Pronto para conhecer você.", 17, Color.WHITE);
         text(layout, "Toque para cutucar. Dois toques fazem carinho. Arraste e solte rápido para arremessar. Segure para abrir este painel.", 16, Color.LTGRAY);
+        button(layout, "Assistente • foco, lembretes, agenda e notícias", v -> startActivity(new Intent(this, AssistantActivity.class)));
         button(layout, "Memória e cérebro • ver / exportar / restaurar", v -> startActivity(new Intent(this, MemoryActivity.class)));
         text(layout,"Personagem (guarde o pet antes de trocar)",15,Color.LTGRAY);
         Spinner character=new Spinner(this);
@@ -109,7 +110,7 @@ public class MainActivity extends Activity {
         slider(layout,"Tamanho", "size",60,160);
         slider(layout,"Velocidade", "speed",25,200);
         button(layout, "Guardar o pet", v -> stopService(new Intent(this, PetService.class)));
-        text(layout, "Tudo fica neste aparelho. Sem internet, leitura de tela ou acesso aos seus aplicativos. A animação pausa com a tela apagada. Alguns apps do sistema podem ocultar o pet.", 14, Color.LTGRAY);
+        text(layout, "Memória local. Internet somente para os feeds que você adicionar e atualizar. Sem leitura de tela ou de compromissos da agenda. A animação pausa com a tela apagada. Alguns apps do sistema podem ocultar o pet.", 14, Color.LTGRAY);
         button(layout, "Sobre o projeto e licença", v -> new AlertDialog.Builder(this)
                 .setTitle("Pestinha Android • GPL-3.0-or-later")
                 .setMessage("Adaptação experimental de mille-okws/pestinha. Rede neural, emoções e homeostase originais; interface Android nova. Código-fonte: github.com/mille-okws/pestinha (original). Esta adaptação inclui seus fontes na entrega.\n\nInclui bolinha, notebook, bilhetes, imagem personalizada, protestos, cantinho e monitor de memória. Janelas de outros apps e posição do cursor de desktop não são observadas. O contexto é escolhido por você. A versão Android não é uma versão oficial do autor.\n\n" + license())

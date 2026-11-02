@@ -91,6 +91,15 @@ class AndroidBrain:
 
     def event(self, kind):
         now = time.monotonic()
+        if kind == 'focus_start':
+            self.context = 'trabalho'
+            self.notebook = True
+            self.asleep = self.manual_sleep = False
+            return
+        if kind == 'focus_end':
+            self.context = 'livre'
+            self.notebook = False
+            return
         if kind == 'pause':
             self.paused_at = now
             return
