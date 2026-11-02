@@ -1,6 +1,6 @@
 # Pestinha Android — fork duOCELOT
 
-Versão Android experimental **0.11**, desenvolvida neste fork a partir de
+Versão Android experimental **0.12**, desenvolvida neste fork a partir de
 [mille-okws/pestinha](https://github.com/mille-okws/pestinha). A adaptação está
 na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
 O texto original de desktop foi preservado abaixo.
@@ -307,3 +307,10 @@ A bolinha mantém sua própria física, inclusive inclinação quando habilitada
 A preferência de inclinação é preservada para quando você soltar a posição.
 Se a orientação, o tamanho ou a área da tela mudar, a posição pode ser ajustada
 para que o boneco continue dentro dos limites visíveis.
+
+
+## Arkanoid sobre os apps (0.12)
+
+Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
+para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
+Pausar/fechar ficam no topo. Veja o [guia do jogo](docs/android/ARKANOID.md).
