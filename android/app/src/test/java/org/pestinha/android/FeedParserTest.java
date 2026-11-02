@@ -10,6 +10,13 @@ import java.util.*;
 @org.robolectric.annotation.Config(sdk=28,manifest=org.robolectric.annotation.Config.NONE)
 public class FeedParserTest {
     private List<FeedParser.Item> parse(String xml) throws Exception {return FeedParser.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)),"https://example.org/feed");}
+    @Test public void officialCatalogHasUniqueHttpsSourcesAndNoSubscriptionsByDefault() throws Exception {
+        android.content.Context c=org.robolectric.RuntimeEnvironment.getApplication();
+        org.json.JSONArray entries=FeedCatalog.entries(c);java.util.Set<String> urls=new java.util.HashSet<>();
+        assertEquals(14,entries.length());
+        for(int i=0;i<entries.length();i++){org.json.JSONObject row=entries.getJSONObject(i);assertTrue(urls.add(row.getString("url")));FeedParser.https(row.getString("url"));FeedParser.https(row.getString("publisher"));assertEquals("2026-11-02",row.getString("verified_at"));}
+        assertFalse(c.getSharedPreferences(LocalAssistant.PREFS,0).contains("feeds"));
+    }
     @Test public void rssPreservesSourceDateAndReadableEntry() throws Exception {
         FeedParser.Item i=parse("<rss><channel><title>Source</title><item><title>A &amp; B</title><link>/story</link><description><![CDATA[<b>Excerpt</b>]]></description><pubDate>Today</pubDate></item></channel></rss>").get(0);
         assertEquals("A & B",i.title);assertEquals("https://example.org/story",i.link);assertEquals("Today",i.date);assertEquals("<b>Excerpt</b>",i.snippet);

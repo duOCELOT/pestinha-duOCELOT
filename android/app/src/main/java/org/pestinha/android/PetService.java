@@ -20,6 +20,7 @@ public class PetService extends Service {
         if(event!=null)service.event(event);
         service.ui.post(()->{if(!service.closed&&service.world!=null&&service.screenOn)service.world.message(text,false,service.pos.x,service.pos.y,()->{});});
     }
+    static void usageSettingsChanged(){PetService service=instance;if(service!=null)service.ui.post(()->{if(!service.closed&&service.usageMonitor!=null)service.usageMonitor.update(service.screenOn);});}
     public static volatile boolean running = false, busy = false;
     public static volatile String liveSnapshot = "";
     public static volatile String emotion = "observando";
@@ -32,6 +33,7 @@ public class PetService extends Service {
     private WindowManager.LayoutParams pos;
     private PetView pet;
     private PetWorld world;
+    private UsageMonitor usageMonitor;
     private QuickMenu quickMenu;
     private boolean menuOpenedByHold=false;
     private MotionSensors motion;
@@ -51,6 +53,7 @@ public class PetService extends Service {
         public void onReceive(Context c, Intent i) {
             screenOn = Intent.ACTION_SCREEN_ON.equals(i.getAction());
             updateMotion();
+            if(usageMonitor!=null)usageMonitor.update(screenOn);
             if(!screenOn){pressed=dragging=false;event("release");if(quickMenu!=null)quickMenu.dismiss();}
             ui.removeCallbacks(frame);
             if (screenOn) { lastFrame = SystemClock.uptimeMillis(); ui.post(frame); }
@@ -87,6 +90,7 @@ public class PetService extends Service {
         pet = new PetView(this);
         pet.jorge = petId.equals("jorge");
         world = new PetWorld(this, wm, this::event);
+        usageMonitor=new UsageMonitor(this);
         quickMenu = new QuickMenu(this,wm,action->{
             if(action.equals("stop"))stopSelf();
             else if(action.equals("panel")||action.equals("memory")||action.equals("assistant")){
@@ -162,7 +166,7 @@ public class PetService extends Service {
         else registerReceiver(screen, filter);
         receiverRegistered = true;
         screenOn = getSystemService(PowerManager.class).isInteractive();
-        updateMotion();
+        updateMotion();usageMonitor.update(screenOn);
         thread = new HandlerThread("PestinhaBrain"); thread.start(); worker = new Handler(thread.getLooper());
         worker.post(() -> {
             try {
@@ -294,6 +298,7 @@ public class PetService extends Service {
         if(instance==this)instance=null;
         closed = true; running = false; ui.removeCallbacksAndMessages(null); storePosition();
         if (receiverRegistered) unregisterReceiver(screen);
+        if(usageMonitor!=null)usageMonitor.stop();
         if(motion!=null)motion.stop();
         if(quickMenu!=null)quickMenu.dismiss();
         if(world!=null)world.close();

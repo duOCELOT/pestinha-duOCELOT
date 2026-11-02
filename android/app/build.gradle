@@ -24,8 +24,8 @@ android {
         applicationId 'org.pestinha.android'
         minSdk 26
         targetSdk 35
-        versionCode 7
-        versionName '0.6.0-alpha'
+        versionCode 8
+        versionName '0.7.0-alpha'
         ndk { abiFilters 'arm64-v8a', 'x86_64' }
     }
     testOptions {
@@ -92,7 +92,7 @@ tasks.register('verifyDebugPayload') {
     doLast {
         def apk = layout.buildDirectory.file('outputs/apk/debug/app-debug.apk').get().asFile
         new java.util.zip.ZipFile(apk).withCloseable { zip ->
-            ['assets/pets/bryan.json', 'assets/pets/jorge.json', 'assets/pets/mimir.json', 'assets/LICENSE', 'assets/chaquopy/app.imy'].each { path ->
+            ['assets/pets/bryan.json', 'assets/pets/jorge.json', 'assets/pets/mimir.json', 'assets/feed-catalog.json', 'assets/LICENSE', 'assets/chaquopy/app.imy'].each { path ->
                 if (zip.getEntry(path) == null) {
                     throw new GradleException("Required APK entry missing: $path")
                 }

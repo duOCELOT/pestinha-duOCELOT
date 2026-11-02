@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "verified_at": "2026-11-02",
+  "feeds": [
+    {
+      "name": "Agência Brasil — últimas",
+      "category": "Notícias",
+      "language": "pt-BR",
+      "url": "https://agenciabrasil.ebc.com.br/rss/ultimasnoticias/feed.xml",
+      "publisher": "https://agenciabrasil.ebc.com.br/feed/",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "BBC News Brasil",
+      "category": "Notícias",
+      "language": "pt-BR",
+      "url": "https://feeds.bbci.co.uk/portuguese/rss.xml",
+      "publisher": "https://www.bbc.com/portuguese",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "g1 — notícias",
+      "category": "Notícias",
+      "language": "pt-BR",
+      "url": "https://g1.globo.com/rss/g1/",
+      "publisher": "https://g1.globo.com/",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "BBC — mundo",
+      "category": "Mundo",
+      "language": "en",
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "publisher": "https://www.bbc.com/news",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "Agência Brasil — economia",
+      "category": "Economia",
+      "language": "pt-BR",
+      "url": "https://agenciabrasil.ebc.com.br/rss/economia/feed.xml",
+      "publisher": "https://agenciabrasil.ebc.com.br/feed/",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "g1 — economia",
+      "category": "Economia",
+      "language": "pt-BR",
+      "url": "https://g1.globo.com/rss/g1/economia/",
+      "publisher": "https://g1.globo.com/economia/",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "InfoMoney",
+      "category": "Bolsa e mercados",
+      "language": "pt-BR",
+      "url": "https://www.infomoney.com.br/feed/",
+      "publisher": "https://www.infomoney.com.br/",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "Money Times",
+      "category": "Bolsa e mercados",
+      "language": "pt-BR",
+      "url": "https://www.moneytimes.com.br/feed/",
+      "publisher": "https://www.moneytimes.com.br/",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "Bloomberg Markets",
+      "category": "Bolsa e mercados",
+      "language": "en",
+      "url": "https://feeds.bloomberg.com/markets/news.rss",
+      "publisher": "https://www.bloomberg.com/markets",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "CoinDesk",
+      "category": "Criptomoedas",
+      "language": "en",
+      "url": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+      "publisher": "https://www.coindesk.com/coindesk-news/2021/09/17/coindesk-rss",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "Cointelegraph",
+      "category": "Criptomoedas",
+      "language": "en",
+      "url": "https://cointelegraph.com/rss",
+      "publisher": "https://cointelegraph.com/",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "Livecoins",
+      "category": "Criptomoedas",
+      "language": "pt-BR",
+      "url": "https://livecoins.com.br/feed/",
+      "publisher": "https://livecoins.com.br/",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "BBC — tecnologia",
+      "category": "Tecnologia",
+      "language": "en",
+      "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+      "publisher": "https://www.bbc.com/news/technology",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    },
+    {
+      "name": "NASA",
+      "category": "Ciência",
+      "language": "en",
+      "url": "https://www.nasa.gov/feed/",
+      "publisher": "https://www.nasa.gov/",
+      "verified_at": "2026-11-02",
+      "verification": "HTTPS 200 e XML RSS com itens"
+    }
+  ]
+}

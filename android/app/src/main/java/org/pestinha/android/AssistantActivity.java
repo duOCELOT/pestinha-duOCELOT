@@ -34,6 +34,9 @@ public class AssistantActivity extends Activity {
         layout=new LinearLayout(this);layout.setOrientation(LinearLayout.VERTICAL);layout.setPadding(dp(22),dp(36),dp(22),dp(50));scroll.addView(layout);
         text(layout,"Seu assistente",28);
         text(layout,"Timers e lembretes ficam neste aparelho. Notícias usam apenas os feeds HTTPS que você adicionar. Agenda e relógio abrem para você revisar e confirmar.",15);
+        LinearLayout mindful=section("Pausas conscientes");
+        text(mindful,"Escolha apps e receba comentários do pet sobre o tempo de uso. Requer Acesso ao uso autorizado por você; desligado por padrão.",14);
+        button(mindful,"Uso de aplicativos e recados do pet",()->startActivity(new Intent(this,UsageActivity.class)));
         LinearLayout focus=section("Foco e pausas");countdown=text(focus,"",19);
         button(focus,"Focar por 25 minutos",()->startTimer(25,"focus"));
         button(focus,"Pausa de 5 minutos",()->startTimer(5,"break"));
@@ -59,6 +62,8 @@ public class AssistantActivity extends Activity {
         button(external,"Abrir timer do relógio",()->open(new Intent(AlarmClock.ACTION_SET_TIMER).putExtra(AlarmClock.EXTRA_LENGTH,25*60).putExtra(AlarmClock.EXTRA_MESSAGE,"Foco com o Pestinha").putExtra(AlarmClock.EXTRA_SKIP_UI,false)));
         text(external,"O app não lê seus compromissos. Confira os campos e salve no aplicativo que abrir.",14);
         LinearLayout rss=section("Notícias • RSS / Atom");
+        button(rss,"Escolher fontes oficiais por categoria",this::chooseOfficialFeeds);
+        text(rss,"Biblioteca de feeds dos próprios veículos, verificada em 02/11/2026. Você escolhe quais adicionar; até 10 ativos. São notícias, não cotações em tempo real.",14);
         address=new EditText(this);address.setTextColor(Color.WHITE);address.setHintTextColor(Color.LTGRAY);address.setHint("https://site.exemplo/feed.xml");address.setSingleLine();address.setInputType(android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_VARIATION_URI);rss.addView(address);
         button(rss,"Adicionar feed",this::addFeed);
         feeds=new LinearLayout(this);feeds.setOrientation(LinearLayout.VERTICAL);rss.addView(feeds);
@@ -115,13 +120,21 @@ public class AssistantActivity extends Activity {
     private void clockAlarm(){Calendar now=Calendar.getInstance();new TimePickerDialog(this,(v,h,m)->open(new Intent(AlarmClock.ACTION_SET_ALARM).putExtra(AlarmClock.EXTRA_HOUR,h).putExtra(AlarmClock.EXTRA_MINUTES,m).putExtra(AlarmClock.EXTRA_MESSAGE,"Pestinha").putExtra(AlarmClock.EXTRA_SKIP_UI,false)),now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE),true).show();}
     private void open(Intent intent){try{startActivity(intent);}catch(ActivityNotFoundException e){toast("Nenhum aplicativo compatível instalado.");}catch(SecurityException e){toast("O aplicativo de destino não permitiu abrir esta ação.");}}
     private JSONArray feedUrls(){try{return new JSONArray(prefs().getString("feeds","[]"));}catch(JSONException e){return new JSONArray();}}
+    private void chooseOfficialFeeds(){
+        try{JSONArray catalog=FeedCatalog.entries(this),current=feedUrls();String[] labels=new String[catalog.length()];boolean[] chosen=new boolean[catalog.length()];
+            java.util.HashSet<String> library=new java.util.HashSet<>();for(int i=0;i<catalog.length();i++){JSONObject row=catalog.getJSONObject(i);String url=row.getString("url");library.add(url);labels[i]=row.getString("category")+" • "+row.getString("name")+" ("+row.getString("language")+")";for(int j=0;j<current.length();j++)if(url.equals(current.optString(j)))chosen[i]=true;}
+            new AlertDialog.Builder(this).setTitle("Fontes dos próprios veículos").setMultiChoiceItems(labels,chosen,(d,which,value)->chosen[which]=value).setNegativeButton("Cancelar",null).setPositiveButton("Salvar seleção",(d,w)->{
+                try{JSONArray next=new JSONArray();java.util.HashSet<String> seen=new java.util.HashSet<>();JSONArray latest=feedUrls();for(int i=0;i<latest.length();i++){String url=latest.optString(i);if(!library.contains(url)&&seen.add(url))next.put(url);}for(int i=0;i<catalog.length();i++)if(chosen[i]){String url=catalog.getJSONObject(i).getString("url");if(seen.add(url))next.put(url);}if(next.length()>10){toast("Escolha até 10 feeds no total, incluindo os adicionados manualmente.");return;}prefs().edit().putString("feeds",next.toString()).remove("news").remove("newsAt").apply();renderFeeds();showCache();toast("Fontes salvas. Toque em Atualizar notícias agora para consultar.");}catch(Exception e){toast("Não foi possível salvar: "+e.getMessage());}
+            }).show();
+        }catch(Exception e){toast("Não foi possível abrir a biblioteca de fontes.");}
+    }
     private void addFeed(){
         try{String url=FeedParser.https(address.getText().toString()).toString();JSONArray list=feedUrls();if(list.length()>=10){toast("Limite de 10 feeds.");return;}
             for(int i=0;i<list.length();i++)if(url.equals(list.optString(i))){toast("Esse feed já está na lista.");return;}
             list.put(url);prefs().edit().putString("feeds",list.toString()).apply();address.setText("");renderFeeds();
         }catch(Exception e){toast("Informe o endereço HTTPS do feed RSS ou Atom.");}
     }
-    private void renderFeeds(){feeds.removeAllViews();JSONArray list=feedUrls();for(int i=0;i<list.length();i++){String url=list.optString(i);text(feeds,url,14);button(feeds,"Remover este feed",()->{JSONArray next=new JSONArray();JSONArray current=feedUrls();for(int j=0;j<current.length();j++)if(!url.equals(current.optString(j)))next.put(current.optString(j));prefs().edit().putString("feeds",next.toString()).remove("news").remove("newsAt").apply();renderFeeds();showCache();});}}
+    private void renderFeeds(){feeds.removeAllViews();JSONArray list=feedUrls();for(int i=0;i<list.length();i++){String url=list.optString(i);text(feeds,FeedCatalog.name(this,url)+"\n"+url,14);button(feeds,"Remover este feed",()->{JSONArray next=new JSONArray();JSONArray current=feedUrls();for(int j=0;j<current.length();j++)if(!url.equals(current.optString(j)))next.put(current.optString(j));prefs().edit().putString("feeds",next.toString()).remove("news").remove("newsAt").apply();renderFeeds();showCache();});}}
     private void fetchNews(){
         if(loading){toast("Atualização em andamento.");return;}JSONArray list=feedUrls();if(list.length()==0){toast("Adicione pelo menos um feed.");return;}
         loading=true;feedStatus.setText("Consultando os feeds escolhidos…");

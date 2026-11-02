@@ -10,7 +10,7 @@ final class FeedClient {
         for(int redirects=0;redirects<5;redirects++){
             HttpURLConnection c=(HttpURLConnection)uri.toURL().openConnection();
             c.setConnectTimeout(10000);c.setReadTimeout(10000);c.setInstanceFollowRedirects(false);
-            c.setRequestProperty("User-Agent","PestinhaAndroid/0.4 (RSS reader)");
+            c.setRequestProperty("User-Agent","PestinhaAndroid/0.7 (RSS reader)");
             c.setRequestProperty("Accept","application/rss+xml, application/atom+xml, application/xml, text/xml");
             try{
                 int code=c.getResponseCode();
