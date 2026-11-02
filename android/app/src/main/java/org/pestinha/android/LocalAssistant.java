@@ -53,7 +53,7 @@ final class LocalAssistant {
         if(!c.getSharedPreferences(PREFS,0).edit().putString("alarms",remaining.toString()).commit())return;
         channel(c);String title=found.optString("title","Lembrete");
         PendingIntent open=PendingIntent.getActivity(c,0,new Intent(c,AssistantActivity.class),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-        Notification note=new Notification.Builder(c,CHANNEL).setSmallIcon(R.drawable.ic_pet).setContentTitle("Pestinha • "+title)
+        Notification note=new Notification.Builder(c,CHANNEL).setSmallIcon(R.drawable.ic_notification).setContentTitle("Pestinha • "+title)
             .setContentText("Toque para abrir seus controles.").setContentIntent(open).setAutoCancel(true)
             .setStyle(new Notification.BigTextStyle().bigText(title)).build();
         if(Build.VERSION.SDK_INT>=33&&c.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED)return;

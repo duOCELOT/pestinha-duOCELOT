@@ -77,7 +77,7 @@ public class PetService extends Service {
         nm.createNotificationChannel(new NotificationChannel("pet", "Pet flutuante", NotificationManager.IMPORTANCE_LOW));
         PendingIntent panel = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_IMMUTABLE);
         PendingIntent stop = PendingIntent.getService(this, 1, new Intent(this, PetService.class).setAction("stop"), PendingIntent.FLAG_IMMUTABLE);
-        Notification note = new Notification.Builder(this, "pet").setSmallIcon(org.pestinha.android.R.drawable.ic_pet)
+        Notification note = new Notification.Builder(this, "pet").setSmallIcon(org.pestinha.android.R.drawable.ic_notification)
                 .setContentTitle((petId.equals("jorge")?"Jorge":"Bryan")+" está por aqui").setContentText("Toque para abrir os controles.")
                 .setContentIntent(panel).setOngoing(true)
                 .addAction(new Notification.Action.Builder(null, "Guardar", stop).build()).build();
