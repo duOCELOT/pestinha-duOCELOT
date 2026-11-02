@@ -21,8 +21,6 @@ android {
     sourceSets {
         main {
             python.srcDir "$buildDir/generated-python"
-            assets.srcDir '../..'
-            assets.includes = ['LICENSE', 'pets/bryan.json']
         }
     }
 }
@@ -51,3 +49,11 @@ tasks.configureEach {
         dependsOn 'syncBrain'
     }
 }
+
+// A narrow generated assets directory avoids treating the entire repository
+// (including Gradle outputs) as an input of mergeDebugAssets.
+def syncPetAssets = tasks.register('syncPetAssets', Sync) {
+    from('../..') { include 'LICENSE', 'pets/bryan.json' }
+    into layout.buildDirectory.dir('generated-pet-assets')
+}
+android.sourceSets.main.assets.srcDir(syncPetAssets)
