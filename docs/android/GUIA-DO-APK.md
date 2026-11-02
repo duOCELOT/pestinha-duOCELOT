@@ -220,8 +220,7 @@ lista alarmes existentes e não altera/exclui eventos já salvos.
 A lista de assinaturas começa vazia. **Escolher fontes oficiais por categoria**
 oferece uma biblioteca de 14 endereços; você escolhe até dez feeds ativos.
 Veja a [lista de fontes e referências dos editores](FONTES-RSS.md). Cada consulta aceita até 30 itens
-por fonte, com limites de tamanho e tempo de conexão/leitura. Não há consultas
-automáticas em segundo plano, resumo por LLM ou busca geral na web.
+por fonte, com limites de tamanho e tempo de conexão/leitura. O radar opcional permite consultas automáticas com o pet solto e a tela desbloqueada. Não há resumo por LLM ou busca geral na web.
 
 Os trechos vêm do feed e podem estar incompletos. O cache permite ler a última
 consulta offline e não representa informação em tempo real. Erros de fontes
@@ -368,3 +367,9 @@ Os registros de água e configurações do assistente não fazem parte do backup
 O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
 defina a entrega e escolha a frequência de acompanhamento. O painel permite
 começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAREFAS.md).
+
+
+## Meu radar (0.10)
+
+Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
+comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](MEU-RADAR.md).

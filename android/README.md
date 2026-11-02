@@ -1,4 +1,4 @@
-# Pestinha Android 0.9 (experimental)
+# Pestinha Android 0.10 (experimental)
 
 Adaptação independente de mille-okws/pestinha. Interface Android em Java/Canvas;
 rede neural e memória originais em Python, integradas por Chaquopy. Sem Termux,
@@ -154,7 +154,7 @@ Abra **Assistente • foco, lembretes, agenda e notícias** no painel.
 - Relógio: abre o app do sistema para confirmar um alarme ou timer; requer um
   aplicativo compatível instalado. Não usa confirmação automática/skip UI.
 - RSS/Atom: até dez feeds HTTPS escolhidos por você, com biblioteca opcional de 14 fontes dos próprios veículos; nenhuma assinatura é ativada automaticamente.
-  A rede só é consultada ao tocar **Atualizar notícias agora**. Cada resposta
+  A atualização pode ser manual ou automática no radar opcional, com pet solto e tela desbloqueada. Cada resposta
   tem timeout, limite de 1,5 MB, até 30 itens, e redirecionamentos só para HTTPS.
   Não aceita credenciais na URL, DTDs ou links que executam ações no aparelho.
   Trechos são texto do próprio feed, não resumos por IA. Mostra fonte, data
@@ -164,8 +164,7 @@ Abra **Assistente • foco, lembretes, agenda e notícias** no painel.
 Não há LLM, busca geral na internet, leitura de agenda, envio de mensagens ou
 execução de ordens contidas em notícias. Os pedidos de rede incluem o endereço
 IP e os cabeçalhos normais ao servidor do feed, sem enviar memória do pet,
-lembretes ou agenda. Remover um feed limpa a cópia de notícias salva. Não há
-atualização automática em segundo plano. Timers, lista de feeds e cache ficam
+lembretes ou agenda. Remover um feed limpa a cópia de notícias salva. O radar opcional atualiza aproximadamente a cada hora enquanto o pet está solto e a tela desbloqueada. Timers, lista de feeds e cache ficam
 nas preferências privadas do app; **não estão no backup JSON do cérebro**.
 A atualização normal do APK conserva esses dados, pois usa a mesma assinatura
 fixa de desenvolvimento desde 0.2.
@@ -249,3 +248,9 @@ Consulte o [guia das telas](../docs/android/GUIA-DO-APK.md) para ativar e entend
 O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
 defina a entrega e escolha a frequência de acompanhamento. O painel permite
 começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](../docs/android/TAREFAS.md).
+
+
+## Meu radar (0.10)
+
+Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
+comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](../docs/android/MEU-RADAR.md).

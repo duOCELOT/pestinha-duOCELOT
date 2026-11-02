@@ -1,6 +1,6 @@
 # Pestinha Android — apresentação do projeto
 
-**Material da versão 0.9 experimental.** Este diretório apresenta o APK, suas
+**Material da versão 0.10 experimental.** Este diretório apresenta o APK, suas
 interfaces e funções. Foi conferido com o código da branch `android`.
 
 | Para quem | Material |
@@ -64,7 +64,7 @@ solte novamente. Trocar de personagem não apaga a memória dos demais.
 | Memória | Monitor, associações aprendidas, episódios, consolidação e backup por personagem |
 | Produtividade | Foco de 25 minutos, pausa de 5, duração personalizada e lembretes locais |
 | Integrações | Solicitar criação de eventos e alarmes nos aplicativos de agenda e relógio |
-| Notícias | Biblioteca opcional de 14 feeds dos próprios veículos; leitura manual, trechos, fontes, links e cache local |
+| Notícias | Biblioteca opcional de 14 feeds dos próprios veículos; seleção diária de temas, leitura manual ou automática opcional com o pet, trechos, fontes, links e cache local |
 | Pausas conscientes | Uso estimado dos apps escolhidos, com autorização, limite e recados do personagem |
 
 ## Mapa das telas
@@ -135,3 +135,9 @@ do próprio projeto.
 O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
 defina a entrega e escolha a frequência de acompanhamento. O painel permite
 começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAREFAS.md).
+
+
+## Meu radar (0.10)
+
+Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
+comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](MEU-RADAR.md).

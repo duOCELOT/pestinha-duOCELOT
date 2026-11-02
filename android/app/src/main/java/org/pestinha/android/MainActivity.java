@@ -27,8 +27,9 @@ public class MainActivity extends Activity {
         return out.toString("UTF-8");
     }
 
+    private android.app.Dialog radarDialog;private boolean radarRestore;
     @Override public void onCreate(Bundle state) {
-        super.onCreate(state);LocalAssistant.rearm(this);Tasks.rearm(this);
+        super.onCreate(state);radarRestore=state!=null&&state.getBoolean("radarOpen",false);LocalAssistant.rearm(this);Tasks.rearm(this);
         ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setClipToPadding(false);
         LinearLayout layout=Design.column(this);layout.setPadding(dp(20),dp(20),dp(20),dp(28));scroll.addView(layout);
         TextView brand=Design.text(this,"PESTINHA",13,Design.ACCENT);brand.setLetterSpacing(.18f);brand.setPadding(dp(4),dp(4),0,dp(16));layout.addView(brand);
@@ -43,6 +44,7 @@ public class MainActivity extends Activity {
         launch=Design.button(hero,"Soltar o pet","primary",this::startPet);
         permission=Design.button(hero,"Permitir aparecer sobre outros apps","secondary",()->startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:"+getPackageName()))));
         TextView hint=Design.text(this,"Segure para abrir os atalhos. Dois toques fazem carinho.",14,Design.MUTED);hint.setPadding(0,dp(12),0,0);hero.addView(hint);
+        navigation(layout,"note","Meu radar","Assuntos do dia e notícias com o pet",()->startActivity(new Intent(this,NewsActivity.class)));
         navigation(layout,"assistant","Assistente","Foco, lembretes e notícias",()->startActivity(new Intent(this,AssistantActivity.class)));
         navigation(layout,"note","Tarefas e prazos","Conte o que precisa fazer e acompanhe",()->startActivity(new Intent(this,TaskActivity.class)));
         navigation(layout,"memory","Memória e cérebro","Personalidade, gráficos e tempo de cada pet",()->startActivity(new Intent(this,MemoryActivity.class)));
@@ -88,7 +90,7 @@ public class MainActivity extends Activity {
         button(physics,"Calibrar nesta posição",()->send("calibrate"));button(physics,"Restaurar gravidade natural",()->send("reset_tilt"));
         LinearLayout about=expandable(layout,"Privacidade e informações");
         text(about,"A memória fica no aparelho. A internet só é consultada ao atualizar os feeds escolhidos. Sem leitura de tela ou da agenda. O acompanhamento de apps usa estatísticas do Android somente se você autorizar e ativar. Sensores desligam com a tela apagada.",14,Design.MUTED);
-        text(about,"Pestinha Android • 0.9 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
+        text(about,"Pestinha Android • 0.10 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
         button(about,"Modo de teste • tempos curtos",()->send("fast"));
         button(about,"Licença e projeto original",()->new AlertDialog.Builder(this).setTitle("Pestinha • GPL-3.0-or-later").setMessage("Adaptação independente de mille-okws/pestinha. Código-fonte: github.com/duOCELOT/pestinha-duOCELOT, branch android.\n\n"+license()).setPositiveButton("Fechar",null).show());
         Design.button(layout,"Guardar o pet","danger",()->stopService(new Intent(this,PetService.class)));
@@ -162,6 +164,9 @@ public class MainActivity extends Activity {
         else {preview.emotion="observando";preview.caressing=false;preview.notebook=false;preview.face(null,false);}
         preview.invalidate();
     }
-    @Override protected void onResume() { super.onResume(); handler.post(refresh); }
+    @Override protected void onResume() { super.onResume(); handler.post(refresh);handler.post(()->{if(!isFinishing()&&!isDestroyed()&&(radarDialog==null||!radarDialog.isShowing())&&(radarRestore||NewsRepository.askToday(this))){radarRestore=false;radarDialog=InterestsDialog.show(this,()->android.widget.Toast.makeText(this,"Radar salvo. Solte o pet para receber as manchetes.",android.widget.Toast.LENGTH_LONG).show());}}); }
     @Override protected void onPause() { handler.removeCallbacks(refresh); super.onPause(); }
+    @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);state.putBoolean("radarOpen",radarDialog!=null&&radarDialog.isShowing());}
+    @Override protected void onDestroy(){handler.removeCallbacksAndMessages(null);if(radarDialog!=null)radarDialog.dismiss();super.onDestroy();}
+
 }

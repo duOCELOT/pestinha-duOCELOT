@@ -177,7 +177,7 @@ compromissos, listagem de alarmes nem edição/exclusão automática desses dado
 ## 7. Rede e feeds
 
 A consulta é feita apenas por solicitação no Assistente, em executor separado
-da interface. Não existe polling automático de notícias.
+da interface. O radar opcional consulta aproximadamente a cada hora com pet solto e tela desbloqueada. O monitor para com o serviço/tela apagada.
 
 | Limite / regra | Implementação |
 | --- | --- |
@@ -305,3 +305,9 @@ quando Bryan está ativo. O teste visual emite uma prévia do monitor renderizad
 O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
 defina a entrega e escolha a frequência de acompanhamento. O painel permite
 começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAREFAS.md).
+
+
+## Meu radar (0.10)
+
+Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
+comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](MEU-RADAR.md).

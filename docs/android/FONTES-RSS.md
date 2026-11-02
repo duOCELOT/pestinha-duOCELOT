@@ -43,6 +43,6 @@ Endereços antigos que retornaram erro, conteúdo que não era XML ou nenhum ite
 
 O catálogo fica em [`feed-catalog.json`](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/assets/feed-catalog.json). Cada entrada tem nome, categoria, idioma, URL, referência do editor e data de verificação. Os testes verificam URLs HTTPS únicas e o pacote exige a presença do catálogo.
 
-A leitura continua manual. A atualização não envia estatísticas de uso de apps, memória do pet ou lembretes aos veículos. O servidor recebe a conexão HTTP normal do leitor, incluindo IP e cabeçalhos.
+A leitura manual continua disponível. No APK 0.10, o radar opcional configura fontes por assunto e pode consultar automaticamente com o pet solto e a tela desbloqueada. A atualização não envia estatísticas de uso de apps, memória do pet ou lembretes aos veículos. O servidor recebe a conexão HTTP normal do leitor, incluindo IP e cabeçalhos.
 
 [Guia do APK](GUIA-DO-APK.md) · [Acompanhamento de aplicativos](PAUSAS-CONSCIENTES.md)

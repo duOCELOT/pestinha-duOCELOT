@@ -18,12 +18,21 @@ public class PetService extends Service {
     static void assistantNotice(String text,String event){
         PetService service=instance;if(service==null||service.closed)return;
         if(event!=null)service.event(event);
-        service.ui.post(()->{if(!service.closed&&service.world!=null&&service.screenOn)service.world.message(text,false,service.pos.x,service.pos.y,()->{});});
+        service.ui.post(()->{if(!service.closed&&service.world!=null&&service.screenOn){lastNoticeAt=SystemClock.uptimeMillis();service.world.message(text,false,service.pos.x,service.pos.y,()->{});}});
+    }
+    private static volatile long lastNoticeAt=0;
+    static void newsSettingsChanged(){PetService service=instance;if(service!=null)service.ui.post(()->{if(!service.closed&&service.newsMonitor!=null)service.newsMonitor.update(service.screenOn);});}
+    static void newsNotice(JSONObject row,String generation,boolean manual){PetService service=instance;if(service==null||service.closed)return;
+        service.ui.post(()->{if(service.closed||!running||service.world==null||!service.screenOn||!UsageRepository.interactive(service)||InterestsDialog.visible||!generation.equals(NewsRepository.generation(service)))return;
+            if(!manual&&(!NewsRepository.prefs(service).getBoolean("radarAuto",false)||service.pressed||service.dragging||(service.quickMenu!=null&&service.quickMenu.isShowing())||SystemClock.uptimeMillis()-lastNoticeAt<30000))return;
+            if(!manual&&NewsRepository.candidate(service,System.currentTimeMillis())==null)return;
+            NewsRepository.shown(service,row);lastNoticeAt=SystemClock.uptimeMillis();service.world.message(NewsRepository.message(service,row),false,service.pos.x,service.pos.y,()->service.startActivity(new Intent(service,NewsActivity.class).putExtra("article",row.toString()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
+        });
     }
     static void taskNotice(String text,String taskId,boolean create){
         PetService service=instance;if(service==null||service.closed)return;
         service.ui.post(()->{if(service.closed||service.world==null||!service.screenOn||service.getSystemService(KeyguardManager.class).isKeyguardLocked())return;
-            service.world.message(text,false,service.pos.x,service.pos.y,()->service.startActivity(new Intent(service,TaskActivity.class).putExtra("task",taskId).putExtra("new",create).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
+            lastNoticeAt=SystemClock.uptimeMillis();service.world.message(text,false,service.pos.x,service.pos.y,()->service.startActivity(new Intent(service,TaskActivity.class).putExtra("task",taskId).putExtra("new",create).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
         });
     }
     private final Runnable taskInvitation=new Runnable(){public void run(){
@@ -47,6 +56,7 @@ public class PetService extends Service {
     private PetView pet;
     private PetWorld world;
     private UsageMonitor usageMonitor;
+    private NewsMonitor newsMonitor;
     private QuickMenu quickMenu;
     private boolean menuOpenedByHold=false;
     private MotionSensors motion;
@@ -66,7 +76,7 @@ public class PetService extends Service {
         public void onReceive(Context c, Intent i) {
             screenOn = Intent.ACTION_SCREEN_ON.equals(i.getAction());
             updateMotion();
-            if(usageMonitor!=null)usageMonitor.update(screenOn);
+            if(usageMonitor!=null)usageMonitor.update(screenOn);if(newsMonitor!=null)newsMonitor.update(screenOn);
             if(!screenOn){pressed=dragging=false;event("release");if(quickMenu!=null)quickMenu.dismiss();}
             ui.removeCallbacks(frame);
             if (screenOn) { lastFrame = SystemClock.uptimeMillis(); ui.post(frame); }
@@ -103,7 +113,7 @@ public class PetService extends Service {
         pet = new PetView(this);
         pet.jorge = petId.equals("jorge");
         world = new PetWorld(this, wm, this::event);
-        usageMonitor=new UsageMonitor(this);
+        usageMonitor=new UsageMonitor(this);newsMonitor=new NewsMonitor(this);
         quickMenu = new QuickMenu(this,wm,action->{
             if(action.equals("stop"))stopSelf();
             else if(action.equals("panel")||action.equals("memory")||action.equals("assistant")){
@@ -179,7 +189,7 @@ public class PetService extends Service {
         else registerReceiver(screen, filter);
         receiverRegistered = true;
         screenOn = getSystemService(PowerManager.class).isInteractive();
-        updateMotion();usageMonitor.update(screenOn);
+        updateMotion();usageMonitor.update(screenOn);newsMonitor.update(screenOn);
         thread = new HandlerThread("PestinhaBrain"); thread.start(); worker = new Handler(thread.getLooper());
         worker.post(() -> {
             try {
@@ -311,7 +321,7 @@ public class PetService extends Service {
         if(instance==this)instance=null;
         closed = true; running = false; ui.removeCallbacksAndMessages(null); storePosition();
         if (receiverRegistered) unregisterReceiver(screen);
-        if(usageMonitor!=null)usageMonitor.stop();
+        if(usageMonitor!=null)usageMonitor.stop();if(newsMonitor!=null)newsMonitor.stop();
         if(motion!=null)motion.stop();
         if(quickMenu!=null)quickMenu.dismiss();
         if(world!=null)world.close();

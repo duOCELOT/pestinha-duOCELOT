@@ -71,6 +71,7 @@ public class AssistantActivity extends Activity {
         button(external,"Abrir timer do relógio",()->open(new Intent(AlarmClock.ACTION_SET_TIMER).putExtra(AlarmClock.EXTRA_LENGTH,25*60).putExtra(AlarmClock.EXTRA_MESSAGE,"Foco com o Pestinha").putExtra(AlarmClock.EXTRA_SKIP_UI,false)));
         text(external,"O app não lê seus compromissos. Confira os campos e salve no aplicativo que abrir.",14);
         LinearLayout rss=section("Notícias • RSS / Atom");
+        button(rss,"Meu radar / assuntos de hoje",()->startActivity(new Intent(this,NewsActivity.class)));
         button(rss,"Escolher fontes oficiais por categoria",this::chooseOfficialFeeds);
         text(rss,"Biblioteca de feeds dos próprios veículos, verificada em 02/11/2026. Você escolhe quais adicionar; até 10 ativos. São notícias, não cotações em tempo real.",14);
         address=new EditText(this);address.setTextColor(Color.WHITE);address.setHintTextColor(Color.LTGRAY);address.setHint("https://site.exemplo/feed.xml");address.setSingleLine();address.setInputType(android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_VARIATION_URI);rss.addView(address);
