@@ -67,3 +67,12 @@ Uma prévia visual nativa do campo e do pet é produzida nos testes de interface
 A compilação e os testes simulados não substituem experimentar a sobreposição no aparelho.
 
 [Guia das telas](GUIA-DO-APK.md) · [Documentação Android](README.md)
+
+
+### Campo transparente (0.13)
+
+O Arkanoid agora deixa o fundo totalmente transparente: os aplicativos abertos
+continuam visíveis por baixo, sem uma camada escura cobrindo a tela. Blocos, bola,
+pet e controles continuam visíveis. Apenas textos/controles e os cartões temporários
+de instrução ou pausa têm fundos locais para manter a leitura.
+Os toques continuam controlando o jogo enquanto ele está aberto; use × para voltar ao app de baixo.

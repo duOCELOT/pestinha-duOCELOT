@@ -1,4 +1,4 @@
-# Pestinha Android 0.12 (experimental)
+# Pestinha Android 0.13 (experimental)
 
 Adaptação independente de mille-okws/pestinha. Interface Android em Java/Canvas;
 rede neural e memória originais em Python, integradas por Chaquopy. Sem Termux,
@@ -276,3 +276,12 @@ para que o boneco continue dentro dos limites visíveis.
 Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
 para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
 Pausar/fechar ficam no topo. Veja o [guia do jogo](../docs/android/ARKANOID.md).
+
+
+### Campo transparente (0.13)
+
+O Arkanoid agora deixa o fundo totalmente transparente: os aplicativos abertos
+continuam visíveis por baixo, sem uma camada escura cobrindo a tela. Blocos, bola,
+pet e controles continuam visíveis. Apenas textos/controles e os cartões temporários
+de instrução ou pausa têm fundos locais para manter a leitura.
+Os toques continuam controlando o jogo enquanto ele está aberto; use × para voltar ao app de baixo.
