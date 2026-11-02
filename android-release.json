@@ -1,0 +1,13 @@
+{
+  "repository": "duOCELOT/pestinha-duOCELOT",
+  "tag": "android-v0.13.0",
+  "title": "Pestinha Android 0.13 — experimental",
+  "run_id": 41541064297,
+  "artifact_id": 13187236170,
+  "artifact_name": "pestinha-android-debug",
+  "source_sha": "9a9d79a63946d7030bb7e4f2248e2b93084b3ff3",
+  "version_name": "0.13.0-alpha",
+  "version_code": 14,
+  "apk_sha256": "e39356425d1f6fc8439397044395f9357c977f1a41c8af94abad41f6b1cb85ba",
+  "notes": ".github/release-notes/android-v0.13.0.md"
+}

@@ -1,6 +1,6 @@
 # Referência técnica do APK
 
-**Base: Pestinha Android 0.7 experimental.**
+**Referência atualizada para Pestinha Android 0.13 experimental.**
 [Apresentação](README.md) · [Guia das telas](GUIA-DO-APK.md)
 
 ## 1. Estrutura da aplicação
@@ -53,6 +53,12 @@ inclusive quando este material é lido pela branch `main`.
 | [AssistantReceiver](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/AssistantReceiver.java) | Entrega de avisos e reagendamento nos eventos do sistema |
 | [FeedParser](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/FeedParser.java) e [FeedClient](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/FeedClient.java) | Leitura de RSS/Atom e consultas HTTPS limitadas |
 | [MotionSensors](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/MotionSensors.java) e [TiltPhysics](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/TiltPhysics.java) | Ciclo de vida dos sensores, rotação de eixos, filtragem e integração do movimento |
+| [TaskActivity](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/TaskActivity.java) e [Tasks](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/Tasks.java) | Cadastro, progresso manual, prazo e avisos protegidos por token |
+| [Hydration](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/Hydration.java) | Janela diária de água, repetição e registro manual |
+| [InterestsDialog](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/InterestsDialog.java), NewsActivity/Repository/Monitor | Cartões de assuntos, leitura RSS coordenada, cache e comentários |
+| [UsageActivity](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/UsageActivity.java), UsageRepository/Ledger/Monitor | Consentimento, cálculo de sessão/dia e recados locais |
+| [MetricChart](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/MetricChart.java) | Barras nativas com valores e descrições de acessibilidade |
+| [ArkanoidModel](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/ArkanoidModel.java) e [ArkanoidOverlay](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/ArkanoidOverlay.java) | Física Java pura, campo transparente e pet original como plataforma |
 | [android_brain.py](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/python/android_brain.py) | Ponte dos eventos Android para o núcleo Python e composição do estado exportado à interface |
 
 ## 3. Cérebro, comportamento e personalidade
@@ -132,6 +138,11 @@ preferências `assistant` guardam avisos, feeds e cache. São dados privados do
 app, separados da memória neural. Atualizar um APK com a mesma assinatura
 normalmente conserva ambos; limpar dados ou desinstalar remove essa área.
 
+As preferências `tasks` guardam tarefas/prazos, `hydration` guarda janela e copos do dia,
+e `arcade` guarda recordes por personagem. O radar usa as preferências `assistant`,
+incluindo interesses, consentimento, cache e histórico limitado de manchetes.
+Esses dados não integram o backup neural.
+
 O backup JSON de memória tem `format: "pestinha-android"`, versão 1, ID do pet
 e um mapa dos arquivos permitidos. Na restauração, o app verifica formato,
 personagem, nomes de arquivos, JSONs e semente da definição selecionada. Prepara
@@ -176,8 +187,7 @@ compromissos, listagem de alarmes nem edição/exclusão automática desses dado
 
 ## 7. Rede e feeds
 
-A consulta é feita apenas por solicitação no Assistente, em executor separado
-da interface. O radar opcional consulta aproximadamente a cada hora com pet solto e tela desbloqueada. O monitor para com o serviço/tela apagada.
+Consultas manuais no Assistente/Meu radar usam um executor fora da interface. O radar opcional também consulta aproximadamente a cada hora com pet solto e tela desbloqueada; ele para com o serviço, tela apagada ou durante o jogo.
 
 | Limite / regra | Implementação |
 | --- | --- |
@@ -274,7 +284,7 @@ verificações de pacote e testes. Não basta mudar a cor para obter novas
 capacidades cognitivas: temperamento, conteúdo e ferramentas são partes distintas.
 
 Para adicionar ferramentas ou um LLM, preserve a separação entre apresentação,
-interpretação e execução de ações. A versão 0.8 não implementa esse modelo ou
+interpretação e execução de ações. A versão 0.13 não implementa esse modelo ou
 acesso geral ao celular; essa expansão precisa de um trabalho próprio.
 
 
@@ -331,3 +341,12 @@ retomada da gravidade e o rótulo/ação do atalho no menu.
 Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
 para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
 Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).
+
+
+## Distribuição pública (0.13)
+
+O APK validado é disponibilizado em [Releases](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest),
+com download direto, hash SHA-256 e tag para o commit da compilação. A versão interna
+é `0.13.0-alpha`, versionCode 14, minSdk 26, targetSdk 35, ARM64/x86_64.
+A publicação não altera o APK nem sua assinatura de desenvolvimento. Veja o
+[procedimento de publicação](PUBLICAR-RELEASE.md).

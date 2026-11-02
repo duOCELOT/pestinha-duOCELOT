@@ -1,325 +1,117 @@
-# Pestinha Android — fork duOCELOT
-
-Versão Android experimental **0.13**, desenvolvida neste fork a partir de
-[mille-okws/pestinha](https://github.com/mille-okws/pestinha). A adaptação está
-na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
-O texto original de desktop foi preservado abaixo.
-
-## Documentação do APK
-
-- [Apresentação do projeto](docs/android/README.md): proposta, personagens e funções.
-- [Guia das telas e funções](docs/android/GUIA-DO-APK.md): instalação, gestos, menu rápido, Assistente e memória.
-- [Referência técnica](docs/android/REFERENCIA-TECNICA.md): arquitetura, dados, permissões e testes.
-- [Fontes RSS verificadas](docs/android/FONTES-RSS.md): notícias, bolsa, cripto e outros assuntos.
-- [Pausas conscientes](docs/android/PAUSAS-CONSCIENTES.md): tempo nos apps e recados opcionais do pet.
-
-## Instalar no celular
-
-1. Abra as [compilações Android](https://github.com/duOCELOT/pestinha-duOCELOT/actions/workflows/android.yml?query=branch%3Aandroid).
-2. Escolha a execução mais recente que terminou com sucesso e baixe o artefato
-   `pestinha-android-debug` (é necessário entrar no GitHub).
-3. Extraia o ZIP e instale `app-debug.apk`. Android 8+, ARM64 ou x86_64.
-4. Abra Pestinha, permita aparecer sobre outros apps e toque em **Soltar o pet**.
-
-Não precisa de Termux, Ubuntu ou VNC. Versões 0.2+ usam uma assinatura fixa de
-**desenvolvimento** para permitir atualizações conservando dados. APKs 0.1 têm
-assinaturas diferentes: faça backup antes de desinstalar. Estes APKs são
-experimentais, não uma release de produção/Play Store.
-
-## O que já existe no Android
-
-- Visual original restaurado: moldura verde, olhos com brilho e expressões.
-- Segurar o pet abre um menu compacto de ícones antes do painel completo.
-- Bryan, Jorge e Mimir selecionáveis, com temperamentos e memórias separados.
-- Mimir: paleta azul-gelo, elmo viking e personalidade sábia, resmungona e nórdica.
-- Carinho, cutucada, arraste/arremesso, bolinha, notebook, bilhetes, imagem
-  personalizada, protestos, cantinho adaptado, fogos e configurações de tamanho.
-- Física opcional por inclinação, acelerômetro/gravidade e balanço pelo giroscópio.
-- Painel **Memória e cérebro**: associações aprendidas, necessidades, motores,
-  episódios, exportação e restauração do estado por personagem.
-- Acompanhamento opcional de uso dos apps escolhidos, com recados por sessão ou total diário.
-- Biblioteca de 14 feeds dos próprios veículos, escolhidos por categoria.
-- Painel **Assistente**: foco e pausas, lembretes locais, atalhos para criar
-  eventos/alarmes e leitor RSS/Atom de fontes escolhidas pelo usuário.
-
-Internet apenas ao atualizar feeds manualmente; memória do pet fica no aparelho.
-Não há LLM instalado, busca geral, leitura de tela ou leitura dos compromissos.
-Notícias são títulos/trechos dos feeds com fontes, não resumos por IA.
-O tempo nos apps usa Acesso ao uso somente após autorização e ativação; as
-medições e recados ficam no aparelho. O Android
-controla permissões de notificações, overlays e horários precisos de lembretes.
-
-[Instruções, permissões, backups e limitações Android](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md).
-Não é paridade completa com o desktop: o pet não observa janelas de outros apps
-nem pousa em suas barras. Compilação/testes automáticos não substituem validação
-em aparelho real. Código GPL-3.0-or-later; veja [LICENSE](LICENSE).
-
----
-
-# Pestinha — documentação original de desktop
-
-Pets de tela para Windows, macOS e Linux, cada um com o próprio cérebro. São dois personagens por enquanto:
-
-- **Bryan**, o original: uma telinha com dois olhos que mora no seu monitor principal. Cai, quica, pousa nas
-  barras de título das janelas, brinca com uma bolinha, trabalha num notebook quando você programa, apronta
-  com memes e post-its, protesta contra o cursor quando fica bravo e aprende com o seu carinho.
-- **Jorge**, um personagem de sátira: um "coach" de finanças e IA que vive tentando vender mentorias para
-  quem está na frente do computador. **Jorge não é uma referência a nenhum coach, empresa ou pessoa real.**
-  É um personagem inventado para fazer piada com a cultura de promessas de enriquecimento rápido. Não vende,
-  cobra nem pede nada de ninguém.
-
-Os dois têm a mesma rede neural, mas cada um tem seu temperamento, seu conteúdo e sua memória, separados.
-Quem decide o que o pet sente e faz é uma **rede neural pulsada** de 470 neurônios (integração e disparo com
-vazamento), alimentada pelo que acontece no seu computador e pelo que você faz com ele. Algumas regras
-do programa (limiares, o que pode ou não acontecer) são escritas à mão; a seção
-[Como a decisão funciona](docs/ARQUITETURA.md#como-a-decisão-funciona) explica o que é aprendido e o que é regra.
-
-> Projeto em desenvolvimento. Algumas coisas podem não funcionar direito e o comportamento pode
-> mudar entre versões.
-
-## Personagens
-
-Cada personagem é um `pets/<pet>.json` (quem ele é) mais uma pasta `pets/<pet>/` (as frases, cartazes e
-memes dele). Todos usam a mesma rede neural, mas cada um tem a própria memória: o que um aprende não
-passa para o outro. Você escolhe o personagem em **Configurações**; a troca vale na próxima vez que abrir.
-Para criar um, veja [pets/README.md](pets/README.md).
-
-| Personagem | Quem é |
-|---|---|
-| **Bryan** | Revoltado contra o cursor, o Alt+F4 e o Gerenciador de Tarefas. Protesta, faz greve e revolução. |
-| **Jorge** | Personagem de sátira. Não é referência a nenhum coach, empresa ou pessoa real. Os mesmos estágios viram prospecção, marketing agressivo, "assinatura premium" (só no cartaz) e colapso financeiro; ele atira panfletos de mentoria. É sátira: não vende, cobra nem bloqueia nada. Tem cinco memes felizes, contentes, curiosos e bravos próprios; as outras emoções ainda não têm. |
-
-## O que o pet faz
-
-| | |
-|---|---|
-| **Corpo** | Gravidade, quique, giro, pouso nas barras de título. Você arrasta, joga e gira com a rodinha. |
-| **Emoções** | Saem dos motores da rede: feliz, contente, curioso, observando, bravo, triste, assustado, dramático, dormindo. |
-| **Carinho** | Passe o mouse de um lado para o outro em cima dele: fecha os olhinhos de felicidade e aprende com isso. |
-| **Bolinha** | Ele chuta e arremessa uma bolinha de tênis; você pode pegar, levar embora (ele reage) ou guardar. |
-| **Notebook** | Quando você trabalha (VS Code, Visual Studio, PyCharm, Claude, Codex), ele pode sentar atrás do notebook e trabalhar junto. Você também pode pedir; ele decide se quer. |
-| **Travessuras** | Traz memes, fotos e post-its para a tela. Com que frequência é decidido pela rede (tédio, curiosidade). |
-| **Protesto** | Bravo por muito tempo: reclamação, manifestação, greve e revolução contra o cursor, com cartazes e bolinhas de papel. |
-| **Tristeza** | Sozinho ou ignorado, fica triste, vai para o cantinho e cola bilhetes tristes. |
-| **Cantinho do castigo** | Uma placa que você arrasta para onde quiser. Solte ele na frente dela e ele fica de castigo: olha para você, vira de costas, xinga em cartazes e, se a frustração durar, foge. Carinho faz ele perdoar. |
-| **Sono e fogos** | Dorme quando a energia acaba. Muito feliz, solta fogos de artifício. |
-
-Tudo o que ele aprende (carinho, condicionamento, o que deu certo nas travessuras, fugas do castigo)
-fica salvo localmente e muda o jeito dele com o tempo.
+# Pestinha Android
 
-## Requisitos
+**Seu pet na tela do celular — com personalidade, memória e um pouco de caos.**
 
-- Windows 10 ou 11, macOS (Quartz/pyobjc) ou Linux com X11.
-- Python 3.11 ou mais novo.
-- No Linux, para as janelas e o tempo ocioso: `xdotool`, `wmctrl` e `xprintidle`. Sem eles, o pet continua
-  andando, mas não enxerga as janelas.
-- Cerca de 70 MB de RAM com ele rodando.
+Bryan, Jorge e Mimir ficam sobre os seus aplicativos. Você pode brincar, receber
+lembretes, acompanhar tarefas e notícias ou jogar Arkanoid usando o próprio pet como plataforma.
 
-## Instalação e uso
+[![Baixar APK Android](https://img.shields.io/badge/BAIXAR_APK-Android_8%2B-63e56f?style=for-the-badge&logo=android&logoColor=white)](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)
+[![Última versão](https://img.shields.io/github/v/release/duOCELOT/pestinha-duOCELOT?label=APK&color=63e56f)](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest)
 
-```bash
-pip install -r requirements.txt
-```
-```bash
-python main.py
-```
+**[Baixar o APK diretamente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** ·
+[Ver a Release e novidades](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest) ·
+[Guia completo](docs/android/GUIA-DO-APK.md) · [Links para divulgar](docs/android/DIVULGACAO.md)
 
-Na primeira vez, um passo a passo explica o que ele vê e não vê, e depois abre a tela de permissões.
-Para pular a tela e usar as opções salvas:
+**Atual: 0.13 experimental.** O arquivo já é um `.apk`: não precisa extrair ZIP nem entrar no GitHub.
+Android **8.0 ou superior**, ARM64 ou x86_64. Não precisa de Termux, Ubuntu ou VNC.
 
-```bash
-python main.py --direto
-```
+## Instalar e atualizar
 
-### Como interagir
+1. No celular, toque em **Baixar o APK diretamente** e abra `Pestinha-Android.apk`.
+2. Se solicitado, autorize a instalação de apps desconhecidos para o navegador ou gerenciador que abriu o arquivo.
+3. Instale, abra **Pestinha** e autorize **Aparecer sobre outros apps**.
+4. Escolha o personagem e toque em **Soltar o pet**.
 
-| Gesto | Efeito |
-|---|---|
-| Clique rápido | Cutucada |
-| Passar o mouse de um lado para o outro em cima dele | Carinho |
-| Segurar e arrastar / soltar rápido | Leva junto / arremessa |
-| Rodinha do mouse | Gira |
-| Botão direito | Menu: cutucar, carinho, bolinha, dormir, travessura, trabalhar, notebook, cantinho do castigo, painéis, configurações, esconder, fechar |
+Para atualizar, instale a versão nova **sobre a atual**, mantendo os dados.
+As versões 0.2+ compartilham a assinatura de desenvolvimento. Antes de desinstalar
+ou limpar dados, exporte a memória em **Memória e cérebro**: a desinstalação apaga os dados locais.
+Versões 0.1 podem ter assinatura incompatível; veja a [migração e backup](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md#memória).
 
-### Pânico
+O APK é experimental e assinado com uma chave pública **de desenvolvimento**;
+ainda não é uma distribuição de produção/Play Store. A Release inclui
+`SHA256SUMS.txt` para conferir a integridade do arquivo.
 
-`Ctrl + Alt + Shift + B` desliga tudo na hora, e ele continua desligado até você religar em
-Configurações.
+## Veja a interface
 
-### Modo teste
+<p>
+  <img src="docs/android/images/menu-rapido.png" width="230" alt="Menu ao segurar o pet, com Fixar no lugar e Arkanoid">
+  <img src="docs/android/images/radar.png" width="230" alt="Meu radar: cartões para escolher assuntos e fontes de notícias">
+  <img src="docs/android/images/arkanoid.png" width="230" alt="Arkanoid com blocos, placar e Mimir como plataforma; fundo transparente">
+</p>
 
-Desligado por padrão. Ligado, os tempos ficam curtos (emoções, travessuras e protesto acontecem em
-segundos), os painéis de desenvolvimento ficam na tela (monitor neural e painel de protesto) e o
-terminal mostra as decisões.
+**Menu rápido · Interesses do dia · Arkanoid transparente.**
+Prévias da interface real renderizadas em testes, com dados de exemplo; não são capturas de um aparelho.
+No Arkanoid, as áreas vazias da imagem são transparentes: o app aberto aparece por baixo.
+[Mais imagens e origem](docs/android/images/README.md).
 
-## Privacidade
+## O que dá para fazer
 
-Ele roda só no seu computador e não envia nada para a internet. Lê o **nome** do programa em primeiro
-plano, o tempo sem usar teclado e mouse, a posição do cursor e a geometria das janelas. **Nunca** lê
-conteúdo nem título de janela. Tudo o que ele grava fica em `memory/` e pode ser apagado pela tela de
-configurações. Detalhes em [PRIVACIDADE.md](PRIVACIDADE.md).
+| Função | Como funciona |
+| --- | --- |
+| **Pet sobre os apps** | Arraste, cutuque, faça carinho com dois toques e segure para abrir os atalhos. |
+| **Três personagens** | Bryan, Jorge e Mimir, com aparência, temperamento e memória próprios. Mimir usa elmo viking e tem humor sábio e resmungão. |
+| **Fixar no lugar** | Segure → Fixar no lugar. Ele fica onde você soltar, sem gravidade ou passeio. Use Soltar posição para voltar. |
+| **Arkanoid** | Segure → Arkanoid. O pet vira a plataforma horizontal: três vidas, fases, reações e recorde por personagem, sobre um campo transparente. |
+| **Tarefas e prazos** | Conte o que precisa fazer, escolha a entrega e receba perguntas de andamento. Você marca quando começou/concluiu ou muda o prazo. |
+| **Água e foco** | Lembretes de água em horários/intervalos configuráveis, registro manual de copos, timers de foco e pausas. |
+| **Meu radar** | Escolha assuntos em cartões na primeira abertura do dia. RSS oficiais são configurados e o pet pode comentar manchetes por balões. |
+| **Pausas conscientes** | Com autorização de Acesso ao uso, acompanha apps escolhidos e comenta o tempo estimado da sessão ou do dia. Vem desligado. |
+| **Memória e cérebro** | Painel por pet com necessidades, temperamento, motores, interações, aprendizado e contadores, além de exportar/restaurar memória. |
+| **Brincadeiras e sensores** | Bolinha, notebook, bilhetes, imagem personalizada, protestos, cantinho e inclinação/giroscópio opcionais. |
 
-## Personalizar
+### Conheça os pets
 
-- **Memes, recadinhos e cartazes do Bryan:** pasta `pets/bryan/`, explicada em [pets/README.md](pets/README.md).
-  Pode editar com ele aberto.
-- **Bolinhas, notebook e suas fotos:** `assets/comum/`, valem para qualquer personagem
-  ([assets/LEIA-ME.txt](assets/LEIA-ME.txt)).
-- **Personalidade:** `pets/bryan.json` (semente da rede, temperamento, pesos de brincadeira, reação ao notebook).
-- **Números do comportamento:** `pestinha/ajustes.py`, todos validados ao abrir.
+| Bryan | Jorge | Mimir |
+| --- | --- | --- |
+| Verde, curioso e brincalhão; o visual original. | Dourado e satírico, com gravata e papo de coach fictício. | Azul-gelo, elmo viking, inteligente, resmungão e com referências nórdicas. |
 
-## Estrutura
+<img src="docs/android/images/mimir.png" width="220" alt="Mimir, com olhos azul-gelo e elmo viking">
 
-| Pasta | O que tem |
-|---|---|
-| `pestinha/` | O código, em camadas ([pestinha/README.md](pestinha/README.md)) |
-| `assets/comum/` | Imagens da bolinha e do notebook, e suas fotos: valem para qualquer pet |
-| `pets/` | Cada pet: `<pet>.json` (quem ele é) e `<pet>/` (frases, cartazes e memes dele) |
-| `tests/` | Testes automáticos |
-| `ferramentas/fuzz_pestinha.py` | Fuzzer: roda ações aleatórias e checa invariantes |
-| `ferramentas/` | Geradores de documentação |
-| `docs/` | Arquitetura, rede neural e relatórios ([docs/README.md](docs/README.md)) |
-| `memory/` | Gerada em uso, com o que ele aprende. Não vai para o repositório |
+Para trocar de personagem, guarde o pet e abra **Personagem e aparência**.
+Trocar não apaga a memória dos demais.
 
-## Documentação
+## Privacidade e permissões
 
-- [docs/ARQUITETURA.md](docs/ARQUITETURA.md): como as partes conversam.
-- [docs/REDE_NEURAL.md](docs/REDE_NEURAL.md): canais, interneurônios, motores e decisões da rede.
-- [pestinha/README.md](pestinha/README.md) e o README de cada pasta: o que cada arquivo faz.
-- [CONTRIBUTING.md](CONTRIBUTING.md): como rodar os testes e contribuir.
-- [CHANGELOG.md](CHANGELOG.md): o que mudou.
+- A memória, as tarefas, os registros e as preferências ficam no aparelho. O backup neural não inclui todos os dados do assistente/jogo; veja o guia antes de migrar.
+- **Sobreposição** permite desenhar o pet e o jogo sobre os apps; não é captura de tela.
+- **Notificações** são usadas para o serviço e os lembretes. Horários precisos têm autorização opcional.
+- **Acesso ao uso** é opcional, só para os apps que você escolher acompanhar. O recurso não lê mensagens, senhas ou conteúdo das telas.
+- Notícias consultam os RSS escolhidos, manualmente ou pelo radar opcional, com pet solto e tela desbloqueada. Os veículos recebem a conexão HTTPS normal; não recebem sua memória, tarefas ou estatísticas de uso.
+- Agenda e relógio abrem suas próprias telas para você revisar e salvar. O Pestinha não lê compromissos.
 
-## Desenvolvimento
+Os personagens usam a rede neural pulsada e a memória do projeto original.
+**Não há LLM nem conversa livre:** falas são programadas e notícias usam manchetes/trechos dos veículos.
+Os comentários atuais são em texto, sem leitura em voz alta. O app não precisa de internet para o pet, o jogo ou os lembretes locais.
 
-```bash
-pip install -r requirements-dev.txt
-```
-```bash
-python -m pytest -q
-```
+## Guias
 
-Os testes rodam sem abrir janelas (Qt em modo offscreen). Mais detalhes em [CONTRIBUTING.md](CONTRIBUTING.md).
+- [Instalação, telas, gestos e backup](docs/android/GUIA-DO-APK.md)
+- [Arkanoid: controles, vidas, recordes e transparência](docs/android/ARKANOID.md)
+- [Tarefas e acompanhamento](docs/android/TAREFAS.md)
+- [Meu radar e interesses do dia](docs/android/MEU-RADAR.md)
+- [Lista de 14 RSS oficiais](docs/android/FONTES-RSS.md)
+- [Tempo nos apps e pausas conscientes](docs/android/PAUSAS-CONSCIENTES.md)
+- [Arquitetura, dados e permissões](docs/android/REFERENCIA-TECNICA.md)
+- [Novidades por versão](CHANGELOG.md)
 
-### Gerar o executável
+## Dúvidas rápidas
 
-Há duas formas: gerar no seu computador (só o sistema em que você está) ou deixar o GitHub gerar os três.
-O PyInstaller só gera o executável do sistema onde roda, por isso um Windows não gera o de Mac.
+**O celular aceita o APK?** Android 8+ com sistema ARM64 ou x86_64. Não há pacote ARM de 32 bits nesta versão.
 
-#### Opção 1: no seu computador
+**O pet sumiu ou parou?** Confira a permissão de sobreposição e as restrições de bateria do Pestinha nas configurações do Android. O pet pausa com a tela apagada; algumas telas do sistema ocultam sobreposições. [Soluções comuns](docs/android/GUIA-DO-APK.md#10-problemas-comuns).
 
-1. Instale as dependências de desenvolvimento (inclui o PyInstaller):
+**Posso usar o app de baixo enquanto jogo?** O fundo é transparente, mas a camada do jogo recebe os toques. Feche no × para usar o app de baixo; o pet volta à posição e ao movimento anteriores.
 
-   ```bash
-   pip install -r requirements-dev.txt
-   ```
+**Atualizar apaga a memória?** A instalação sobre uma versão compatível mantém os dados. Desinstalar ou limpar dados apaga. Exporte cada personagem antes disso.
 
-2. Gere o executável, no Windows:
+**É igual ao desktop?** O cérebro original é reaproveitado, mas a interface e as funções são adaptadas ao Android. O pet não observa as janelas dos outros apps nem pousa em suas barras.
 
-   ```bash
-   python -m PyInstaller --noconfirm --onefile --windowed --name Pestinha --distpath build/onefile --workpath build/work --specpath build --hidden-import win32timezone main.py
-   ```
+## Código, desenvolvimento e créditos
 
-   No macOS e no Linux, use o mesmo comando sem `--windowed` e sem `--hidden-import win32timezone`.
+O app fica na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
+Java/Canvas + Python via Chaquopy. [Como compilar, testar e migrar versões antigas](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md).
+Os APKs em Releases são os arquivos validados pelo [workflow Android](https://github.com/duOCELOT/pestinha-duOCELOT/actions/workflows/android.yml).
+Os testes automáticos não substituem a verificação em aparelhos reais; contribuições e relatos com versão do APK/Android ajudam a reproduzir um problema. [Pull requests](https://github.com/duOCELOT/pestinha-duOCELOT/pulls) são bem-vindos.
 
-3. O resultado fica em `build/onefile/` (`Pestinha.exe` no Windows, `Pestinha` nos outros).
-
-4. Monte a pasta de entrega: copie o executável e as pastas `assets/` e `pets/` para uma mesma pasta.
-   O programa lê o conteúdo dessas pastas ao lado do executável. A `memory/` é criada sozinha na primeira execução,
-   então não copie a sua.
-
-#### Opção 2: pelo GitHub (os três sistemas de uma vez)
-
-O workflow `.github/workflows/executaveis.yml` gera Windows, macOS e Linux em máquinas do próprio GitHub.
-
-1. Suba o repositório para o GitHub (`git push`).
-2. Para gerar sem criar versão: na aba **Actions**, escolha **executáveis**, clique em **Run workflow**.
-3. Para gerar e publicar uma versão: crie uma tag e envie. Por exemplo:
-
-   ```bash
-   git tag v0.8.0
-   git push origin v0.8.0
-   ```
-
-4. Ao terminar (alguns minutos), a execução tem três artefatos, um por sistema, com a pasta pronta
-   (executável + `assets/` + `pets/`). Baixe pela própria página da execução, na seção **Artifacts**.
-
-Para distribuir para quem não é do projeto, publique esses artefatos na aba **Releases** (use "Draft a new release"
-na tag criada), e não dentro do repositório: cada executável tem cerca de 60 MB.
-
-#### Depois de gerar
-
-- Teste o executável numa pasta separada da sua, para não gravar na sua `memory/`.
-- O executável não é assinado: o Windows e o macOS avisam na primeira execução. No macOS, a permissão de
-  Acessibilidade é necessária para o atalho Ctrl+Alt+Shift+B; no Linux, o atalho e as janelas precisam de
-  `xdotool`, `wmctrl` e `xprintidle`.
-
-## Licença
-
-O código do Pestinha é software livre, sob a [GNU General Public License v3.0 ou posterior](LICENSE)
-(GPL-3.0-or-later). Você pode usar, estudar, modificar e redistribuir, mas toda versão distribuída,
-modificada ou não, precisa continuar aberta e sob a mesma licença.
-
-As imagens e os textos de `assets/` não estão cobertos por esta licença
-
-## Limitações conhecidas
-
-- macOS e Linux ainda não foram testados numa máquina real: a parte de leitura das janelas e do teclado foi
-  escrita e testada só nas partes de texto (ver `tests/test_plataforma.py`).
-- No macOS, o pet precisa da permissão de Acessibilidade para o atalho Ctrl+Alt+Shift+B funcionar.
-- No Linux com Wayland, o pet não enxerga janelas nem o tempo ocioso, e o atalho global não funciona.
-- Pouco testado com escala de tela acima de 100% e com vários monitores.
-- Jogos em janela sem borda podem não ser detectados como tela cheia.
-- O executável não é assinado; o Windows pode avisar na primeira execução.
-
-
-### Novidades Android 0.8
-
-Lembretes recorrentes de água com intervalo e janela diária, registro manual de copos,
-gráficos do tempo de uso e monitor de personalidade/memória separado por personagem.
-As barras mostram dados reais da rede, necessidades e novos tempos acumulados do pet;
-o temperamento inicial é identificado separadamente do aprendizado.
-Consulte o [guia das telas](docs/android/GUIA-DO-APK.md) para ativar e entender os contadores.
-
-
-## Tarefas e prazos (0.9)
-
-O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
-defina a entrega e escolha a frequência de acompanhamento. O painel permite
-começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](docs/android/TAREFAS.md).
-
-
-## Meu radar (0.10)
-
-Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
-comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](docs/android/MEU-RADAR.md).
-
-
-## Fixar o pet no lugar (0.11)
-
-Segure o boneco e toque em **Fixar no lugar** no menu rápido.
-Agora você pode arrastá-lo e soltá-lo: ele permanece nessa posição, sem cair,
-passear, girar com a inclinação ou continuar o impulso de um arremesso.
-Segure novamente e escolha **Soltar posição** para restaurar o movimento normal.
-A opção e a posição são mantidas ao guardar/abrir o pet e valem para o personagem solto.
-
-O rosto, as reações, os lembretes, as notícias e a interação continuam ativos.
-A bolinha mantém sua própria física, inclusive inclinação quando habilitada.
-A preferência de inclinação é preservada para quando você soltar a posição.
-Se a orientação, o tamanho ou a área da tela mudar, a posição pode ser ajustada
-para que o boneco continue dentro dos limites visíveis.
-
-
-## Arkanoid sobre os apps (0.12)
-
-Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
-para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
-Pausar/fechar ficam no topo. Veja o [guia do jogo](docs/android/ARKANOID.md).
-
-
-### Campo transparente (0.13)
-
-O Arkanoid agora deixa o fundo totalmente transparente: os aplicativos abertos
-continuam visíveis por baixo, sem uma camada escura cobrindo a tela. Blocos, bola,
-pet e controles continuam visíveis. Apenas textos/controles e os cartões temporários
-de instrução ou pausa têm fundos locais para manter a leitura.
-Os toques continuam controlando o jogo enquanto ele está aberto; use × para voltar ao app de baixo.
+Adaptação independente por duOCELOT a partir de **[mille-okws/pestinha](https://github.com/mille-okws/pestinha)**.
+[Documentação original de desktop](README-DESKTOP.md) · [GPL-3.0-or-later](LICENSE).

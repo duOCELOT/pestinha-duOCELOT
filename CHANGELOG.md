@@ -1,79 +1,52 @@
-# Histórico de versões
+# Novidades do Android
 
-## Suporte a macOS e Linux
+Versões experimentais do fork duOCELOT. [Baixar a versão mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk).
 
-- Toda a leitura do sistema (programa em primeiro plano, tempo ocioso, janelas, tela cheia, foco e o atalho
-  de pânico) passa para `pestinha/plataforma/`, com um módulo por sistema. O resto do código não sabe
-  qual sistema está rodando.
-- O Windows continua com o mesmo comportamento: o código foi movido, não reescrito.
-- macOS: Quartz e AppKit (pyobjc), tempo ocioso pelo `ioreg` se não houver pyobjc. Atalho via pynput.
-- Linux (X11): xdotool, wmctrl e xprintidle; atalho via pynput. Em Wayland, o pet não enxerga janelas
-  nem o tempo ocioso, e o atalho não funciona.
-- A checagem de atividade reconhece os nomes de programa dos três sistemas (com ou sem `.exe`).
+## 0.13 — Arkanoid com fundo transparente
 
-## Renomeação para Pestinha
+- Campo do Arkanoid totalmente transparente sobre o app aberto.
+- Blocos, bola, pet e controles permanecem visíveis; fundos locais ajudam a ler o placar.
+- Preserva a física, as fases e os recordes da 0.12.
+- APK interno `0.13.0-alpha`, versionCode 14. Android 8+, ARM64 e x86_64.
+- Distribuição por GitHub Releases, com APK direto e SHA-256.
 
-- O programa e o pacote Python passam a se chamar `pestinha/` (antes `bryan/`); a classe principal é
-  `PestinhaApp`; o executável, o log e a documentação usam Pestinha.
-- Bryan continua sendo o nome do primeiro personagem: `pets/bryan.json`, `pets/bryan/`, a memória
-  `memory/pets/bryan/` e os arquivos de conteúdo dele não mudaram.
-- Os comentários e textos que falavam do pet em geral passam a dizer "o pet".
+## 0.12 — Arkanoid com o próprio pet
 
-## 0.7.0 — primeira versão pública (em preparação)
+- O pet vira a plataforma, movendo-se apenas horizontalmente.
+- Três vidas, 28 blocos por fase, velocidade progressiva, partículas e reações.
+- Recorde por personagem; pausa ao apagar a tela/rotacionar e restauração do pet ao fechar.
 
-### O que ele faz
-- Pet de tela com corpo físico: gravidade, quique, giro, pouso nas barras de título, arraste e arremesso.
-- Rede neural pulsada de 470 neurônios LIF, com 30 canais sensoriais, 10 populações de interneurônios
-  e 15 motores (8 de expressão e 7 de decisão).
-- Emoções vindas dos motores; carinho com olhinhos fechados de felicidade.
-- Bolinha de tênis, notebook de trabalho (VS Code, Visual Studio, PyCharm, Claude, Codex) e pedido de
-  trabalho que ele pode recusar.
-- Travessuras com memes, fotos, post-its e bilhetes tristes, com frequência decidida pela rede.
-- Protesto em estágios até a revolução contra o cursor, com cartazes e bolinhas de papel.
-- Cantinho do castigo: placa arrastável, perdão por carinho, fuga por vontade acumulada, rancor, receio,
-  medo condicionado da placa e cartazes de xingamento.
-- Aprendizado: habituação, regra de três fatores, condicionamento Rescorla–Wagner, memória episódica.
-- Pânico (`Ctrl + Alt + Shift + B`), pausa, modo teste, monitor neural e painel de protesto.
+## 0.11 — Fixar posição
 
-### Memória por personagem
-- Cada personagem tem a sua memória em `memory/pets/<pet>/` (rede e os sete arquivos de memória); o que
-  é do app (permissões, rotina, painéis, log) continua em `memory/`.
-- Migração automática da versão antiga: copia, confere, guarda os originais em `memory/legado/<pet>/` e
-  só então marca como migrado. Conflito ou falta de permissão não sobrescrevem nada: ele segue com os
-  arquivos antigos e avisa na bandeja.
+- Atalho Fixar no lugar / Soltar posição no menu de segurar.
+- Impede gravidade, inclinação, passeio e impulso de arremesso; a preferência é salva.
 
-### Conteúdo por personagem
-- Frases, cartazes e memes de cada personagem ficam em `pets/<pet>/`; imagens neutras (bolinhas, notebook)
-  e suas fotos em `assets/comum/`. Um personagem nunca usa o conteúdo de outro: sem conteúdo próprio, usa
-  frases neutras ou não faz aquela travessura.
-- Os cartazes do cantinho do castigo saíram do código para as seções `[castigo]` e `[xingamento]` do
-  `cartazes.txt` do pet.
+## 0.10 — Meu radar
 
-### Escolha do personagem
-- O programa passa a se chamar **Pestinha**; o Bryan é o primeiro personagem.
-- O personagem é escolhido em Configurações (vale ao reabrir). Só `pets/<pet>.json` vira opção.
-- Os textos usam o nome do personagem onde é ele que fala (apresentação, "Estou aqui", notebook, monitor
-  neural, painel de protesto) e o nome do programa no resto (configurações, bandeja, pânico).
-- O log passa a ser `memory/logs/pestinha.log`; o executável, `Pestinha.exe`.
+- Seleção diária de interesses por cartões e configuração de RSS por área.
+- Manchetes comentadas em balões, com fonte e cartão da matéria.
+- Atualização automática opcional com pet solto/tela desbloqueada, pausa e intervalo configuráveis.
 
-### Jorge
-- Segundo personagem: coach de finanças e IA, trambiqueiro. Mesma rede e mesmos estágios do Bryan, com
-  outra semente, outro temperamento e conteúdo próprio (recadinhos, bilhetes tristes, cartazes de todos os
-  estágios e do cantinho, e um panfleto de mentoria no lugar da bolinha de papel). Cinco memes para cada uma de felizes, contentes, curiosos e bravos, em `pets/jorge/memes/`.
-- `ferramentas/medir_cartazes.py` confere, com as fontes de verdade, se cada cartaz cabe na placa.
-- `ferramentas/gerar_panfleto.py` desenha o panfleto do Jorge.
+## 0.9 — Tarefas e prazos
 
-### Cores e acessórios
-- Cada pet pode ter as próprias cores (moldura, tela, olhos) e acessórios (óculos, gravata) no campo
-  `aparencia` do `.json`. Os acessórios são uma camada por cima do rosto; olhos e expressões não mudam.
-- O Jorge tem moldura e olhos dourados e gravata vermelha. O Bryan continua igual.
+- Convite do pet para cadastrar tarefa e entrega.
+- Acompanhamento periódico, avisos de prazo/atraso, começar, concluir, adiar aviso e editar prazo.
 
-### Licença
-- Código sob GPL-3.0-or-later (`LICENSE`).
+## 0.8 — Água, gráficos e contadores
 
-### Qualidade
-- Arquitetura em camadas verificada por teste; `app.py` dividido em composição e mixins de sessão e
-  interação.
-- Persistência validada: escrita atômica, recusa de `NaN`, carga tudo-ou-nada.
-- Cinco rodadas de auditoria, com cada bug corrigido coberto por teste, registradas em `docs/auditorias/`.
-- Suíte de testes, bateria de 100 cenários do cantinho e fuzzer com invariantes.
+- Lembretes de água em janela diária, intervalo e registro manual de copos.
+- Painel gráfico de personalidade/memória por personagem e tempos acumulados de atividades.
+- Gráficos do uso estimado dos apps escolhidos.
+
+## 0.7 — RSS e pausas conscientes
+
+- Biblioteca com 14 feeds dos próprios veículos.
+- Acompanhamento opcional de uso, consentimento, seleção de apps e recados por personagem.
+
+## Versões anteriores
+
+A base anterior trouxe a interface nativa, os personagens Bryan/Jorge/Mimir, memória
+independente, menu rápido, interações, brinquedos, sensores e o assistente local.
+A assinatura de desenvolvimento estável é usada desde 0.2; a 0.1 exige cuidado na migração.
+
+[Histórico original de desktop preservado](CHANGELOG-DESKTOP.md).

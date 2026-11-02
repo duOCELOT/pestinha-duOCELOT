@@ -1,0 +1,38 @@
+name: Publish Android Release
+on:
+  workflow_dispatch:
+  push:
+    branches: [android]
+    paths:
+      - android-release.json
+      - .github/workflows/publish-android.yml
+      - .github/scripts/publish_android.py
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: publish-android-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'duOCELOT/pestinha-duOCELOT'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate approved build and publication config
+        id: config
+        run: python .github/scripts/publish_android.py --check-config
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.config.outputs.artifact_name }}
+          run-id: ${{ steps.config.outputs.run_id }}
+          github-token: ${{ github.token }}
+          path: approved-apk
+      - name: Verify APK and publish Release assets
+        run: python .github/scripts/publish_android.py --publish approved-apk
