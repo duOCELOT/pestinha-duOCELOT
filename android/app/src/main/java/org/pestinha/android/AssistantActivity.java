@@ -29,11 +29,14 @@ public class AssistantActivity extends Activity {
     private void button(LinearLayout box,String label,Runnable action){Design.button(box,label,"secondary",action);}
     private LinearLayout section(String title){LinearLayout box=Design.card(this,layout);Design.label(box,title.toUpperCase(java.util.Locale.ROOT));return box;}
     @Override public void onCreate(Bundle saved){
-        super.onCreate(saved);LocalAssistant.channel(this);LocalAssistant.rearm(this);
+        super.onCreate(saved);LocalAssistant.channel(this);LocalAssistant.rearm(this);Tasks.rearm(this);
         ScrollView scroll=new ScrollView(this);scroll.setBackgroundColor(Design.BG);
         layout=new LinearLayout(this);layout.setOrientation(LinearLayout.VERTICAL);layout.setPadding(dp(22),dp(36),dp(22),dp(50));scroll.addView(layout);
         text(layout,"Seu assistente",28);
         text(layout,"Timers e lembretes ficam neste aparelho. Notícias usam apenas os feeds HTTPS que você adicionar. Agenda e relógio abrem para você revisar e confirmar.",15);
+        LinearLayout tasks=section("Tarefas e prazos");
+        text(tasks,"O que você tem para fazer? Conte a tarefa, defina o prazo e me diga como está indo.",16);
+        button(tasks,"Minhas tarefas / contar uma tarefa",()->startActivity(new Intent(this,TaskActivity.class)));
         LinearLayout mindful=section("Pausas conscientes");
         text(mindful,"Escolha apps e receba comentários do pet sobre o tempo de uso. Requer Acesso ao uso autorizado por você; desligado por padrão.",14);
         button(mindful,"Uso de aplicativos e recados do pet",()->startActivity(new Intent(this,UsageActivity.class)));

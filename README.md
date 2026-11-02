@@ -1,6 +1,6 @@
 # Pestinha Android — fork duOCELOT
 
-Versão Android experimental **0.8**, desenvolvida neste fork a partir de
+Versão Android experimental **0.9**, desenvolvida neste fork a partir de
 [mille-okws/pestinha](https://github.com/mille-okws/pestinha). A adaptação está
 na **[branch android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**.
 O texto original de desktop foi preservado abaixo.
@@ -279,3 +279,10 @@ gráficos do tempo de uso e monitor de personalidade/memória separado por perso
 As barras mostram dados reais da rede, necessidades e novos tempos acumulados do pet;
 o temperamento inicial é identificado separadamente do aprendizado.
 Consulte o [guia das telas](docs/android/GUIA-DO-APK.md) para ativar e entender os contadores.
+
+
+## Tarefas e prazos (0.9)
+
+O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
+defina a entrega e escolha a frequência de acompanhamento. O painel permite
+começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](docs/android/TAREFAS.md).

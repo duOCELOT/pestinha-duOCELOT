@@ -20,6 +20,19 @@ public class PetService extends Service {
         if(event!=null)service.event(event);
         service.ui.post(()->{if(!service.closed&&service.world!=null&&service.screenOn)service.world.message(text,false,service.pos.x,service.pos.y,()->{});});
     }
+    static void taskNotice(String text,String taskId,boolean create){
+        PetService service=instance;if(service==null||service.closed)return;
+        service.ui.post(()->{if(service.closed||service.world==null||!service.screenOn||service.getSystemService(KeyguardManager.class).isKeyguardLocked())return;
+            service.world.message(text,false,service.pos.x,service.pos.y,()->service.startActivity(new Intent(service,TaskActivity.class).putExtra("task",taskId).putExtra("new",create).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
+        });
+    }
+    private final Runnable taskInvitation=new Runnable(){public void run(){
+        if(closed)return;
+        if(running&&screenOn&&world!=null&&!getSystemService(KeyguardManager.class).isKeyguardLocked()&&Tasks.invitationDue(PetService.this,System.currentTimeMillis())){
+            Tasks.prefs(PetService.this).edit().putLong("invitedAt",System.currentTimeMillis()).apply();taskNotice(TaskActivity.invitation(),null,true);
+        }
+        ui.postDelayed(this,60000);
+    }};
     static void usageSettingsChanged(){PetService service=instance;if(service!=null)service.ui.post(()->{if(!service.closed&&service.usageMonitor!=null)service.usageMonitor.update(service.screenOn);});}
     public static volatile boolean running = false, busy = false;
     public static volatile String liveSnapshot = "";
@@ -186,7 +199,7 @@ public class PetService extends Service {
                 if (!closed) { running = true; worker.post(tick); }
             } catch (Exception e) { ui.post(() -> fail(e)); }
         });
-        lastFrame = SystemClock.uptimeMillis(); if (screenOn) ui.post(frame);
+        lastFrame = SystemClock.uptimeMillis(); if (screenOn) ui.post(frame);ui.postDelayed(taskInvitation,20000);
     }
     private void event(String kind) { if (worker != null && !closed) worker.post(() -> {
         if (brain != null) try { brain.callAttr("event", kind); } catch (Exception e) { ui.post(() -> fail(e)); }

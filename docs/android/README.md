@@ -1,6 +1,6 @@
 # Pestinha Android — apresentação do projeto
 
-**Material da versão 0.8 experimental.** Este diretório apresenta o APK, suas
+**Material da versão 0.9 experimental.** Este diretório apresenta o APK, suas
 interfaces e funções. Foi conferido com o código da branch `android`.
 
 | Para quem | Material |
@@ -128,3 +128,10 @@ Código sob [GPL-3.0-or-later](../../LICENSE). O fork preserva os créditos do
 projeto original. O APK desenha o pet em Canvas e não inclui os memes/imagens da
 pasta `assets/` do desktop. O material visual deste guia é gerado pela interface
 do próprio projeto.
+
+
+## Tarefas e prazos (0.9)
+
+O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
+defina a entrega e escolha a frequência de acompanhamento. O painel permite
+começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAREFAS.md).

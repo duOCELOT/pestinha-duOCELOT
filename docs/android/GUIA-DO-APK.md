@@ -361,3 +361,10 @@ caderninho, cantinho e contextos. Começam nesta versão e acompanham o backup d
 Não contam tempo com o pet guardado ou a tela apagada. Contextos e atividades se sobrepõem;
 as barras não devem ser somadas como se fossem categorias exclusivas.
 Os registros de água e configurações do assistente não fazem parte do backup neural.
+
+
+## Tarefas e prazos (0.9)
+
+O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
+defina a entrega e escolha a frequência de acompanhamento. O painel permite
+começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAREFAS.md).
