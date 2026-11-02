@@ -43,7 +43,7 @@ public class MemoryActivity extends Activity {
     @Override public void onCreate(Bundle saved) {
         super.onCreate(saved);
         ScrollView scroll=new ScrollView(this); scroll.setBackgroundColor(Color.rgb(16,29,37));
-        LinearLayout layout=new LinearLayout(this); layout.setOrientation(1); layout.setPadding(28,48,28,48); scroll.addView(layout);
+        LinearLayout layout=new LinearLayout(this); layout.setOrientation(LinearLayout.VERTICAL); layout.setPadding(28,48,28,48); scroll.addView(layout);
         Button export=new Button(this); export.setText("Exportar memória / backup JSON"); layout.addView(export);
         export.setOnClickListener(v -> startActivityForResult(new Intent(Intent.ACTION_CREATE_DOCUMENT).setType("application/json")
                 .addCategory(Intent.CATEGORY_OPENABLE).putExtra(Intent.EXTRA_TITLE,"pestinha-"+petId(this)+"-"+System.currentTimeMillis()+".json"),20));

@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
             public void onItemSelected(android.widget.AdapterView<?> parent,View view,int position,long id){
                 String selected=position==1?"jorge":"bryan";
                 if(selected.equals(MemoryActivity.petId(MainActivity.this)))return;
-                if(PetService.busy){Toast.makeText(MainActivity.this,"Guarde o pet antes de trocar.",1).show();character.setSelection(MemoryActivity.petId(MainActivity.this).equals("jorge")?1:0);return;}
+                if(PetService.busy){Toast.makeText(MainActivity.this,"Guarde o pet antes de trocar.",android.widget.Toast.LENGTH_LONG).show();character.setSelection(MemoryActivity.petId(MainActivity.this).equals("jorge")?1:0);return;}
                 getSharedPreferences("pet",0).edit().putString("character",selected).remove("error").apply();
             }
         });
@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
                     Uri.parse("package:" + getPackageName())));
         });
         button(layout, "2. Soltar o pet", v -> {
-            if (PetService.busy && !PetService.running) {Toast.makeText(this,"Aguarde o início ou salvamento do pet.",1).show();return;}
+            if (PetService.busy && !PetService.running) {Toast.makeText(this,"Aguarde o início ou salvamento do pet.",android.widget.Toast.LENGTH_LONG).show();return;}
             if (!Settings.canDrawOverlays(this)) {
                 Toast.makeText(this, "Primeiro permita aparecer sobre outros apps.", Toast.LENGTH_LONG).show();
                 return;
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
         button(layout, "Deixar um bilhete", v -> send("note"));
         button(layout, "Cantinho • entrar / sair", v -> send("corner"));
         button(layout, "Escolher imagem para memes", v -> startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/*").addCategory(Intent.CATEGORY_OPENABLE),30));
-        button(layout, "Mostrar meu meme", v -> {if(new java.io.File(MemoryActivity.directory(this),"custom-meme.png").exists())send("meme");else Toast.makeText(this,"Escolha uma imagem primeiro.",1).show();});
+        button(layout, "Mostrar meu meme", v -> {if(new java.io.File(MemoryActivity.directory(this),"custom-meme.png").exists())send("meme");else Toast.makeText(this,"Escolha uma imagem primeiro.",android.widget.Toast.LENGTH_LONG).show();});
         CheckBox mischief=new CheckBox(this); mischief.setText("Travessuras automáticas (bilhetes, memes e cartazes)");mischief.setTextColor(Color.WHITE);
         mischief.setChecked(getSharedPreferences("pet",0).getBoolean("mischief",false));layout.addView(mischief);
         mischief.setOnCheckedChangeListener((b,checked)->{getSharedPreferences("pet",0).edit().putBoolean("mischief",checked).apply();if(PetService.running)send("mischief");});
@@ -130,8 +130,8 @@ public class MainActivity extends Activity {
             java.io.File temp=new java.io.File(targetDir,"custom-meme.tmp");
             try(java.io.OutputStream out=new java.io.FileOutputStream(temp)){if(!bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG,100,out))throw new java.io.IOException("Falha ao salvar imagem");}finally{bitmap.recycle();}
             if(!temp.renameTo(new java.io.File(targetDir,"custom-meme.png")))throw new java.io.IOException("Falha ao guardar imagem");
-            handler.post(()->Toast.makeText(this,"Imagem guardada para este personagem.",1).show());
-        }catch(Exception e){handler.post(()->Toast.makeText(this,"Erro na imagem: "+e.getMessage(),1).show());}}).start();
+            handler.post(()->Toast.makeText(this,"Imagem guardada para este personagem.",android.widget.Toast.LENGTH_LONG).show());
+        }catch(Exception e){handler.post(()->Toast.makeText(this,"Erro na imagem: "+e.getMessage(),android.widget.Toast.LENGTH_LONG).show());}}).start();
     }
     private String license() {
         try (java.io.InputStream in = getAssets().open("LICENSE")) {

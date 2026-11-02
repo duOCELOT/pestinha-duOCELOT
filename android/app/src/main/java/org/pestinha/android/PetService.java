@@ -224,8 +224,8 @@ public class PetService extends Service {
         else if(i!=null&&"settings".equals(i.getAction())) { applySettings(); clamp(); }
         else if(i!=null&&"export".equals(i.getAction())&&worker!=null){
             String uri=i.getStringExtra("uri");worker.post(()->{save();try{
-                MemoryActivity.backup(this,android.net.Uri.parse(uri));ui.post(()->android.widget.Toast.makeText(this,"Backup salvo.",1).show());
-            }catch(Exception e){ui.post(()->android.widget.Toast.makeText(this,"Erro no backup: "+e.getMessage(),1).show());}});
+                MemoryActivity.backup(this,android.net.Uri.parse(uri));ui.post(()->android.widget.Toast.makeText(this,"Backup salvo.",android.widget.Toast.LENGTH_LONG).show());
+            }catch(Exception e){ui.post(()->android.widget.Toast.makeText(this,"Erro no backup: "+e.getMessage(),android.widget.Toast.LENGTH_LONG).show());}});
         }
         else if (i != null && i.getAction() != null) event(i.getAction());
         return START_NOT_STICKY;
