@@ -298,3 +298,10 @@ Não há extrapolação retroativa de contadores nem raster neural simulado.
 Testes adicionais: janela de hidratação, repetição e tokens, isolamento do timer de foco,
 contagem manual diária, persistência dos tempos e isolamento do painel de Mimir
 quando Bryan está ativo. O teste visual emite uma prévia do monitor renderizado.
+
+
+## Tarefas e prazos (0.9)
+
+O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
+defina a entrega e escolha a frequência de acompanhamento. O painel permite
+começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAREFAS.md).
