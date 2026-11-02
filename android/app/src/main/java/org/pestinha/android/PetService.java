@@ -43,7 +43,7 @@ public class PetService extends Service {
     private long lastAction=0;
     private boolean inCorner=false, notebook=false, facingSleep=false;
     private volatile boolean closed = false, screenOn = true;
-    private boolean dragging = false, receiverRegistered = false;
+    private boolean dragging = false, pressed = false, receiverRegistered = false;
     private double speed = 20, drive = 0;
     private float vx = 0, vy = 0;
     private long lastFrame, lastSave;
@@ -51,7 +51,7 @@ public class PetService extends Service {
         public void onReceive(Context c, Intent i) {
             screenOn = Intent.ACTION_SCREEN_ON.equals(i.getAction());
             updateMotion();
-            if(!screenOn && quickMenu!=null)quickMenu.dismiss();
+            if(!screenOn){pressed=dragging=false;event("release");if(quickMenu!=null)quickMenu.dismiss();}
             ui.removeCallbacks(frame);
             if (screenOn) { lastFrame = SystemClock.uptimeMillis(); ui.post(frame); }
             if(world!=null)world.show(screenOn);
@@ -96,7 +96,7 @@ public class PetService extends Service {
             else event(action);
         });
         motion = new MotionSensors(this, () -> {
-            if(!closed && running && !dragging && !inCorner && !notebook){
+            if(!closed && running && !dragging && !pressed && !inCorner && !notebook){
                 vy=-180*getResources().getDisplayMetrics().density;event("motion");
             }
         });
@@ -127,6 +127,7 @@ public class PetService extends Service {
                 gestures.onTouchEvent(e);
                 switch (e.getActionMasked()) {
                     case MotionEvent.ACTION_DOWN:
+                        pressed=true;
                         x = e.getRawX(); y = e.getRawY(); initialX = pos.x; initialY = pos.y;
                         vx = vy = 0; dragging = false;
                         previousX=x; previousY=y; movedAt=e.getEventTime(); flingX=flingY=0;
@@ -151,7 +152,7 @@ public class PetService extends Service {
                             vy=Math.max(-1500*density,Math.min(1500*density,flingY)); event("throw");
                         }
                     case MotionEvent.ACTION_CANCEL:
-                        event("release"); dragging = false; storePosition(); break;
+                        event("release"); pressed=false; dragging = false; storePosition(); break;
                 }
                 return true;
             }
@@ -224,7 +225,7 @@ public class PetService extends Service {
             boolean useTilt=tiltEnabled && motion!=null && motion.active;
             float density=getResources().getDisplayMetrics().density;
             float[] force=useTilt?motion.force(displayRotation()):new float[]{0,0};
-            if (!dragging && running && !inCorner && !notebook && !quickMenu.isShowing() && (useTilt || !emotion.equals("dormindo"))) {
+            if (!dragging && !pressed && running && !inCorner && !notebook && !quickMenu.isShowing() && (useTilt || !emotion.equals("dormindo"))) {
                 if(useTilt){
                     vx=TiltPhysics.velocity(vx,force[0]*90*density*tiltSensitivity,dt,650*density);
                     vy=TiltPhysics.velocity(vy,force[1]*90*density*tiltSensitivity,dt,650*density);
@@ -235,7 +236,7 @@ public class PetService extends Service {
                 xFloat+=vx*dt;yFloat+=vy*dt;
                 pos.x=Math.round(xFloat);pos.y=Math.round(yFloat);clamp();
             }
-            float angle=useTilt&&!dragging?motion.angle(displayRotation()):0;
+            float angle=useTilt&&!dragging&&!pressed&&!quickMenu.isShowing()?motion.angle(displayRotation()):0;
             pet.bodyAngle+=(angle-pet.bodyAngle)*Math.min(1,dt*8);
             world.gravity(useTilt,force[0]*90*tiltSensitivity,force[1]*90*tiltSensitivity);
             world.frame(dt,pos.x,pos.y,pos.width,pos.height);
@@ -274,7 +275,7 @@ public class PetService extends Service {
         android.util.Log.e("Pestinha", "Pet failed", e);
         getSharedPreferences("pet", 0).edit().putString("error", String.valueOf(e.getMessage())).apply(); stopSelf();
     }
-    @Override public void onConfigurationChanged(Configuration c) { super.onConfigurationChanged(c); if(quickMenu!=null)quickMenu.dismiss(); if(motion!=null)motion.resetCalibration(); clamp(); }
+    @Override public void onConfigurationChanged(Configuration c) { super.onConfigurationChanged(c); pressed=dragging=false; if(quickMenu!=null)quickMenu.dismiss(); if(motion!=null)motion.resetCalibration(); clamp(); }
     @Override public int onStartCommand(Intent i, int flags, int id) {
         if (i != null && "stop".equals(i.getAction())) stopSelf();
         else if(i!=null&&"ball".equals(i.getAction())&&world!=null) world.toggleBall(pos.x,pos.y);
