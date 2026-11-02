@@ -10,7 +10,7 @@
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
     <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
     <application android:label="Pestinha" android:icon="@drawable/ic_pet"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar"
+        android:theme="@style/PestinhaTheme"
         android:usesCleartextTraffic="false" android:allowBackup="false" android:supportsRtl="true">
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
