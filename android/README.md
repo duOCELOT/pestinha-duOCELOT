@@ -1,6 +1,6 @@
 # Pestinha Android — desenvolvimento e distribuição
 
-**APK atual: 0.13 experimental** (`0.13.0-alpha`, versionCode 14).
+[**Versão atual e histórico do Android**](../CHANGELOG.md).
 Android 8.0/API 26+, ARM64 e x86_64. Interface Java/Canvas com o cérebro Python original via Chaquopy.
 
 **Quer instalar? [Baixe o APK direto da Release](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk).**

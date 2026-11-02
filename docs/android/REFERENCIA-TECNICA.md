@@ -288,7 +288,7 @@ interpretação e execução de ações. A versão 0.13 não implementa esse mod
 acesso geral ao celular; essa expansão precisa de um trabalho próprio.
 
 
-## Painéis e lembretes da versão 0.8
+## Painéis e lembretes
 
 `Hydration` mantém uma única tarefa recorrente (ID reservado 2) no agendador local.
 A janela diária usa o fuso local, é restrita ao mesmo dia e o próximo aviso é
@@ -310,20 +310,20 @@ contagem manual diária, persistência dos tempos e isolamento do painel de Mimi
 quando Bryan está ativo. O teste visual emite uma prévia do monitor renderizado.
 
 
-## Tarefas e prazos (0.9)
+## Tarefas e prazos
 
 O pet pergunta o que você tem para fazer. Toque no convite, escreva a tarefa,
 defina a entrega e escolha a frequência de acompanhamento. O painel permite
 começar, concluir, adiar o aviso e mudar o prazo. Veja o [guia das tarefas](TAREFAS.md).
 
 
-## Meu radar (0.10)
+## Meu radar
 
 Seleção diária de interesses em cartões, RSS configurados por assunto e manchetes
 comentadas pelo pet, com fonte e link para a matéria. Veja o [guia do radar](MEU-RADAR.md).
 
 
-## Posição fixa (0.11)
+## Posição fixa
 
 Preferência `pet.fixed`, acionada diretamente pelo menu rápido. O serviço zera
 velocidades ao alternar e bloqueia gravidade, passeio, deslocamento por inclinação,
@@ -336,17 +336,19 @@ Testes verificam posição após arrastar/soltar com impulso anterior, persistê
 retomada da gravidade e o rótulo/ação do atalho no menu.
 
 
-## Arkanoid sobre os apps (0.12)
+## Arkanoid sobre os apps
 
 Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
 para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
 Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).
 
 
-## Distribuição pública (0.13)
+## Distribuição pública
 
 O APK validado é disponibilizado em [Releases](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest),
 com download direto, hash SHA-256 e tag para o commit da compilação. A versão interna
 é `0.13.0-alpha`, versionCode 14, minSdk 26, targetSdk 35, ARM64/x86_64.
 A publicação não altera o APK nem sua assinatura de desenvolvimento. Veja o
 [procedimento de publicação](PUBLICAR-RELEASE.md).
+
+[Histórico e versão disponível para download](../../CHANGELOG.md).
