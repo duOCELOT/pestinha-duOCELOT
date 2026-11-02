@@ -4,7 +4,7 @@ import random
 import time
 from pathlib import Path
 from pestinha.core.nervous_system import LIFBrain
-from pestinha.core.emotion import EmotionState
+from pestinha.core.emotion import EmotionState, EYE_SHAPES
 from pestinha.core.homeostasis import Drives
 from pestinha.core.motor import MotorTone
 from pestinha.core.conditioning import Conditioning
@@ -262,6 +262,7 @@ class AndroidBrain:
             self.pending_thing = None
         self.snapshot = {
             'name': self.name, 'emotion': 'dormindo' if self.asleep else emotion,
+            'face': EYE_SHAPES['dormindo' if self.asleep else emotion], 'caressing': caring,
             'energy': self.drives.energy, 'stimulation': self.drives.stimulation,
             'contact': self.drives.contact, 'speed': 0 if self.asleep or self.corner or self.notebook else self.motor.speed(),
             'drive': 0 if self.asleep or self.corner or self.notebook else self.motor.drive(),

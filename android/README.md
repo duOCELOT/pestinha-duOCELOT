@@ -1,14 +1,32 @@
-# Pestinha Android 0.4 (experimental)
+# Pestinha Android 0.5 (experimental)
 
 Adaptação independente de mille-okws/pestinha. Interface Android em Java/Canvas;
 rede neural e memória originais em Python, integradas por Chaquopy. Sem Termux,
 Ubuntu, Qt ou VNC no aparelho. Código de desktop preservado.
 
+## Interface e menu rápido (0.5)
+
+O rosto Android é uma portagem nativa de `pestinha/body/desenho_rosto.py`:
+corpo 120 × 90, moldura verde `#63e56f`, tela `#171e19`, olhos `#3ee877`,
+brilho `#c8ffd8` e os recortes de pálpebra do original. Os formatos por emoção
+vêm de `EYE_SHAPES` no núcleo Python, com transição suave na interface. Jorge
+usa as cores e acessórios de seu JSON. Não depende de screenshots ou sprites.
+
+**Segurar o pet abre os ícones rápidos**, sem sair para o app. Carinho, bolinha,
+dormir/acordar, notebook, memória, assistente, painel e guardar estão disponíveis.
+O botão Painel abre a tela completa. Toque fora ou no X para fechar. O pet fica
+parado enquanto o menu está aberto; rotação, tela apagada ou guardar fecham o
+menu. Não captura a tela inteira e não bloqueia os toques fora da janela.
+
+A tela principal usa a paleta do pet, cartões para Assistente e Memória e seções
+recolhidas para brincadeiras, personagem, movimento e privacidade. Controles dos
+outros painéis seguem a mesma paleta, com margens para as barras do Android.
+
 ## Funções
 
 - Bryan e Jorge, com sementes, temperamentos e memórias separados.
 - Pet transparente sobre apps, gravidade, quique, arraste e arremesso por toque.
-- Toque para cutucar, toque duplo para carinho, segurar para abrir controles.
+- Toque para cutucar, toque duplo para carinho, segurar para abrir os ícones rápidos.
 - Bolinha arrastável, chute por proximidade, notebook para trabalhar junto.
 - Bilhetes e memes de uma imagem escolhida pelo usuário; dispensar ensina uma
   reação negativa, deixar o bilhete na tela ensina uma reação positiva.

@@ -25,14 +25,14 @@ public class AssistantActivity extends Activity {
     private int dp(int n){return Math.round(n*getResources().getDisplayMetrics().density);}
     private android.content.SharedPreferences prefs(){return getSharedPreferences(LocalAssistant.PREFS,0);}
     private void toast(String s){Toast.makeText(this,s,Toast.LENGTH_LONG).show();}
-    private TextView text(LinearLayout box,String title,int size){TextView t=new TextView(this);t.setText(title);t.setTextColor(Color.WHITE);t.setTextSize(size);t.setPadding(0,dp(8),0,dp(10));box.addView(t);return t;}
-    private void button(LinearLayout box,String label,Runnable action){Button b=new Button(this);b.setText(label);b.setAllCaps(false);box.addView(b);b.setOnClickListener(v->action.run());}
-    private LinearLayout section(String title){text(layout,title,22);LinearLayout box=new LinearLayout(this);box.setOrientation(LinearLayout.VERTICAL);layout.addView(box);return box;}
+    private TextView text(LinearLayout box,String title,int size){TextView t=new TextView(this);t.setText(title);t.setTextColor(size>=18?Design.TEXT:Design.MUTED);t.setTextSize(size);t.setLineSpacing(dp(2),1);t.setPadding(0,dp(8),0,dp(10));box.addView(t);return t;}
+    private void button(LinearLayout box,String label,Runnable action){Design.button(box,label,"secondary",action);}
+    private LinearLayout section(String title){LinearLayout box=Design.card(this,layout);Design.label(box,title.toUpperCase(java.util.Locale.ROOT));return box;}
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved);LocalAssistant.channel(this);LocalAssistant.rearm(this);
-        ScrollView scroll=new ScrollView(this);scroll.setBackgroundColor(Color.rgb(16,29,37));
+        ScrollView scroll=new ScrollView(this);scroll.setBackgroundColor(Design.BG);
         layout=new LinearLayout(this);layout.setOrientation(LinearLayout.VERTICAL);layout.setPadding(dp(22),dp(36),dp(22),dp(50));scroll.addView(layout);
-        text(layout,"SEU PEQUENO ASSISTENTE",24);
+        text(layout,"Seu assistente",28);
         text(layout,"Timers e lembretes ficam neste aparelho. Notícias usam apenas os feeds HTTPS que você adicionar. Agenda e relógio abrem para você revisar e confirmar.",15);
         LinearLayout focus=section("Foco e pausas");countdown=text(focus,"",19);
         button(focus,"Focar por 25 minutos",()->startTimer(25,"focus"));
@@ -66,7 +66,7 @@ public class AssistantActivity extends Activity {
         button(rss,"Apagar notícias salvas",()->{prefs().edit().remove("news").remove("newsAt").apply();showCache();});
         feedStatus=text(rss,"",14);news=new LinearLayout(this);news.setOrientation(LinearLayout.VERTICAL);rss.addView(news);
         text(rss,"Os trechos vêm dos próprios feeds; ainda não há resumo por LLM nem busca geral na web. Notícias não podem acionar funções do app. Abrir uma matéria usa seu navegador.",14);
-        setContentView(scroll);renderFeeds();renderReminders();showCache();
+        setContentView(scroll);Design.install(this,scroll);renderFeeds();renderReminders();showCache();
     }
     private boolean requireNotifications(){if(LocalAssistant.notificationsAllowed(this))return true;requestNotifications();toast("Permita as notificações e tente criar o aviso novamente.");return false;}
     private void requestNotifications(){

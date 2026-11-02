@@ -32,6 +32,8 @@ public class PetService extends Service {
     private WindowManager.LayoutParams pos;
     private PetView pet;
     private PetWorld world;
+    private QuickMenu quickMenu;
+    private boolean menuOpenedByHold=false;
     private MotionSensors motion;
     private boolean tiltEnabled=false;
     private float tiltSensitivity=1;
@@ -49,6 +51,7 @@ public class PetService extends Service {
         public void onReceive(Context c, Intent i) {
             screenOn = Intent.ACTION_SCREEN_ON.equals(i.getAction());
             updateMotion();
+            if(!screenOn && quickMenu!=null)quickMenu.dismiss();
             ui.removeCallbacks(frame);
             if (screenOn) { lastFrame = SystemClock.uptimeMillis(); ui.post(frame); }
             if(world!=null)world.show(screenOn);
@@ -84,6 +87,14 @@ public class PetService extends Service {
         pet = new PetView(this);
         pet.jorge = petId.equals("jorge");
         world = new PetWorld(this, wm, this::event);
+        quickMenu = new QuickMenu(this,wm,action->{
+            if(action.equals("stop"))stopSelf();
+            else if(action.equals("panel")||action.equals("memory")||action.equals("assistant")){
+                Class<?> screen=action.equals("panel")?MainActivity.class:action.equals("memory")?MemoryActivity.class:AssistantActivity.class;
+                startActivity(new Intent(this,screen).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            }else if(action.equals("ball"))world.toggleBall(pos.x,pos.y);
+            else event(action);
+        });
         motion = new MotionSensors(this, () -> {
             if(!closed && running && !dragging && !inCorner && !notebook){
                 vy=-180*getResources().getDisplayMetrics().density;event("motion");
@@ -103,7 +114,11 @@ public class PetService extends Service {
             @Override public boolean onSingleTapConfirmed(android.view.MotionEvent e) { event("poke"); return true; }
             @Override public boolean onDoubleTap(android.view.MotionEvent e) { event("caress"); return true; }
             @Override public void onLongPress(android.view.MotionEvent e) {
-                if (!dragging) startActivity(new Intent(PetService.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                if (!dragging && running){
+                    menuOpenedByHold=true;vx=vy=0;
+                    pet.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    quickMenu.show(pos.x,pos.y,pos.width,pos.height,emotion.equals("dormindo"),notebook,world.ball!=null);
+                }
             }
         });
         pet.setOnTouchListener(new View.OnTouchListener() {
@@ -115,8 +130,10 @@ public class PetService extends Service {
                         x = e.getRawX(); y = e.getRawY(); initialX = pos.x; initialY = pos.y;
                         vx = vy = 0; dragging = false;
                         previousX=x; previousY=y; movedAt=e.getEventTime(); flingX=flingY=0;
+                        menuOpenedByHold=false;if(quickMenu!=null)quickMenu.dismiss();
                         event("press"); break;
                     case MotionEvent.ACTION_MOVE:
+                        if(menuOpenedByHold)return true;
                         float dx = e.getRawX() - x, dy = e.getRawY() - y;
                         if (!dragging && Math.hypot(dx, dy) > ViewConfiguration.get(PetService.this).getScaledTouchSlop()) {
                             dragging = true; event("drag");
@@ -129,7 +146,7 @@ public class PetService extends Service {
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-                        if(dragging && e.getEventTime()-movedAt<150 && Math.hypot(flingX,flingY)>500*density){
+                        if(!menuOpenedByHold && dragging && e.getEventTime()-movedAt<150 && Math.hypot(flingX,flingY)>500*density){
                             vx=Math.max(-1500*density,Math.min(1500*density,flingX));
                             vy=Math.max(-1500*density,Math.min(1500*density,flingY)); event("throw");
                         }
@@ -153,6 +170,8 @@ public class PetService extends Service {
                 try (java.io.InputStream in = getAssets().open("pets/"+petId+".json")) {
                     definition = readText(in);
                 }
+                JSONObject appearance=new JSONObject(definition).optJSONObject("aparencia");
+                ui.post(()->{if(!closed)pet.appearance(appearance);});
                 brain = Python.getInstance().getModule("android_brain").get("AndroidBrain")
                         .call(new java.io.File(getFilesDir(), "memory/"+petId).toString(), definition);
                 brain.callAttr("event", "context:"+getSharedPreferences("pet",0).getString("context","livre"));
@@ -178,7 +197,7 @@ public class PetService extends Service {
                     String snapshot=data.toString();
                     ui.post(() -> { if (!closed) {
                         boolean celebrate=next.equals("feliz")&&!emotion.equals("feliz");
-                        liveSnapshot=snapshot; emotion=next; energy=en; speed=sp; drive=dr; pet.emotion=next;
+                        liveSnapshot=snapshot; emotion=next; energy=en; speed=sp; drive=dr; pet.emotion=next;pet.face(data.optJSONObject("face"),data.optBoolean("caressing"));
                         boolean wasCorner=inCorner; inCorner=data.optBoolean("corner"); notebook=data.optBoolean("notebook");
                         pet.notebook=notebook; pet.corner=inCorner;
                         if(inCorner&&!wasCorner){pos.x=0;clamp();xFloat=pos.x;yFloat=pos.y;}
@@ -205,7 +224,7 @@ public class PetService extends Service {
             boolean useTilt=tiltEnabled && motion!=null && motion.active;
             float density=getResources().getDisplayMetrics().density;
             float[] force=useTilt?motion.force(displayRotation()):new float[]{0,0};
-            if (!dragging && running && !inCorner && !notebook && (useTilt || !emotion.equals("dormindo"))) {
+            if (!dragging && running && !inCorner && !notebook && !quickMenu.isShowing() && (useTilt || !emotion.equals("dormindo"))) {
                 if(useTilt){
                     vx=TiltPhysics.velocity(vx,force[0]*90*density*tiltSensitivity,dt,650*density);
                     vy=TiltPhysics.velocity(vy,force[1]*90*density*tiltSensitivity,dt,650*density);
@@ -255,7 +274,7 @@ public class PetService extends Service {
         android.util.Log.e("Pestinha", "Pet failed", e);
         getSharedPreferences("pet", 0).edit().putString("error", String.valueOf(e.getMessage())).apply(); stopSelf();
     }
-    @Override public void onConfigurationChanged(Configuration c) { super.onConfigurationChanged(c); if(motion!=null)motion.resetCalibration(); clamp(); }
+    @Override public void onConfigurationChanged(Configuration c) { super.onConfigurationChanged(c); if(quickMenu!=null)quickMenu.dismiss(); if(motion!=null)motion.resetCalibration(); clamp(); }
     @Override public int onStartCommand(Intent i, int flags, int id) {
         if (i != null && "stop".equals(i.getAction())) stopSelf();
         else if(i!=null&&"ball".equals(i.getAction())&&world!=null) world.toggleBall(pos.x,pos.y);
@@ -275,6 +294,7 @@ public class PetService extends Service {
         closed = true; running = false; ui.removeCallbacksAndMessages(null); storePosition();
         if (receiverRegistered) unregisterReceiver(screen);
         if(motion!=null)motion.stop();
+        if(quickMenu!=null)quickMenu.dismiss();
         if(world!=null)world.close();
         if (pet != null && pet.isAttachedToWindow()) wm.removeView(pet);
         if (worker != null) { worker.removeCallbacks(tick); worker.post(() -> { save(); busy=false; thread.quitSafely(); }); } else busy=false;
