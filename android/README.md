@@ -4,6 +4,17 @@ Adaptação independente de mille-okws/pestinha. Interface Android em Java/Canva
 rede neural e memória originais em Python, integradas por Chaquopy. Sem Termux,
 Ubuntu, Qt ou VNC no aparelho. Código de desktop preservado.
 
+
+## Material descritivo do APK
+
+[Apresentação](../docs/android/README.md) ·
+[Guia das telas e funções](../docs/android/GUIA-DO-APK.md) ·
+[Referência técnica](../docs/android/REFERENCIA-TECNICA.md)
+
+O guia inclui imagens renderizadas, o mapa das telas e a descrição das funções
+implementadas, com instruções de uso, memória, permissões e limitações.
+
+
 ## Mimir e personagens (0.6)
 
 Em **Personagem e aparência**, escolha Bryan, Jorge ou Mimir. Guarde o pet e
