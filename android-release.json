@@ -1,13 +1,13 @@
 {
   "repository": "duOCELOT/pestinha-duOCELOT",
-  "tag": "android-v0.19.0",
-  "title": "Pestinha Android 0.19 — categorias e Quebra-blocos",
-  "run_id": 41654350495,
-  "artifact_id": 13239871239,
+  "tag": "android-v0.20.0",
+  "title": "Pestinha Android 0.20 — Presidente com barba e orelhas refinadas",
+  "run_id": 41655741049,
+  "artifact_id": 13240216054,
   "artifact_name": "pestinha-android-debug",
-  "source_sha": "3b5621f95ec7264ed752477e5c361fd9a05fa33b",
-  "version_name": "0.19.0-alpha",
-  "version_code": 20,
-  "apk_sha256": "c5d1442acf3023c808fe4c8b6886329d42e3936040f46545ff8687fda551ff09",
-  "notes": ".github/release-notes/android-v0.19.0.md"
+  "source_sha": "d5b0f68d753ca00ea02258c003ff83eddc23b0eb",
+  "version_name": "0.20.0-alpha",
+  "version_code": 21,
+  "apk_sha256": "c897803e83618284f32bbd286e8e8f6a6a7054eba634edeb7f1b7c9f9d9ea69e",
+  "notes": ".github/release-notes/android-v0.20.0.md"
 }
