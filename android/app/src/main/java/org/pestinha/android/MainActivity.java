@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
     private TextView status,nameTitle,energyLabel,characterDescription;
     private PetView preview;
     private ProgressBar energyBar;
-    private Button launch,permission;
+    private Button launch,retract,permission;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable refresh = new Runnable() {
         public void run() { updateStatus(); handler.postDelayed(this, 1500); }
@@ -48,14 +48,18 @@ public class MainActivity extends Activity {
         character.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onNothingSelected(AdapterView<?> p){}
             public void onItemSelected(AdapterView<?> p,View v,int index,long id){String selected=Characters.id(index);if(selected.equals(MemoryActivity.petId(MainActivity.this)))return;
-                if(PetService.busy){Toast.makeText(MainActivity.this,"Guarde o pet antes de trocar.",Toast.LENGTH_LONG).show();character.setSelection(Characters.index(MemoryActivity.petId(MainActivity.this)));return;}
+                if(PetService.busy){Toast.makeText(MainActivity.this,"Recolha o pet antes de trocar.",Toast.LENGTH_LONG).show();character.setSelection(Characters.index(MemoryActivity.petId(MainActivity.this)));return;}
                 getSharedPreferences("pet",0).edit().putString("character",selected).remove("error").apply();loadAppearance();updateStatus();
             }
         });
         status=Design.text(this,"Pronto para ficar por perto.",17,Design.TEXT);hero.addView(status);
         energyLabel=Design.text(this,"Sua memória fica guardada neste aparelho.",13,Design.MUTED);energyLabel.setPadding(0,dp(6),0,dp(8));hero.addView(energyLabel);
         energyBar=new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);energyBar.setMax(100);energyBar.setProgress(100);energyBar.setProgressTintList(android.content.res.ColorStateList.valueOf(Design.ACCENT));hero.addView(energyBar,new LinearLayout.LayoutParams(-1,dp(4)));
-        launch=Design.button(hero,"Soltar o pet","primary",this::startPet);
+        LinearLayout controls=new LinearLayout(this);controls.setOrientation(LinearLayout.HORIZONTAL);hero.addView(controls);
+        launch=Design.button(controls,"Mostrar pet","primary",this::startPet);
+        retract=Design.button(controls,"Recolher pet","secondary",()->{stopService(new Intent(this,PetService.class));retract.setEnabled(false);});
+        LinearLayout.LayoutParams showParams=new LinearLayout.LayoutParams(0,-2,1);showParams.topMargin=dp(8);showParams.rightMargin=dp(8);launch.setLayoutParams(showParams);
+        LinearLayout.LayoutParams hideParams=new LinearLayout.LayoutParams(0,-2,1);hideParams.topMargin=dp(8);retract.setLayoutParams(hideParams);retract.setTag("retract");
         permission=Design.button(hero,"Permitir aparecer sobre outros apps","secondary",()->startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:"+getPackageName()))));
         TextView hint=Design.text(this,"Segure para abrir os atalhos. Dois toques fazem carinho.",14,Design.MUTED);hint.setPadding(0,dp(12),0,0);hero.addView(hint);
         navigation(layout,"note","Meu radar","Assuntos do dia e notícias com o pet",()->startActivity(new Intent(this,NewsActivity.class)));
@@ -94,10 +98,9 @@ public class MainActivity extends Activity {
         button(physics,"Calibrar nesta posição",()->send("calibrate"));button(physics,"Restaurar gravidade natural",()->send("reset_tilt"));
         LinearLayout about=expandable(layout,"Privacidade e informações");
         text(about,"A memória fica no aparelho. A internet consulta somente os feeds escolhidos, manualmente ou pelo radar opcional. Sem leitura de tela ou da agenda. O acompanhamento de apps usa estatísticas do Android somente se você autorizar e ativar. Sensores desligam com a tela apagada.",14,Design.MUTED);
-        text(about,"Pestinha Android • 0.17 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
+        text(about,"Pestinha Android • 0.18 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
         button(about,"Modo de teste • tempos curtos",()->send("fast"));
         button(about,"Licença e projeto original",()->new AlertDialog.Builder(this).setTitle("Pestinha • GPL-3.0-or-later").setMessage("Adaptação independente de mille-okws/pestinha. Código-fonte: github.com/duOCELOT/pestinha-duOCELOT, branch android.\n\n"+license()).setPositiveButton("Fechar",null).show());
-        Design.button(layout,"Guardar o pet","danger",()->stopService(new Intent(this,PetService.class)));
         setContentView(scroll);Design.install(this,scroll);loadAppearance();updateStatus();
     }
     private void startPet(){
@@ -144,7 +147,7 @@ public class MainActivity extends Activity {
     }
     private void send(String action) {
         if (!PetService.running) {
-            Toast.makeText(this, "Solte o pet primeiro.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Toque em Mostrar pet primeiro.", Toast.LENGTH_SHORT).show();
             return;
         }
         startService(new Intent(this, PetService.class).setAction(action));
@@ -163,12 +166,12 @@ public class MainActivity extends Activity {
         else status.setText(running?nameTitle.getText()+" está "+PetService.emotion+".":"Pronto para ficar por perto.");
         energyLabel.setText(running?"Energia • "+Math.round(PetService.energy*100)+"%":"Sua memória continua salva.");energyBar.setProgress(running?(int)Math.round(PetService.energy*100):100);
         permission.setVisibility(Settings.canDrawOverlays(this)?View.GONE:View.VISIBLE);
-        launch.setText(running?"Companheiro está solto":PetService.busy?"Preparando…":"Soltar "+nameTitle.getText());launch.setEnabled(!running&&!PetService.busy);launch.setAlpha(running?.6f:1);
+        launch.setText(PetService.busy&&!running?"Aguarde…":"Mostrar pet");launch.setEnabled(!running&&!PetService.busy);launch.setAlpha(launch.isEnabled()?1:.5f);retract.setEnabled(running);retract.setAlpha(running?1:.5f);
         if(running){try{org.json.JSONObject state=new org.json.JSONObject(PetService.liveSnapshot);preview.emotion=PetService.emotion;preview.face(state.optJSONObject("face"),state.optBoolean("caressing"));preview.notebook=state.optBoolean("notebook");}catch(Exception ignored){}}
         else {preview.emotion="observando";preview.caressing=false;preview.notebook=false;preview.face(null,false);}
         preview.invalidate();
     }
-    @Override protected void onResume() { super.onResume(); loadAppearance();handler.post(refresh);handler.post(()->{if(!isFinishing()&&!isDestroyed()&&(radarDialog==null||!radarDialog.isShowing())&&(radarRestore||NewsRepository.askToday(this))){radarRestore=false;radarDialog=InterestsDialog.show(this,()->android.widget.Toast.makeText(this,"Radar salvo. Solte o pet para receber as manchetes.",android.widget.Toast.LENGTH_LONG).show());}}); }
+    @Override protected void onResume() { super.onResume(); loadAppearance();handler.post(refresh);handler.post(()->{if(!isFinishing()&&!isDestroyed()&&(radarDialog==null||!radarDialog.isShowing())&&(radarRestore||NewsRepository.askToday(this))){radarRestore=false;radarDialog=InterestsDialog.show(this,()->android.widget.Toast.makeText(this,"Radar salvo. Mostre o pet para receber as manchetes.",android.widget.Toast.LENGTH_LONG).show());}}); }
     @Override protected void onPause() { handler.removeCallbacks(refresh); super.onPause(); }
     @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);state.putBoolean("radarOpen",radarDialog!=null&&radarDialog.isShowing());}
     @Override protected void onDestroy(){handler.removeCallbacksAndMessages(null);if(radarDialog!=null)radarDialog.dismiss();super.onDestroy();}

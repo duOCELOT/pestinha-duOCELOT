@@ -109,7 +109,7 @@ public class PetService extends Service {
         Notification note = new Notification.Builder(this, "pet").setSmallIcon(org.pestinha.android.R.drawable.ic_notification)
                 .setContentTitle(Characters.name(this,petId)+" está por aqui").setContentText("Toque para abrir os controles.")
                 .setContentIntent(panel).setOngoing(true)
-                .addAction(new Notification.Action.Builder(null, "Guardar", stop).build()).build();
+                .addAction(new Notification.Action.Builder(null, "Recolher pet", stop).build()).build();
         if (Build.VERSION.SDK_INT >= 34) startForeground(1, note, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
         else startForeground(1, note);
         wm = getSystemService(WindowManager.class);
