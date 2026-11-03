@@ -33,6 +33,7 @@ public class PetView extends View {
         float k=1-(float)Math.exp(-dt/.12);for(int i=0;i<shape.length;i++)shape[i]+=(target[i]-shape[i])*k;
         float scale=Math.min(getWidth()/160f,getHeight()/130f);canvas.save();canvas.translate(getWidth()/2f,getHeight()/2f);canvas.scale(scale,scale);
         if(helmet!=0&&detailed==null){canvas.translate(0,4);canvas.scale(.78f,.78f);}
+        if(detailed!=null)canvas.scale(.84f,.84f);
         canvas.rotate(bodyAngle);if(emotion.equals("dormindo"))canvas.translate(0,(float)Math.sin(now/1000.0*1.6)*1.5f);
         if(detailed!=null){p.setShader(null);p.setAlpha(255);canvas.drawBitmap(detailed,null,new RectF(-65,-65,65,65),p);}
         else {

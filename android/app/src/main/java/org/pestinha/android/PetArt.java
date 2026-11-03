@@ -20,6 +20,7 @@ final class PetArt {
             int index=Characters.index(id),w=atlas.getWidth()/3,h=atlas.getHeight()/2;
             Bitmap image=Bitmap.createBitmap(atlas,(index%3)*w,(index/3)*h,w,h).copy(Bitmap.Config.ARGB_8888,true);
             int[] pixels=new int[w*h];image.getPixels(pixels,0,w,0,0,w,h);
+            clean(pixels,w,h);
             float[] target=new float[3],hsv=new float[3];Color.colorToHSV(frame,target);
             for(int i=0;i<pixels.length;i++){
                 int value=pixels[i];if(Color.alpha(value)<8)continue;
@@ -32,5 +33,19 @@ final class PetArt {
             while(cache.size()>8)cache.remove(cache.keySet().iterator().next());
             return image;
         }catch(java.io.IOException|IllegalArgumentException e){return null;}
+    }
+    private static void clean(int[] pixels,int w,int h){
+        boolean[] seen=new boolean[pixels.length];int[] queue=new int[pixels.length],best=new int[0];
+        for(int start=0;start<pixels.length;start++){
+            if(seen[start]||Color.alpha(pixels[start])<64)continue;
+            int head=0,tail=1;queue[0]=start;seen[start]=true;
+            while(head<tail){int at=queue[head++],x=at%w,y=at/w;
+                int[] next={x>0?at-1:-1,x+1<w?at+1:-1,y>0?at-w:-1,y+1<h?at+w:-1};
+                for(int n:next)if(n>=0&&!seen[n]&&Color.alpha(pixels[n])>=64){seen[n]=true;queue[tail++]=n;}
+            }
+            if(tail>best.length)best=java.util.Arrays.copyOf(queue,tail);
+        }
+        boolean[] keep=new boolean[pixels.length];for(int at:best)keep[at]=true;
+        for(int i=0;i<pixels.length;i++)if(!keep[i])pixels[i]=0;
     }
 }
