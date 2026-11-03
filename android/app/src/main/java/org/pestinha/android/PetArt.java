@@ -9,16 +9,26 @@ import java.util.LinkedHashMap;
 
 /** Shared, bounded artwork cache. Recolour only saturated frame pixels, preserving texture. */
 final class PetArt {
-    private static Bitmap atlas;
+    private static Bitmap atlas,president;
     private static final LinkedHashMap<String,Bitmap> cache=new LinkedHashMap<>(8,.75f,true);
     static synchronized Bitmap load(Context context,String id,int frame){
         String key=id+":"+frame;
         if(cache.containsKey(key))return cache.get(key);
         try {
-            if(atlas==null)try(InputStream in=context.getAssets().open("art/pets-hd.png")){atlas=BitmapFactory.decodeStream(in);}
-            if(atlas==null)return null;
-            int index=Characters.index(id),w=atlas.getWidth()/3,h=atlas.getHeight()/2;
-            Bitmap image=Bitmap.createBitmap(atlas,(index%3)*w,(index/3)*h,w,h).copy(Bitmap.Config.ARGB_8888,true);
+            Bitmap image;
+            if(id.equals("lula")){
+                if(president==null)try(InputStream in=context.getAssets().open("art/presidente-hd.png")){
+                    BitmapFactory.Options options=new BitmapFactory.Options();options.inSampleSize=2;president=BitmapFactory.decodeStream(in,null,options);
+                }
+                if(president==null)return null;
+                image=president.copy(Bitmap.Config.ARGB_8888,true);
+            }else{
+                if(atlas==null)try(InputStream in=context.getAssets().open("art/pets-hd.png")){atlas=BitmapFactory.decodeStream(in);}
+                if(atlas==null)return null;
+                int index=Characters.index(id),cw=atlas.getWidth()/3,ch=atlas.getHeight()/2;
+                image=Bitmap.createBitmap(atlas,(index%3)*cw,(index/3)*ch,cw,ch).copy(Bitmap.Config.ARGB_8888,true);
+            }
+            int w=image.getWidth(),h=image.getHeight();
             int[] pixels=new int[w*h];image.getPixels(pixels,0,w,0,0,w,h);
             clean(pixels,w,h);
             float[] target=new float[3],hsv=new float[3];Color.colorToHSV(frame,target);

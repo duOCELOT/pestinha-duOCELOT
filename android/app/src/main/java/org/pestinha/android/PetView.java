@@ -50,7 +50,7 @@ public class PetView extends View {
         if(tie!=0&&!detailedAccessories)drawTie(canvas);
         float blink=now%4800<110?.08f:1;
         for(int side:new int[]{-1,1}){
-            float w=shape[0]*(detailed!=null?.78f:lulaStyle?.9f:1),h=Math.max(3,shape[1]*blink*(detailed!=null?.8f:lulaStyle?.9f:1)),cx=side*(detailed!=null?18:24),cy=shape[5]+(detailed==null?0:artId.equals("lula")?-8:artId.equals("jorge")?-8:artId.equals("mimir")?9:artId.equals("luna")?7:0);if(emotion.equals("curioso")&&side==1)h*=1.15f;
+            float w=shape[0]*(detailed!=null?.78f:lulaStyle?.9f:1),h=Math.max(3,shape[1]*blink*(detailed!=null?(artId.equals("lula")?.65f:.8f):lulaStyle?.9f:1)),cx=side*(detailed!=null?18:24),cy=shape[5]+(detailed==null?0:artId.equals("lula")?-5:artId.equals("jorge")?-8:artId.equals("mimir")?9:artId.equals("luna")?7:0);if(emotion.equals("curioso")&&side==1)h*=1.15f;
             if(caressing){p.setStyle(Paint.Style.STROKE);p.setColor(eye);p.setStrokeWidth(5);p.setStrokeCap(Paint.Cap.ROUND);canvas.drawArc(cx-15,cy-8,cx+15,cy+14,180,180,false,p);p.setStyle(Paint.Style.FILL);continue;}
             float top=cy-h/2;Path eyePath=new Path();eyePath.addRoundRect(cx-w/2,top,cx+w/2,top+h,Math.min(w,h)*.38f,Math.min(w,h)*.38f,Path.Direction.CW);
             if(blink>.5f){float outer=cx+side*w/2,inner=cx-side*w/2;Path lid=new Path();lid.moveTo(outer+side*4,top-40);lid.lineTo(inner-side*4,top-40);lid.lineTo(inner-side*4,top+shape[2]*h);lid.lineTo(outer+side*4,top+shape[3]*h);lid.close();eyePath.op(lid,Path.Op.DIFFERENCE);

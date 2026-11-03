@@ -105,7 +105,7 @@ public class MainActivity extends Activity {
         button(physics,"Calibrar nesta posição",()->send("calibrate"));button(physics,"Restaurar gravidade natural",()->send("reset_tilt"));
         LinearLayout about=Design.fold(this,settings,"privacy","Privacidade e informações","Dados locais, permissões e licença",false);
         text(about,"A memória fica no aparelho. A internet consulta somente os feeds escolhidos, manualmente ou pelo radar opcional. Sem leitura de tela ou da agenda. O acompanhamento de apps usa estatísticas do Android somente se você autorizar e ativar. Sensores desligam com a tela apagada.",14,Design.MUTED);
-        text(about,"Pestinha Android • 0.19 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
+        text(about,"Pestinha Android • 0.20 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
         button(about,"Modo de teste • tempos curtos",()->send("fast"));
         button(about,"Licença e projeto original",()->new AlertDialog.Builder(this).setTitle("Pestinha • GPL-3.0-or-later").setMessage("Adaptação independente de mille-okws/pestinha. Código-fonte: github.com/duOCELOT/pestinha-duOCELOT, branch android.\n\n"+license()).setPositiveButton("Fechar",null).show());
         setContentView(scroll);Design.install(this,scroll);loadAppearance();updateStatus();
