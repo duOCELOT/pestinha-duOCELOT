@@ -13,14 +13,14 @@ public class PetView extends View {
     public float bodyAngle=0;
     public boolean jorge=false,notebook=false,corner=false,caressing=false,autoAnimate=false;
     private int frame=Color.parseColor("#63e56f"),shell=Color.parseColor("#101512"),screen=Color.parseColor("#171e19"),eye=Color.parseColor("#3ee877"),shine=Color.parseColor("#c8ffd8");
-    private int tie=0,glasses=0,helmet=0;
+    private int tie=0,glasses=0,helmet=0,bow=0,beard=0;
     private final float[] shape={30,40,.14f,0,0,0};
     private float[] target={30,40,.14f,0,0,0};
     private long previous=0;
     public PetView(Context c){super(c);setLayerType(View.LAYER_TYPE_SOFTWARE,null);setContentDescription("Pestinha");}
     public void appearance(JSONObject data){
-        frame=Color.parseColor("#63e56f");shell=Color.parseColor("#101512");screen=Color.parseColor("#171e19");eye=Color.parseColor("#3ee877");shine=Color.parseColor("#c8ffd8");tie=glasses=helmet=0;
-        if(data!=null){frame=color(data,"moldura",frame);shell=color(data,"casca",shell);screen=color(data,"tela",screen);eye=color(data,"olho",eye);shine=color(data,"brilho",shine);JSONObject accessories=data.optJSONObject("acessorios");if(accessories!=null){if(accessories.has("gravata"))tie=color(accessories,"gravata",Color.parseColor("#b3261e"));if(accessories.has("oculos"))glasses=color(accessories,"oculos",Color.LTGRAY);if(accessories.has("elmo_viking"))helmet=color(accessories,"elmo_viking",Color.rgb(119,146,156));}}invalidate();
+        frame=Color.parseColor("#63e56f");shell=Color.parseColor("#101512");screen=Color.parseColor("#171e19");eye=Color.parseColor("#3ee877");shine=Color.parseColor("#c8ffd8");tie=glasses=helmet=bow=beard=0;
+        if(data!=null){frame=color(data,"moldura",frame);shell=color(data,"casca",shell);screen=color(data,"tela",screen);eye=color(data,"olho",eye);shine=color(data,"brilho",shine);JSONObject accessories=data.optJSONObject("acessorios");if(accessories!=null){if(accessories.has("laco"))bow=color(accessories,"laco",Color.MAGENTA);if(accessories.has("barba"))beard=color(accessories,"barba",Color.WHITE);if(accessories.has("gravata"))tie=color(accessories,"gravata",Color.parseColor("#b3261e"));if(accessories.has("oculos"))glasses=color(accessories,"oculos",Color.LTGRAY);if(accessories.has("elmo_viking"))helmet=color(accessories,"elmo_viking",Color.rgb(119,146,156));}}invalidate();
     }
     private int color(JSONObject d,String key,int fallback){try{String value=d.optString(key);return value.matches("#[0-9a-fA-F]{6}")?Color.parseColor(value):fallback;}catch(Exception e){return fallback;}}
     public void face(JSONObject data,boolean caring){caressing=caring;if(data!=null)target=new float[]{(float)data.optDouble("w",30),(float)data.optDouble("h",40),(float)data.optDouble("inner",.14),(float)data.optDouble("outer",0),(float)data.optDouble("smile",0),(float)data.optDouble("dy",0)};else target=new float[]{30,40,.14f,0,0,0};}
@@ -45,6 +45,8 @@ public class PetView extends View {
             p.setColor(eye);p.setStyle(Paint.Style.FILL);canvas.drawPath(eyePath,p);
             if(blink>.5f&&h>=8){canvas.save();canvas.clipPath(eyePath);p.setColor(shine);canvas.drawCircle(cx-w*.18f,top+h*(.24f+Math.max(shape[2],shape[3])*.6f),3.6f,p);canvas.restore();}
         }
+        if(bow!=0){p.setColor(bow);Path ribbon=new Path();ribbon.moveTo(-35,-47);ribbon.lineTo(-53,-57);ribbon.lineTo(-53,-37);ribbon.close();ribbon.moveTo(-35,-47);ribbon.lineTo(-17,-57);ribbon.lineTo(-17,-37);ribbon.close();canvas.drawPath(ribbon,p);canvas.drawCircle(-35,-47,5,p);}
+        if(beard!=0){p.setColor(beard);Path hair=new Path();hair.moveTo(-40,18);hair.quadTo(-37,47,0,49);hair.quadTo(37,47,40,18);hair.quadTo(23,35,0,29);hair.quadTo(-23,35,-40,18);canvas.drawPath(hair,p);}
         if(helmet!=0)drawHelmet(canvas);
         if(glasses!=0){p.setColor(glasses);p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(2);for(int side:new int[]{-1,1}){canvas.drawRoundRect(side*24-21,-25,side*24+21,27,10,10,p);p.setStrokeWidth(5);canvas.drawLine(side*24-17,-25,side*24+17,-25,p);p.setStrokeWidth(2);}canvas.drawLine(-3,-18,3,-18,p);}
         p.setStyle(Paint.Style.FILL);

@@ -26,7 +26,7 @@ public class PetService extends Service {
         service.ui.post(()->{if(service.closed||playing||!running||service.world==null||!service.screenOn||!UsageRepository.interactive(service)||InterestsDialog.visible||!generation.equals(NewsRepository.generation(service)))return;
             if(!manual&&(!NewsRepository.prefs(service).getBoolean("radarAuto",false)||service.pressed||service.dragging||(service.quickMenu!=null&&service.quickMenu.isShowing())||SystemClock.uptimeMillis()-lastNoticeAt<30000))return;
             if(!manual&&NewsRepository.candidate(service,System.currentTimeMillis())==null)return;
-            NewsRepository.shown(service,row);lastNoticeAt=SystemClock.uptimeMillis();service.world.message(NewsRepository.message(service,row),false,service.pos.x,service.pos.y,()->service.startActivity(new Intent(service,NewsActivity.class).putExtra("article",row.toString()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
+            NewsRepository.shown(service,row);lastNoticeAt=SystemClock.uptimeMillis();service.world.messageAction(NewsRepository.message(service,row).replace("\nToque para ler a notícia.",""),false,service.pos.x,service.pos.y,()->{},"Ler notícia",()->service.startActivity(new Intent(service,NewsActivity.class).putExtra("article",row.toString()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
         });
     }
     static void taskNotice(String text,String taskId,boolean create){
@@ -121,6 +121,7 @@ public class PetService extends Service {
             if(action.equals("stop"))stopSelf();
             else if(action.equals("pin"))setFixed(!fixed);
             else if(action.equals("arcade"))startArcade();
+            else if(action.equals("care"))startActivity(new Intent(this,CareActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             else if(action.equals("panel")||action.equals("memory")||action.equals("assistant")){
                 Class<?> screen=action.equals("panel")?MainActivity.class:action.equals("memory")?MemoryActivity.class:AssistantActivity.class;
                 startActivity(new Intent(this,screen).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -204,7 +205,7 @@ public class PetService extends Service {
                 try (java.io.InputStream in = getAssets().open("pets/"+petId+".json")) {
                     definition = readText(in);
                 }
-                JSONObject appearance=new JSONObject(definition).optJSONObject("aparencia");
+                JSONObject appearance=Characters.appearance(this,petId);
                 ui.post(()->{if(!closed)pet.appearance(appearance);});
                 brain = Python.getInstance().getModule("android_brain").get("AndroidBrain")
                         .call(new java.io.File(getFilesDir(), "memory/"+petId).toString(), definition);
@@ -239,6 +240,7 @@ public class PetService extends Service {
                         JSONObject action=data.optJSONObject("action");
                         if(action!=null&&action.optLong("id")!=lastAction){
                             lastAction=action.optLong("id");String kind=action.optString("kind");
+                            if(!playing&&kind.equals("care"))world.message(action.optString("text"),false,pos.x,pos.y,()->{});
                             if(!playing&&(kind.equals("note")||kind.equals("sign")||kind.equals("image")))world.message(action.optString("text"),kind.equals("image"),pos.x,pos.y,()->event("dismiss"));
                             if(!playing&&!fixed&&kind.equals("roam"))vx=(float)(getResources().getDisplayMetrics().density*speed);
                         }
@@ -338,6 +340,7 @@ public class PetService extends Service {
         else if(i!=null&&"reset_tilt".equals(i.getAction())&&motion!=null){motion.resetCalibration();vx=vy=0;}
         else if(i!=null&&"settings".equals(i.getAction())) { if(!playing){applySettings();clamp();} }
         else if(i!=null&&"arcade".equals(i.getAction()))startArcade();
+        else if(i!=null&&"appearance".equals(i.getAction())){try{pet.appearance(Characters.appearance(this,petId));}catch(Exception ignored){}}
         else if(i!=null&&"export".equals(i.getAction())&&worker!=null){
             String uri=i.getStringExtra("uri");worker.post(()->{save();try{
                 MemoryActivity.backup(this,android.net.Uri.parse(uri));ui.post(()->android.widget.Toast.makeText(this,"Backup salvo.",android.widget.Toast.LENGTH_LONG).show());

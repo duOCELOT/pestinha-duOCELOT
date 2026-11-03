@@ -1,0 +1,27 @@
+{
+  "_ajuda": "brincadeira: pesos de cada jeito de brincar (0 desliga). temperamento: DISMISS->FRUSTRATION e IMPACT->FRUSTRATION altos = mais humor bravo. reacao_notebook: \"bravo\" ou \"triste\", o que ele sente se arrancarem o notebook dele.",
+  "nome": "Lula (caricatura)",
+  "seed": 32452843,
+  "temperamento": {
+    "CURIOUS": 1.2,
+    "CARESS->CALM": 1.3,
+    "NOVELTY->CURIOUS": 1.15
+  },
+  "brincadeira": {
+    "bola": 1.0,
+    "arremesso": 0.6,
+    "postit": 0.5
+  },
+  "reacao_notebook": "bravo",
+  "descricao": "Caricatura fictícia inspirada em Luiz Inácio Lula da Silva. Não oficial, sem endosso, falas reais ou conteúdo de campanha.",
+  "aparencia": {
+    "moldura": "#df655f",
+    "casca": "#171b20",
+    "tela": "#20252c",
+    "olho": "#f3dfb2",
+    "brilho": "#ffffff",
+    "acessorios": {
+      "barba": "#e8e9e6"
+    }
+  }
+}

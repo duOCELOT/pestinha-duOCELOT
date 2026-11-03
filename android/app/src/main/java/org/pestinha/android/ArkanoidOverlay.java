@@ -19,7 +19,7 @@ final class ArkanoidOverlay {
     private boolean screenOn=true,closed=false;private long previous,reactUntil;private String reaction="";
     private float scale=1,left=0;private int best,accent=Design.ACCENT;private final String character;
     private final ArrayList<Particle> particles=new ArrayList<>();private final float[] trailX=new float[10],trailY=new float[10];private int trailCount;
-    ArkanoidOverlay(Context c,WindowManager manager,PetView view,Placement move,Runnable close,Events callback){context=c;wm=manager;pet=view;placement=move;onClose=close;events=callback;character=MemoryActivity.petId(c);best=c.getSharedPreferences("arcade",0).getInt("best_"+character,0);try{accent=Color.parseColor(Characters.definition(c,character).getJSONObject("aparencia").getString("moldura"));}catch(Exception ignored){}}
+    ArkanoidOverlay(Context c,WindowManager manager,PetView view,Placement move,Runnable close,Events callback){context=c;wm=manager;pet=view;placement=move;onClose=close;events=callback;character=MemoryActivity.petId(c);best=c.getSharedPreferences("arcade",0).getInt("best_"+character,0);try{accent=Color.parseColor(Characters.appearance(c,character).getString("moldura"));}catch(Exception ignored){}}
     boolean isShowing(){return root!=null&&!closed;}
     FrameLayout content(){
         FrameLayout frame=new FrameLayout(context);board=new GameView(context);frame.addView(board,new FrameLayout.LayoutParams(-1,-1));

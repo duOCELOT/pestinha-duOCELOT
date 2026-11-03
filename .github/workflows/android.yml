@@ -39,6 +39,8 @@ jobs:
       - name: Build and check Android
         working-directory: android
         run: gradle --no-daemon assembleDebug lintDebug verifyDebugPayload testDebugUnitTest
+      - name: APK checksum
+        run: sha256sum android/app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         with:
           name: pestinha-android-debug

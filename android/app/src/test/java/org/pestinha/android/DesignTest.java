@@ -33,13 +33,14 @@ public class DesignTest {
         pet.bodyAngle=18;Bitmap tilted=draw(pet,320,260);for(int x=0;x<320;x++)assertEquals(0,Color.alpha(tilted.getPixel(x,0)));
     }
     @Test public void allThreeCharactersCanBeSelectedAndHaveIndependentMemoryPaths() throws Exception {
-        assertArrayEquals(new String[]{"Bryan","Jorge","Mimir"},Characters.names(context));
+        assertArrayEquals(new String[]{"Bryan","Jorge","Mimir","Luna","Lula (caricatura)"},Characters.names(context));
         assertEquals(104729,Characters.definition(context,"mimir").getInt("seed"));
         context.getSharedPreferences("pet",0).edit().putString("character","mimir").commit();assertEquals("mimir",MemoryActivity.petId(context));
         java.io.File mimir=MemoryActivity.directory(context);
         context.getSharedPreferences("pet",0).edit().putString("character","bryan").commit();assertNotEquals(mimir,MemoryActivity.directory(context));
         assertEquals("bryan",Characters.normalize("../outside"));
     }
+    @Test public void newPetsHaveDistinctAppearanceAndRender() throws Exception {for(String id:new String[]{"luna","lula"}){PetView v=new PetView(context);v.appearance(Characters.appearance(context,id));Bitmap b=draw(v,320,260);assertEquals(0,Color.alpha(b.getPixel(0,0)));preview(id.toUpperCase(java.util.Locale.ROOT),b);}assertNotEquals(Characters.definition(context,"luna").getInt("seed"),Characters.definition(context,"lula").getInt("seed"));}
     @Test public void menuRoutesActionsWithoutOpeningThePanel(){AtomicReference<String> selected=new AtomicReference<>();QuickMenu menu=new QuickMenu(context,context.getSystemService(WindowManager.class),selected::set);LinearLayout content=menu.content(false,false,false,4);View heart=content.findViewWithTag("caress");assertNotNull(heart);heart.performClick();assertEquals("caress",selected.get());assertFalse(menu.isShowing());preview("MENU",draw(content,280,390));}
     @Test public void menuPlacementFitsAllPhoneCorners(){for(int x:new int[]{0,200,330})for(int y:new int[]{0,390,700}){int[] p=QuickMenu.place(360,780,280,390,x,y,100,90,12);assertTrue(p[0]>=0);assertTrue(p[1]>=0);assertTrue(p[0]+280<=360);assertTrue(p[1]+390<=780);}}
     @Test public void mainScreenHasRealNavigationAndRenders(){Activity activity=Robolectric.buildActivity(MainActivity.class).create().get();View content=((android.view.ViewGroup)activity.findViewById(android.R.id.content)).getChildAt(0);preview("HOME",draw(content,360,780));assertNotNull(content.findViewWithTag("primary"));activity.finish();}

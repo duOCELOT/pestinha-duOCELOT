@@ -1,0 +1,28 @@
+package org.pestinha.android;
+import android.app.*;
+import android.content.*;
+import android.os.*;
+import android.widget.*;
+import org.json.*;
+import java.io.File;
+
+public class CareActivity extends Activity {
+    private TextView state;private final Handler ui=new Handler(Looper.getMainLooper());
+    private final Runnable refresh=new Runnable(){public void run(){render();ui.postDelayed(this,1500);}};
+    private String id(){return MemoryActivity.petId(this);}
+    private void toast(String s){Toast.makeText(this,s,Toast.LENGTH_LONG).show();}
+    private JSONObject care(){try{String raw=PetService.running?PetService.liveSnapshot:"";if(raw.isEmpty()){File f=new File(MemoryActivity.directory(this),"android.json");if(f.isFile())return new JSONObject(MemoryActivity.read(f)).optJSONObject("care");}else return new JSONObject(raw).optJSONObject("care");}catch(Exception ignored){}return null;}
+    private void act(String action){if(!PetService.running){toast("Solte o pet primeiro para cuidar dele.");return;}startService(new Intent(this,PetService.class).setAction("care:"+action));}
+    @Override public void onCreate(Bundle saved){super.onCreate(saved);ScrollView scroll=new ScrollView(this);LinearLayout l=Design.column(this);l.setPadding(22,28,22,32);scroll.addView(l);Design.label(l,"CUIDADOS E GUARDA-ROUPA");state=Design.text(this,"",20,Design.TEXT);l.addView(state);
+        Design.button(l,"Servir lanche","primary",()->act("feed"));Design.button(l,"Cuidar / descansar","secondary",()->act("treat"));Design.button(l,"Cobertor • aliviar frio","secondary",()->act("warm"));Design.button(l,"Sombra • aliviar calor","secondary",()->act("cool"));Design.button(l,"Clima simulado","secondary",()->new AlertDialog.Builder(this).setTitle("Clima de brincadeira").setItems(new String[]{"Ameno","Frio","Calor"},(d,n)->act(new String[]{"mild","cold","hot"}[n])).show());
+        Design.label(l,"APARÊNCIA DESTE PERSONAGEM");Design.button(l,"Cor da moldura","secondary",()->color("moldura"));Design.button(l,"Cor dos olhos","secondary",()->color("olho"));Design.button(l,"Escolher acessório","secondary",()->new AlertDialog.Builder(this).setTitle("Um item por vez").setItems(new String[]{"Original","Sem item","Laço","Óculos","Gravata","Elmo viking","Barba"},(d,n)->{getSharedPreferences("appearance_"+id(),0).edit().putString("item",new String[]{"original","none","laco","oculos","gravata","elmo_viking","barba"}[n]).apply();appearanceChanged();}).show());
+        Design.button(l,"Restaurar visual original","secondary",()->{getSharedPreferences("appearance_"+id(),0).edit().clear().apply();appearanceChanged();});
+        Design.label(l,"FUNÇÕES LOCAIS • BASE PARA MODELOS LEVES");CheckBox consent=new CheckBox(this);consent.setText("Ativar sugestões por regras locais");consent.setChecked(getSharedPreferences("local-functions",0).getBoolean("enabled",false));consent.setOnCheckedChangeListener((b,on)->getSharedPreferences("local-functions",0).edit().putBoolean("enabled",on).apply());l.addView(consent);
+        Design.button(l,"Sugerir cuidado","secondary",()->{try{JSONObject data=care();if(data==null){toast("Solte o pet para gerar seu estado.");return;}LocalFunctions.Suggestion s=LocalFunctions.request(new LocalFunctions.Rules(),data,consent.isChecked());new AlertDialog.Builder(this).setTitle("Sugestão local • regras").setMessage(s.text).setPositiveButton("Entendi",null).show();}catch(Exception e){toast(e.getMessage());}});
+        l.addView(Design.text(this,"Fome, saúde e clima são fictícios. Não lemos temperatura corporal ou calor do aparelho. Não há morte, progresso offline ou castigo por fechar o app. Sugestões atuais são regras, não um LLM. Nenhum modelo é baixado e nenhum dado é enviado.",14,Design.MUTED));setContentView(scroll);Design.install(this,scroll);render();}
+    private void appearanceChanged(){if(PetService.running)startService(new Intent(this,PetService.class).setAction("appearance"));toast("Visual salvo para "+Characters.name(this,id()));}
+    private void color(String key){EditText input=new EditText(this);input.setSingleLine();input.setHint("#63e56f");input.setText(getSharedPreferences("appearance_"+id(),0).getString(key,""));AlertDialog d=new AlertDialog.Builder(this).setTitle("Cor hexadecimal #RRGGBB").setView(input).setNegativeButton("Cancelar",null).setPositiveButton("Salvar",null).create();d.setOnShowListener(v->d.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(b->{String value=input.getText().toString().trim();if(!value.matches("#[0-9a-fA-F]{6}")){input.setError("Use # e seis dígitos, por exemplo #63e56f");return;}getSharedPreferences("appearance_"+id(),0).edit().putString(key,value).apply();appearanceChanged();d.dismiss();}));d.show();}
+    private void render(){JSONObject c=care();state.setText(Characters.name(this,id())+(c==null?"\nSolte o pet para iniciar os cuidados.":"\nFome: "+Math.round(c.optDouble("hunger")*100)+"%\nSaúde: "+Math.round((1-c.optDouble("illness"))*100)+"%\nConforto térmico: "+(c.optDouble("temperature")<-.3?"frio":c.optDouble("temperature")>.3?"calor":"confortável")));}
+    @Override protected void onResume(){super.onResume();ui.post(refresh);}
+    @Override protected void onPause(){ui.removeCallbacks(refresh);super.onPause();}
+}

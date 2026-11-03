@@ -27,8 +27,8 @@ final class QuickMenu {
         boolean fixed=context.getSharedPreferences("pet",0).getBoolean("fixed",false);
         LinearLayout pin=new LinearLayout(context);pin.setGravity(Gravity.CENTER_VERTICAL);pin.setPadding(Design.dp(context,12),Design.dp(context,8),Design.dp(context,12),Design.dp(context,8));pin.setBackground(Design.touch(context,fixed?Design.RAISED:Design.CARD,Design.BORDER));pin.setTag("pin");pin.setFocusable(true);pin.setSelected(fixed);pin.setContentDescription(fixed?"Soltar posição. Reativar movimento do pet.":"Fixar no lugar. Sem gravidade ou movimento automático.");
         ActionIcon pinIcon=new ActionIcon(context,"pin");pin.addView(pinIcon,new LinearLayout.LayoutParams(Design.dp(context,26),Design.dp(context,26)));LinearLayout pinText=Design.column(context);pinText.setPadding(Design.dp(context,10),0,0,0);pinText.addView(Design.text(context,fixed?"Soltar posição":"Fixar no lugar",14,Design.TEXT));pinText.addView(Design.text(context,fixed?"Voltar ao movimento normal":"Ficar onde você soltar • sem gravidade",11,Design.MUTED));pin.addView(pinText,new LinearLayout.LayoutParams(0,-2,1));LinearLayout.LayoutParams pinParams=new LinearLayout.LayoutParams(-1,-2);pinParams.bottomMargin=Design.dp(context,8);box.addView(pin,pinParams);pin.setOnClickListener(v->{dismiss();action.selected("pin");});
-        String[] ids={"arcade","caress","ball","sleep","work","memory","assistant","panel","stop"};
-        String[] labels={"Arkanoid","Carinho",ball?"Sem bola":"Bolinha",sleeping?"Acordar":"Dormir",working?"Parar":"Notebook","Memória","Assistente","Painel","Guardar"};
+        String[] ids={"arcade","care","caress","ball","sleep","work","memory","assistant","panel","stop"};
+        String[] labels={"Arkanoid","Cuidados","Carinho",ball?"Sem bola":"Bolinha",sleeping?"Acordar":"Dormir",working?"Parar":"Notebook","Memória","Assistente","Painel","Guardar"};
         LinearLayout row=null;
         for(int i=0;i<ids.length;i++){
             if(i%columns==0){row=new LinearLayout(context);box.addView(row,new LinearLayout.LayoutParams(-1,Design.dp(context,76)));}

@@ -137,7 +137,7 @@ public class MemoryActivity extends Activity {
     private void render() {
         try {
             boolean live=PetService.running&&inspected.equals(petId(this));
-            JSONObject definition=Characters.definition(this,inspected);portrait.jorge=inspected.equals("jorge");portrait.appearance(definition.optJSONObject("aparencia"));portrait.invalidate();identity.setText(definition.optString("nome")+" • "+(live?"ao vivo":"último estado salvo")+"\n"+definition.optString("descricao","")+"\nConsultar este painel não troca o pet solto.");
+            JSONObject definition=Characters.definition(this,inspected);portrait.jorge=inspected.equals("jorge");portrait.appearance(Characters.appearance(this,inspected));portrait.invalidate();identity.setText(definition.optString("nome")+" • "+(live?"ao vivo":"último estado salvo")+"\n"+definition.optString("descricao","")+"\nConsultar este painel não troca o pet solto.");
             objectChart(temperament,definition.optJSONObject("temperamento"),1,android.graphics.Color.rgb(79,179,255),"×");
             String raw=live?PetService.liveSnapshot:"";
             if(raw.isEmpty()) { File f=new File(inspectedDirectory(),"snapshot.json"); if(!f.exists()){summary.setText("Ainda sem estado salvo para "+Characters.name(this,inspected));for(MetricChart c:new MetricChart[]{needs,motors,habituation,usage,interactions})objectChart(c,null,1,Design.ACCENT,"");body.setText("MEMÓRIA • "+inspected+"\n\nSolte o pet para começar a acompanhar o cérebro. A memória antiga será carregada automaticamente.");return;} raw=read(f); }

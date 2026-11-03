@@ -3,6 +3,7 @@ import json
 import random
 import time
 import math
+from care_state import CareState
 from pathlib import Path
 from pestinha.core.nervous_system import LIFBrain
 from pestinha.core.emotion import EmotionState, EYE_SHAPES
@@ -49,6 +50,7 @@ class AndroidBrain:
         self.sad_prof = dict(self.prof, grievance_up=self.prof['sad_up'], grievance_down=self.prof['sad_down'], stage_up=self.prof['sad_stage_up'])
         self.sad.load(self.sad_prof)
         data = read_json(self.root / 'android.json', {})
+        self.care = CareState(data.get('care') if isinstance(data, dict) else None)
         counters = data.get('counts', {}) if isinstance(data, dict) else {}
         self.counts = {k: max(0, v) for k, v in counters.items() if type(v) is int} if isinstance(counters, dict) else {}
         durations = data.get('durations', {}) if isinstance(data, dict) else {}
@@ -96,6 +98,10 @@ class AndroidBrain:
             self.pending_since = self.elapsed
             self.memory.start(ctx, action, self.pending_thing)
             phrases = ['Pausa para um carinho?', 'Estou de olho em você.', 'Bora brincar?', 'Seu pequeno caos está aqui.']
+            if self.name == 'Luna':
+                phrases = ['Uma ideia brilhante: pausa para brincar?', 'Estou aqui, uma estrelinha de cada vez.', 'Carinho recebido. Vou guardar esse momento.']
+            if self.name == 'Lula (caricatura)':
+                phrases = ['Caricatura em serviço: minha pauta é a bolinha.', 'Uma pausa para o meu lanche virtual?', 'Este pet é uma caricatura fictícia, não uma fala real.']
             if self.name == 'Jorge':
                 phrases = ['Minha mentoria custa um carinho.', 'Diversifique seus investimentos em bolinhas.', 'Retorno garantido: mais travessuras.']
             if self.name == 'Mimir':
@@ -114,6 +120,13 @@ class AndroidBrain:
 
     def event(self, kind):
         now = time.monotonic()
+        if kind.startswith('care:'):
+            result = self.care.act(kind.split(':', 1)[1])
+            if result:
+                self.counts[kind] = self.counts.get(kind, 0) + 1
+                self.events['TOY_NEAR'] = .6
+                self._action('care', ('Hmpf. ' if self.name == 'Mimir' else '') + result)
+            return
         if kind in ('game_start', 'game_end', 'game_hit', 'game_brick', 'game_life', 'game_win', 'game_over', 'game_launch'):
             if kind == 'game_start':
                 self.gaming = True
@@ -301,8 +314,9 @@ class AndroidBrain:
         for key in ['awake_seconds' if not self.asleep else 'sleep_seconds',
                     'context_' + self.context] + (['notebook_seconds'] if self.notebook else []) + (['corner_seconds'] if self.corner else []):
             self.durations[key] = self.durations.get(key, 0.0) + dt
+        self.care.tick(dt)
         self.snapshot = {
-            'name': self.name, 'emotion': 'dormindo' if self.asleep else emotion,
+            'care': self.care.snapshot(), 'name': self.name, 'emotion': 'dormindo' if self.asleep else emotion,
             'face': EYE_SHAPES['dormindo' if self.asleep else emotion], 'caressing': caring,
             'energy': self.drives.energy, 'stimulation': self.drives.stimulation,
             'contact': self.drives.contact, 'speed': 0 if self.asleep or self.corner or self.notebook else self.motor.speed(),
@@ -333,6 +347,6 @@ class AndroidBrain:
         self.sad.save()
         self.memory.save()
         self.memory._trim_file(self.memory._read_episodes())
-        write_json(self.root/'android.json', {'durations': self.durations, 'counts': self.counts, 'escapes': self.escapes, 'saved_at': time.time()})
+        write_json(self.root/'android.json', {'care': self.care.snapshot(), 'durations': self.durations, 'counts': self.counts, 'escapes': self.escapes, 'saved_at': time.time()})
         if self.snapshot:
             write_json(self.root/'snapshot.json', dict(self.snapshot, saved_at=time.time()))

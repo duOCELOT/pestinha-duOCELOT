@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CareActivity" android:exported="false" />
         <activity android:name=".NewsActivity" android:exported="false" />
         <activity android:name=".TaskActivity" android:exported="false" />
         <activity android:name=".UsageActivity" android:exported="false" />

@@ -54,13 +54,15 @@ final class PetWorld {
             }
         }
     }
-    void message(String text,boolean image,int x,int y,Runnable dismissed){
+    void message(String text,boolean image,int x,int y,Runnable dismissed){messageAction(text,image,x,y,dismissed,null,null);}
+    void messageAction(String text,boolean image,int x,int y,Runnable dismissed,String label,Runnable open){
         clearMessage();
         bubblePos=params(image?220:240,image?190:100,true);bubblePos.x=Math.max(0,Math.min(width-bubblePos.width,x));bubblePos.y=Math.max(0,Math.min(height-bubblePos.height,y-dp(105)));
         GradientDrawable bg=new GradientDrawable();bg.setColor(Color.rgb(255,241,176));bg.setCornerRadius(dp(12));
         if(image){ImageView view=new ImageView(context); view.setScaleType(ImageView.ScaleType.FIT_CENTER);
             File f=new File(MemoryActivity.directory(context),"custom-meme.png");view.setImageBitmap(BitmapFactory.decodeFile(f.toString()));bubble=view;
         }else{ TextView view=new TextView(context);view.setText(text+"\n\nToque para dispensar");view.setTextColor(Color.rgb(35,32,20));view.setTextSize(15);view.setGravity(Gravity.CENTER);view.setPadding(dp(12),dp(6),dp(12),dp(6));bubble=view; }
+        if(open!=null){LinearLayout box=Design.column(context);box.addView(bubble);Button read=new Button(context);read.setText(label);read.setTag("message_action");box.addView(read);read.setOnClickListener(v->{clearMessage();open.run();});Button close=new Button(context);close.setText("Fechar");close.setTag("message_close");box.addView(close);close.setOnClickListener(v->clearMessage());bubble=box;}
         bubble.setBackground(bg);
         bubblePos.width=Math.min(bubblePos.width,Math.max(dp(100),width-dp(20)));
         if(!image){bubble.measure(View.MeasureSpec.makeMeasureSpec(bubblePos.width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(Math.max(dp(80),height-dp(24)),View.MeasureSpec.AT_MOST));bubblePos.height=bubble.getMeasuredHeight();}
