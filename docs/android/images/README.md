@@ -43,3 +43,7 @@ A [galeria 0.19](../versions/0.19/README.md) traz início, menu rápido e Quebra
 ## Presidente na 0.20
 
 `presidente.png` foi atualizado e arquivado também em [0.20/images/presidente.png](../versions/0.20/images/presidente.png), a partir de `DesignTest` na [compilação validada 41655741049](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41655741049). Barba e orelhas usam arte dedicada gerada a partir da referência do mantenedor; olhos e cor de borda são aplicados pelo app. As galerias anteriores permanecem intactas.
+
+## Início na 0.21
+
+A [prévia da versão 0.21](../versions/0.21/images/inicio.png) mostra Bryan e os controles com o nome selecionado. Origem: `DesignTest`, [compilação 41657008720](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41657008720). As imagens históricas continuam preservadas.

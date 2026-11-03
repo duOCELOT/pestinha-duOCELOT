@@ -1,6 +1,6 @@
 # Android 0.20 — Presidente refinado
 
-**Versão atual · experimental** · Android 8.0+, ARM64/x86_64 · versionCode 21.
+**Versão arquivada · experimental** · Android 8.0+, ARM64/x86_64 · versionCode 21.
 
 [Catálogo](../README.md) · [Guia atual](../../GUIA-DO-APK.md) · [Projeto](../../../../README.md)
 

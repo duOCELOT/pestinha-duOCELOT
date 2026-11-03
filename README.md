@@ -8,7 +8,7 @@ Pets sobre os aplicativos · Cuidados · Tarefas · Notícias · Quebra-blocos t
 
 [**Baixar APK**](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Guia de uso](docs/android/GUIA-DO-APK.md) · [Versões](docs/android/versions/README.md)
 
-**0.20 experimental** · Android 8.0 ou superior · ARM64 / x86_64
+**0.21 experimental** · Android 8.0 ou superior · ARM64 / x86_64
 
 </div>
 
@@ -35,7 +35,7 @@ O Pestinha vive em uma janela transparente sobre os seus aplicativos. Você pode
 
 1. Baixe o APK e abra no celular. Se solicitado, permita a instalação para o navegador ou gerenciador usado.
 2. Abra **Pestinha** e autorize **Aparecer sobre outros apps**.
-3. Escolha um personagem no cartão superior e toque em **Mostrar pet**.
+3. Escolha um personagem no cartão superior e toque em **Mostrar [nome do pet]**.
 4. Autorize notificações para receber os avisos e acessar os controles.
 
 **Já tem o app?** Instale sobre a versão atual para manter os dados. Desinstalar ou limpar os dados apaga os registros locais. Antes de qualquer remoção, consulte [memória e backup](docs/android/GUIA-DO-APK.md#salvar-exportar-e-restaurar). A versão 0.1 pode exigir [migração de assinatura](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md#instalações-antigas-01).
@@ -46,7 +46,7 @@ O Pestinha vive em uma janela transparente sobre os seus aplicativos. Você pode
 
 <table>
 <tr>
-<td align="center" width="33%"><img src="docs/android/versions/0.19/images/inicio.png" width="230" alt="Tela inicial da versão 0.19, com seletor do personagem junto da prévia"><br><b>Início · 0.19</b><br>Escolha o pet, acompanhe seu estado e acesse as funções.</td>
+<td align="center" width="33%"><img src="docs/android/versions/0.21/images/inicio.png" width="230" alt="Tela inicial da versão 0.21, com seletor do personagem junto da prévia"><br><b>Início · 0.21</b><br>Escolha o pet, acompanhe seu estado e acesse as funções.</td>
 <td align="center" width="33%"><img src="docs/android/versions/0.19/images/menu-rapido.png" width="230" alt="Menu rápido de ícones aberto ao segurar o pet"><br><b>Menu rápido · 0.19</b><br>Interações, posição fixa e acesso ao Quebra-blocos.</td>
 <td align="center" width="33%"><img src="docs/android/versions/0.13/images/radar.png" width="230" alt="Seleção de interesses do dia em cartões"><br><b>Meu radar · prévia 0.13</b><br>Assuntos do dia e fontes de notícias.</td>
 </tr>
@@ -93,7 +93,7 @@ Na 0.17, o visual original usa arte detalhada adaptada das referências. Trocar 
 
 ## Navegação por categorias
 
-A tela inicial usa uma lista vertical de categorias com **+ / −**: Personalização, Rotina, Notícias, Memória, Jogos e interações e Configurações. O estado aberto ou recolhido fica salvo no aparelho. Mostrar pet e Recolher pet continuam juntos no topo.
+A tela inicial usa uma lista vertical de categorias com **+ / −**: Personalização, Rotina, Notícias, Memória, Jogos e interações e Configurações. O estado aberto ou recolhido fica salvo no aparelho. Os botões continuam juntos no topo e mostram o personagem selecionado, por exemplo **Mostrar Bryan** e **Recolher Bryan**.
 
 Cuidados, Assistente e Radar também dividem opções em seções recolhíveis. O atalho de personalização abre as cores e acessórios diretamente; gerenciar fontes abre a seção de RSS.
 
