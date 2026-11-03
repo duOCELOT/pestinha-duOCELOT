@@ -8,7 +8,7 @@ Pets sobre os aplicativos · Cuidados · Tarefas · Notícias · Quebra-blocos t
 
 [**Baixar APK**](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Guia de uso](docs/android/GUIA-DO-APK.md) · [Versões](docs/android/versions/README.md)
 
-**0.19 experimental** · Android 8.0 ou superior · ARM64 / x86_64
+**0.20 experimental** · Android 8.0 ou superior · ARM64 / x86_64
 
 </div>
 
@@ -53,7 +53,7 @@ O Pestinha vive em uma janela transparente sobre os seus aplicativos. Você pode
 <tr>
 <td align="center"><img src="docs/android/versions/0.13/images/memoria.png" width="230" alt="Painel de memória e necessidades, com valores de exemplo"><br><b>Memória · prévia 0.13</b><br>Gráficos, estado do pet, aprendizado e backup.</td>
 <td align="center"><img src="docs/android/versions/0.19/images/quebra-blocos.png" width="230" alt="Quebra-blocos transparente com Mimir como plataforma"><br><b>Quebra-blocos · 0.19</b><br>O próprio pet vira a plataforma sobre o app aberto.</td>
-<td align="center"><img src="docs/android/versions/0.17/images/presidente.png" width="230" alt="Presidente com arte detalhada, barba branca e faixa decorativa"><br><b>Arte dos pets · 0.17</b><br>Olhos animados e cores personalizáveis.</td>
+<td align="center"><img src="docs/android/versions/0.20/images/presidente.png" width="230" alt="Presidente com arte detalhada, barba branca e faixa decorativa"><br><b>Presidente · 0.20</b><br>Olhos animados e cores personalizáveis.</td>
 </tr>
 </table>
 
@@ -76,7 +76,7 @@ As imagens são **prévias de Views Android renderizadas em testes**, com dados 
 <img src="docs/android/versions/0.17/images/bryan.png" width="155" alt="Bryan">
 <img src="docs/android/versions/0.17/images/mimir.png" width="155" alt="Mimir de elmo viking">
 <img src="docs/android/versions/0.17/images/luna.png" width="155" alt="Luna com cabelo e laço">
-<img src="docs/android/versions/0.17/images/presidente.png" width="155" alt="Presidente">
+<img src="docs/android/versions/0.20/images/presidente.png" width="155" alt="Presidente">
 </p>
 
 | Personagem | Personalidade e identidade |

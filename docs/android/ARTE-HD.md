@@ -7,3 +7,9 @@ O atlas `android/app/src/main/assets/art/pets-hd.png` foi gerado a partir das re
 O visual original usa a arte detalhada. Selecionar outro acessório usa a base detalhada de Bryan e o acessório desenhado pelo app; isso permite trocar ou remover itens sem deixar o item original preso na imagem. Separar todos os acessórios em camadas de igual qualidade é um próximo passo. Preferências de cores e memórias são preservadas.
 
 A arte raster é adaptada, não um modelo 3D. As imagens de referência e a geração não garantem identidade pixel a pixel. Validar no aparelho arraste, inclinação, tamanho, desempenho e transparência sobre apps claros e escuros.
+
+## Presidente na 0.20
+
+O Presidente passa a usar o arquivo independente `android/app/src/main/assets/art/presidente-hd.png`, com barba mais curta, bigode natural e orelhas refinadas. Os outros personagens continuam no atlas original. O carregador reduz a resolução ao decodificar esta arte e mantém a recoloração e a limpeza de transparência em cache. A altura e a posição dos olhos animados acompanham o novo desenho.
+
+O nome e o ID do personagem não mudam; memórias, recordes e preferências são preservados. A arte refinada corresponde ao visual Original. Selecionar outro item continua usando a base detalhada com o acessório escolhido.

@@ -1,6 +1,6 @@
 # Android 0.19 — Categorias e Quebra-blocos
 
-**Versão atual · experimental** · Android 8.0+, ARM64/x86_64 · versionCode 20.
+**Versão arquivada · experimental** · Android 8.0+, ARM64/x86_64 · versionCode 20.
 
 [Catálogo](../README.md) · [Guia atual](../../GUIA-DO-APK.md) · [Projeto](../../../../README.md)
 
