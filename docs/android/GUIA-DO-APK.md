@@ -406,5 +406,5 @@ Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).
 ## Cuidados, visual e novos personagens
 
 [Guia dos cuidados e guarda-roupa](CUIDADOS.md): fome, saúde, clima simulado, cores, acessórios e funções locais.
-O catálogo agora inclui Luna e Lula (caricatura não oficial), além de Bryan, Jorge e Mimir.
+O catálogo inclui Bryan, Jorge, Mimir, Luna e Presidente. Na 0.16, a escolha fica no cartão superior, junto da prévia. Guarde o pet antes de trocar.
 Nos balões de notícias, tocar no texto ou em Fechar apenas dispensa. Use Ler notícia para abrir o cartão.

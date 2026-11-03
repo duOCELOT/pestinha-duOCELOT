@@ -2,7 +2,7 @@
 
 Este é o lugar para consultar **o que mudou e qual APK baixar**.
 
-## Versão atual: 0.15 experimental
+## Versão atual: 0.16 experimental
 
 **[Baixar o APK atual](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** ·
 [Release com hash e código-fonte](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest) ·
@@ -15,7 +15,8 @@ Android 8.0+, ARM64 ou x86_64. O arquivo já é `.apk`, sem ZIP ou login.
 
 | Versão | Principal novidade | APK público |
 | --- | --- | --- |
-| **0.15 — atual** | Novo nome e visual do L.U.L.A | **[Baixar 0.15](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.15.0/Pestinha-Android.apk)** |
+| **0.16 — atual** | Presidente, novo acabamento e seletor de pet no topo | **[Baixar 0.16](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.16.0/Pestinha-Android.apk)** |
+| 0.15 | Novo nome e visual do L.U.L.A | **[Baixar 0.15](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.15.0/Pestinha-Android.apk)** |
 | 0.14 | Notícias: fechar sem abrir; cuidados, visual e dois pets novos | **[Baixar 0.14](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.14.0/Pestinha-Android.apk)** |
 | 0.13 | Fundo transparente no Arkanoid | **[Baixar 0.13](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.13.0/Pestinha-Android.apk)** |
 | 0.12 | Arkanoid com o próprio pet como plataforma | Histórico de desenvolvimento |
@@ -26,11 +27,20 @@ Android 8.0+, ARM64 ou x86_64. O arquivo já é `.apk`, sem ZIP ou login.
 | 0.7 | Biblioteca RSS e pausas conscientes | Histórico de desenvolvimento |
 | Anteriores | Pet nativo, personagens, memória e interações | Histórico de desenvolvimento |
 
-**0.15, 0.14 e 0.13 têm Releases públicas.** As linhas marcadas como histórico
+**0.16, 0.15, 0.14 e 0.13 têm Releases públicas.** As linhas marcadas como histórico
 registram a evolução do app e não têm pacotes separados para instalar. Seus antigos
 artefatos de teste não são o canal de download. Para novas instalações, use o APK atual.
 
 ## Detalhes das mudanças
+
+### 0.16 — Presidente e visual dos personagens
+
+- Nome **Presidente**, com descrição curta sem nomes de pessoas ou partidos.
+- Textos autorais com bordões populares nas interações, cuidados, tarefas e avisos. Sem voz ou modelo de IA.
+- Moldura vermelha forte, orelhas assimétricas, cabelo e barba brancos e faixa decorativa.
+- Gradientes de brilho, tela escura e acessórios em camadas nos pets; borda e olhos continuam personalizáveis por personagem.
+- Escolha de personagem no cartão superior, junto da prévia. Guarde o pet antes de trocar.
+- IDs, memórias, backups e preferências de cores existentes preservados.
 
 ### 0.15 — L.U.L.A
 

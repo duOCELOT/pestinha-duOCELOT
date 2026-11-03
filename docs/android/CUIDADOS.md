@@ -1,4 +1,4 @@
-# Cuidados, visual e funções locais — 0.14
+# Cuidados, visual e funções locais
 
 ## Notícias: fechar e ler são ações diferentes
 
@@ -27,9 +27,8 @@ e ainda não entram no backup neural JSON. Não mudam a identidade/seed do perso
 ## Personagens novos
 
 - **Luna:** pet feminina, curiosa e afetuosa, moldura rosa e laço como visual inicial.
-- **L.U.L.A:** robô com barba clara e moldura vermelha; caricatura fictícia
-  inspirada em Luiz Inácio Lula da Silva. Não oficial, sem endosso ou falas reais.
-  As frases são brincadeiras do pet, não aconselhamento político ou campanha.
+- **Presidente:** pet de barba branca, moldura vermelha e faixa decorativa.
+  Descrição curta e falas de humor sobre a rotina do personagem.
 
 Ambos mantêm o formato do projeto e têm memórias próprias. Guarde o pet antes de trocar.
 
@@ -46,8 +45,12 @@ seleção explícita, runtime compatível, limites de memória/tempo e execuçã
 Nenhuma saída do provedor pode virar código, comando ou ação arbitrária.
 
 
-Na 0.15, o nome exibido passa a L.U.L.A. O visual ganha cabelo grisalho, sobrancelhas e barba com bigode em camadas. O ID `lula` e a seed são preservados para manter memórias e backups compatíveis.
+## Visual e seleção na 0.16
 
-<img src="images/lula.png" width="240" alt="L.U.L.A com cabelo grisalho, sobrancelhas, bigode e barba em camadas">
+O nome exibido é Presidente. O ID `lula` e a seed continuam iguais para preservar a memória. A descrição no app não cita nomes ou partidos. As falas são textos autorais com bordões populares, não citações reais nem voz clonada.
+O acabamento usa gradientes nativos e acessórios em camadas, não uma imagem 3D estática. Borda e olhos continuam independentes. O seletor de pets fica no cartão superior, junto da prévia.
 
-Prévia nativa renderizada nos testes da compilação 0.15, não captura de um aparelho.
+
+<img src="images/presidente.png" width="280" alt="Presidente com moldura vermelha forte, barba branca e faixa decorativa">
+
+Prévia nativa renderizada nos testes da compilação 0.16; não é captura de um aparelho. Preferências de cor salvas são mantidas: use **Restaurar visual original** para voltar à paleta padrão do personagem.
