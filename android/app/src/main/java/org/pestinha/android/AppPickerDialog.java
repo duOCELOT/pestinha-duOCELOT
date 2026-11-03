@@ -12,6 +12,9 @@ import org.json.*;
 /** Labels and icons in the UI, package identifiers only in private storage. */
 final class AppPickerDialog {
     static final class Entry {final String id,name;final Drawable icon;final boolean available;Entry(String id,String name,Drawable icon,boolean available){this.id=id;this.name=name;this.icon=icon;this.available=available;}}
+    static Drawable thumbnail(android.content.Context c,Drawable source){
+        int size=Math.min(128,Design.dp(c,40));android.graphics.Bitmap bitmap=android.graphics.Bitmap.createBitmap(size,size,android.graphics.Bitmap.Config.ARGB_8888);bitmap.setDensity(c.getResources().getDisplayMetrics().densityDpi);source.setBounds(0,0,size,size);source.draw(new android.graphics.Canvas(bitmap));return new android.graphics.drawable.BitmapDrawable(c.getResources(),bitmap);
+    }
     static AlertDialog show(Activity a,List<Entry> apps,JSONObject old,Consumer<JSONObject> save){
         LinkedHashSet<String> chosen=new LinkedHashSet<>();for(Entry e:apps)if(old.has(e.id))chosen.add(e.id);
         LinearLayout box=Design.column(a);box.setTag("app_picker_content");int pad=Design.dp(a,16);box.setPadding(pad,pad,pad,pad);

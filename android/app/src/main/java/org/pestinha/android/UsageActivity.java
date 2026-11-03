@@ -56,7 +56,7 @@ public class UsageActivity extends Activity {
             JSONObject old=UsageRepository.selected(this);Iterator<String> previous=old.keys();while(previous.hasNext()){String id=previous.next();if(!found.containsKey(id))found.put(id,old.optString(id,id));}
             ArrayList<String> ids=new ArrayList<>(found.keySet());ids.sort((a,b)->found.get(a).compareToIgnoreCase(found.get(b)));
             ArrayList<AppPickerDialog.Entry> entries=new ArrayList<>();
-            for(String id:ids){android.graphics.drawable.Drawable icon;boolean available=true;try{icon=pm.getApplicationIcon(id);}catch(PackageManager.NameNotFoundException error){icon=pm.getDefaultActivityIcon();available=false;}entries.add(new AppPickerDialog.Entry(id,found.get(id),icon,available));}
+            for(String id:ids){android.graphics.drawable.Drawable icon;boolean available=true;try{icon=pm.getApplicationIcon(id);}catch(PackageManager.NameNotFoundException error){icon=pm.getDefaultActivityIcon();available=false;}entries.add(new AppPickerDialog.Entry(id,found.get(id),AppPickerDialog.thumbnail(this,icon),available));}
             ui.post(()->{if(isDestroyed())return;if(entries.isEmpty()){toast("Nenhum app com tela de abertura foi encontrado neste perfil.");return;}appDialog=AppPickerDialog.show(this,entries,old,next->{android.content.SharedPreferences.Editor edit=prefs().edit().putString("apps",next.toString()).remove("snapshot");if(next.length()==0)edit.putBoolean("enabled",false);UsageRepository.change(this,edit);render();});});
         });
     }
