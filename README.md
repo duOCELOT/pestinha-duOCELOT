@@ -4,7 +4,7 @@ Um pet sobre os seus aplicativos, com personalidade, memória, tarefas, notícia
 
 ## Baixar e instalar
 
-**Versão atual: 0.14 experimental.** Android 8.0+, ARM64 ou x86_64.
+**Versão atual: 0.15 experimental.** Android 8.0+, ARM64 ou x86_64.
 
 ### [⬇ Baixar Pestinha-Android.apk](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)
 
@@ -21,7 +21,7 @@ APK direto, sem ZIP ou login. Não precisa de Termux, Ubuntu ou VNC.
 **[Todas as informações das versões estão nesta página →](CHANGELOG.md)**
 
 Ela reúne o que mudou, qual é a versão atual e quais versões têm APK publicado.
-A **0.14** corrige o fechamento de notícias e traz cuidados, guarda-roupa, Luna e Lula (caricatura). As funções anteriores continuam incluídas.
+A **0.15** renomeia e melhora o visual do **L.U.L.A**, preservando os cuidados, a personalização e as funções anteriores. As funções anteriores continuam incluídas.
 
 [Release atual: APK, hash e código correspondente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest)
 
@@ -35,7 +35,7 @@ A **0.14** corrige o fechamento de notícias e traz cuidados, guarda-roupa, Luna
 
 Prévias da interface renderizadas em testes, com dados de exemplo. O campo do jogo é transparente; no celular, você vê o aplicativo aberto por baixo.
 
-- **Bryan, Jorge, Mimir, Luna e Lula (caricatura):** aparência, temperamento e memórias separados.
+- **Bryan, Jorge, Mimir, Luna e L.U.L.A:** aparência, temperamento e memórias separados.
 - **Interação:** carinho, brinquedos, sensores e opção de fixar o pet onde soltar.
 - **Arkanoid:** pet como plataforma, três vidas, fases e recorde por personagem.
 - **Organização:** tarefas com prazo, água, foco e lembretes.

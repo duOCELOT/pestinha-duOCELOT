@@ -47,3 +47,7 @@ Nenhuma saída do provedor pode virar código, comando ou ação arbitrária.
 
 
 Na 0.15, o nome exibido passa a L.U.L.A. O visual ganha cabelo grisalho, sobrancelhas e barba com bigode em camadas. O ID `lula` e a seed são preservados para manter memórias e backups compatíveis.
+
+<img src="images/lula.png" width="240" alt="L.U.L.A com cabelo grisalho, sobrancelhas, bigode e barba em camadas">
+
+Prévia nativa renderizada nos testes da compilação 0.15, não captura de um aparelho.
