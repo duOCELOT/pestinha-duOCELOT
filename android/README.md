@@ -94,14 +94,14 @@ um conflito de assinatura resolvido sem antes preservar e verificar os dados ant
 | Área | Referência |
 | --- | --- |
 | Personagens, gestos, sensores, memória e água/foco | [Guia das telas](../docs/android/GUIA-DO-APK.md) |
-| Arkanoid com o próprio pet e fundo transparente | [Jogo e ciclo de vida](../docs/android/ARKANOID.md) |
+| Quebra-blocos com o próprio pet e fundo transparente | [Jogo e ciclo de vida](../docs/android/QUEBRA-BLOCOS.md) |
 | Fixar posição sem gravidade | Menu de segurar → Fixar no lugar / Soltar posição |
 | Tarefas, prazos e acompanhamento explícito | [Tarefas](../docs/android/TAREFAS.md) |
 | Temas do dia, fontes e comentários do pet | [Meu radar](../docs/android/MEU-RADAR.md) |
 | 14 RSS dos próprios veículos | [Fontes e referências](../docs/android/FONTES-RSS.md) |
 | Acesso ao uso opcional, apps escolhidos, sessão/dia | [Pausas conscientes](../docs/android/PAUSAS-CONSCIENTES.md) |
 
-O Arkanoid recebe toques sobre o app de baixo até ser fechado no ×. O pet original
+O Quebra-blocos recebe toques sobre o app de baixo até ser fechado no ×. O pet original
 vira a plataforma; não há leitura/captura da tela. A posição e o modo de movimento
 anteriores são restaurados ao sair. Recordes são separados por personagem.
 

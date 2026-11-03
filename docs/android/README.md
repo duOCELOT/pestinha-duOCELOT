@@ -18,7 +18,7 @@
 | [Meu radar](MEU-RADAR.md) | Interesses do dia e notícias comentadas |
 | [Biblioteca RSS](FONTES-RSS.md) | Fontes de notícias, mercado, cripto e outros assuntos |
 | [Pausas conscientes](PAUSAS-CONSCIENTES.md) | Acompanhamento opcional do uso de aplicativos |
-| [Arkanoid](ARKANOID.md) | Jogo transparente e o pet como plataforma |
+| [Quebra-blocos](QUEBRA-BLOCOS.md) | Jogo transparente e o pet como plataforma |
 | [Guia completo](GUIA-DO-APK.md) | Água, timers, lembretes, memória, movimento e demais controles |
 
 ## Desenvolvimento e publicação
@@ -40,3 +40,7 @@
 - **Branch `android`:** código do aplicativo; **branch `main`:** apresentação e documentação pública.
 
 [Documentação de desktop](../../README-DESKTOP.md) · [Licença](../../LICENSE).
+
+## Navegação na 0.19
+
+Categorias verticais com **+ / −** e estado salvo. Personalização, Rotina, Notícias, Memória, Jogos e interações e Configurações organizam a tela inicial. O jogo se chama **Quebra-blocos**. Os documentos de versões antigas preservam os nomes usados na época.
