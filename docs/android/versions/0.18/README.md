@@ -1,6 +1,6 @@
 # Android 0.18 — Controles do pet no topo
 
-**Versão atual · experimental** · Android 8.0+, ARM64/x86_64 · versionCode 19.
+**Versão arquivada · experimental** · Android 8.0+, ARM64/x86_64 · versionCode 19.
 
 [Catálogo](../README.md) · [Guia](../../GUIA-DO-APK.md) · [Projeto](../../../../README.md)
 

@@ -58,7 +58,7 @@ inclusive quando este material é lido pela branch `main`.
 | [InterestsDialog](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/InterestsDialog.java), NewsActivity/Repository/Monitor | Cartões de assuntos, leitura RSS coordenada, cache e comentários |
 | [UsageActivity](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/UsageActivity.java), UsageRepository/Ledger/Monitor | Consentimento, cálculo de sessão/dia e recados locais |
 | [MetricChart](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/MetricChart.java) | Barras nativas com valores e descrições de acessibilidade |
-| [ArkanoidModel](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/ArkanoidModel.java) e [ArkanoidOverlay](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/ArkanoidOverlay.java) | Física Java pura, campo transparente e pet original como plataforma |
+| [BrickGameModel](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/BrickGameModel.java) e [BrickGameOverlay](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/BrickGameOverlay.java) | Física Java pura, campo transparente e pet original como plataforma |
 | [android_brain.py](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/python/android_brain.py) | Ponte dos eventos Android para o núcleo Python e composição do estado exportado à interface |
 
 ## 3. Cérebro, comportamento e personalidade
@@ -336,11 +336,11 @@ Testes verificam posição após arrastar/soltar com impulso anterior, persistê
 retomada da gravidade e o rótulo/ação do atalho no menu.
 
 
-## Arkanoid sobre os apps
+## Quebra-blocos sobre os apps
 
-Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
+Segure o pet e escolha **Quebra-blocos**. O próprio boneco vira a plataforma: arraste
 para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
-Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).
+Pausar/fechar ficam no topo. Veja o [guia do jogo](QUEBRA-BLOCOS.md).
 
 
 ## Distribuição pública

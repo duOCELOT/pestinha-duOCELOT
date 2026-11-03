@@ -1,13 +1,13 @@
 {
   "repository": "duOCELOT/pestinha-duOCELOT",
-  "tag": "android-v0.18.0",
-  "title": "Pestinha Android 0.18 — controles do pet juntos no topo",
-  "run_id": 41651551275,
-  "artifact_id": 13237806641,
+  "tag": "android-v0.19.0",
+  "title": "Pestinha Android 0.19 — categorias e Quebra-blocos",
+  "run_id": 41654350495,
+  "artifact_id": 13239871239,
   "artifact_name": "pestinha-android-debug",
-  "source_sha": "750287f3aa2fd2cb1840e71adafd835a5fd3fb4e",
-  "version_name": "0.18.0-alpha",
-  "version_code": 19,
-  "apk_sha256": "4566336e70a4e152265d4bbda28a87870a19a525ab6facb5b6e29530e1a0789e",
-  "notes": ".github/release-notes/android-v0.18.0.md"
+  "source_sha": "3b5621f95ec7264ed752477e5c361fd9a05fa33b",
+  "version_name": "0.19.0-alpha",
+  "version_code": 20,
+  "apk_sha256": "c5d1442acf3023c808fe4c8b6886329d42e3936040f46545ff8687fda551ff09",
+  "notes": ".github/release-notes/android-v0.19.0.md"
 }

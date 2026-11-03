@@ -34,3 +34,7 @@ O PNG do Arkanoid tem canal alfa: as áreas vazias são transparentes e o visual
 Ao publicar novas prévias, copie os arquivos para a pasta da versão e registre a compilação de origem antes de atualizar as imagens dos guias. Não substitua imagens de uma versão arquivada por arte de outra.
 
 Interface e documentação seguem a [licença do projeto](../../../LICENSE).
+
+## Prévias da 0.19
+
+A [galeria 0.19](../versions/0.19/README.md) traz início, menu rápido e Quebra-blocos, extraídos dos testes DesignTest e BrickGameOverlayTest na [compilação validada](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41654350495). As galerias antigas mantêm suas imagens originais.

@@ -4,7 +4,7 @@
 
 ## Baixar agora
 
-**[Baixar o APK mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** — versão atual: **0.18 experimental**.
+**[Baixar o APK mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** — versão atual: **0.19 experimental**.
 
 O APK atual inclui as funções anteriores; não é necessário instalar as versões em sequência. Android 8.0+, ARM64 ou x86_64.
 
@@ -14,7 +14,8 @@ Cada pasta é independente: contém novidades, links fixos e metadados do seu AP
 
 | Versão | Destaque | Pasta e detalhes | Download fixo |
 | --- | --- | --- | --- |
-| **0.18 · atual** | Controles do pet no topo | [0.18/](0.18/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.18.0/Pestinha-Android.apk) |
+| **0.19 · atual** | Categorias verticais e Quebra-blocos | [0.19/](0.19/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.19.0/Pestinha-Android.apk) |
+| **0.18** | Controles do pet no topo | [0.18/](0.18/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.18.0/Pestinha-Android.apk) |
 | **0.17** | Arte detalhada e personalização | [0.17/](0.17/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.17.0/Pestinha-Android.apk) |
 | **0.16** | Presidente e seletor no topo | [0.16/](0.16/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.16.0/Pestinha-Android.apk) |
 | **0.15** | Novo nome e visual do L.U.L.A | [0.15/](0.15/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.15.0/Pestinha-Android.apk) |
@@ -27,10 +28,11 @@ Cada pasta é independente: contém novidades, links fixos e metadados do seu AP
 versions/
 ├── README.md           # catálogo e versão atual
 ├── HISTORICO.md        # etapas sem APK público separado
-├── 0.18/
+├── 0.19/
 │   ├── README.md       # novidades, arquivos e integridade
 │   ├── release.json    # tag, commit, hashes e requisitos
 │   └── images/         # prévias produzidas nesta versão
+├── 0.18/               # mesma organização
 ├── 0.17/               # mesma organização
 ├── 0.16/               # mesma organização
 ├── 0.15/               # README, metadados e prévia disponível

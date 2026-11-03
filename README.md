@@ -4,11 +4,11 @@
 
 **Um pequeno companheiro de tela, com personalidade, memória e suas próprias travessuras.**
 
-Pets sobre os aplicativos · Cuidados · Tarefas · Notícias · Arkanoid transparente
+Pets sobre os aplicativos · Cuidados · Tarefas · Notícias · Quebra-blocos transparente
 
 [**Baixar APK**](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Guia de uso](docs/android/GUIA-DO-APK.md) · [Versões](docs/android/versions/README.md)
 
-**0.18 experimental** · Android 8.0 ou superior · ARM64 / x86_64
+**0.19 experimental** · Android 8.0 ou superior · ARM64 / x86_64
 
 </div>
 
@@ -46,18 +46,18 @@ O Pestinha vive em uma janela transparente sobre os seus aplicativos. Você pode
 
 <table>
 <tr>
-<td align="center" width="33%"><img src="docs/android/versions/0.18/images/inicio.png" width="230" alt="Tela inicial da versão 0.18, com seletor do personagem junto da prévia"><br><b>Início · 0.18</b><br>Escolha o pet, acompanhe seu estado e acesse as funções.</td>
-<td align="center" width="33%"><img src="docs/android/versions/0.13/images/menu-rapido.png" width="230" alt="Menu rápido de ícones aberto ao segurar o pet"><br><b>Menu rápido · prévia 0.13</b><br>Interações, posição fixa e acesso ao Arkanoid.</td>
+<td align="center" width="33%"><img src="docs/android/versions/0.19/images/inicio.png" width="230" alt="Tela inicial da versão 0.19, com seletor do personagem junto da prévia"><br><b>Início · 0.19</b><br>Escolha o pet, acompanhe seu estado e acesse as funções.</td>
+<td align="center" width="33%"><img src="docs/android/versions/0.19/images/menu-rapido.png" width="230" alt="Menu rápido de ícones aberto ao segurar o pet"><br><b>Menu rápido · 0.19</b><br>Interações, posição fixa e acesso ao Quebra-blocos.</td>
 <td align="center" width="33%"><img src="docs/android/versions/0.13/images/radar.png" width="230" alt="Seleção de interesses do dia em cartões"><br><b>Meu radar · prévia 0.13</b><br>Assuntos do dia e fontes de notícias.</td>
 </tr>
 <tr>
 <td align="center"><img src="docs/android/versions/0.13/images/memoria.png" width="230" alt="Painel de memória e necessidades, com valores de exemplo"><br><b>Memória · prévia 0.13</b><br>Gráficos, estado do pet, aprendizado e backup.</td>
-<td align="center"><img src="docs/android/versions/0.13/images/arkanoid.png" width="230" alt="Arkanoid transparente com Mimir como plataforma"><br><b>Arkanoid · prévia 0.13</b><br>O próprio pet vira a plataforma sobre o app aberto.</td>
+<td align="center"><img src="docs/android/versions/0.19/images/quebra-blocos.png" width="230" alt="Quebra-blocos transparente com Mimir como plataforma"><br><b>Quebra-blocos · 0.19</b><br>O próprio pet vira a plataforma sobre o app aberto.</td>
 <td align="center"><img src="docs/android/versions/0.17/images/presidente.png" width="230" alt="Presidente com arte detalhada, barba branca e faixa decorativa"><br><b>Arte dos pets · 0.17</b><br>Olhos animados e cores personalizáveis.</td>
 </tr>
 </table>
 
-As imagens são **prévias de Views Android renderizadas em testes**, com dados de exemplo; não são capturas de um telefone. Cada imagem indica sua versão de origem. O Arkanoid tem fundo transparente: no aparelho, o aplicativo aberto fica visível por baixo. [Origem e catálogo das imagens](docs/android/images/README.md).
+As imagens são **prévias de Views Android renderizadas em testes**, com dados de exemplo; não são capturas de um telefone. Cada imagem indica sua versão de origem. O Quebra-blocos tem fundo transparente: no aparelho, o aplicativo aberto fica visível por baixo. [Origem e catálogo das imagens](docs/android/images/README.md).
 
 | Função | O que você pode fazer | Guia |
 | --- | --- | --- |
@@ -68,7 +68,7 @@ As imagens são **prévias de Views Android renderizadas em testes**, com dados 
 | Notícias | Escolher interesses e feeds RSS; ler manchetes com comentários em texto | [Meu radar](docs/android/MEU-RADAR.md) |
 | Uso de aplicativos | Acompanhar o tempo estimado nos apps escolhidos, com autorização opcional | [Pausas conscientes](docs/android/PAUSAS-CONSCIENTES.md) |
 | Memória | Consultar gráficos, histórico e aprendizado; exportar ou restaurar a memória de cada pet | [Memória e cérebro](docs/android/GUIA-DO-APK.md#8-tela-memória-e-cérebro) |
-| Arkanoid | Jogar com o pet como plataforma, três vidas, fases e recordes por personagem | [Como jogar](docs/android/ARKANOID.md) |
+| Quebra-blocos | Jogar com o pet como plataforma, três vidas, fases e recordes por personagem | [Como jogar](docs/android/QUEBRA-BLOCOS.md) |
 
 ## Personagens e personalização
 
@@ -90,6 +90,12 @@ As imagens são **prévias de Views Android renderizadas em testes**, com dados 
 Cada personagem tem memória e temperamento próprios. **Recolha o pet antes de trocar** pelo seletor no topo. As cores da moldura e dos olhos podem ser ajustadas separadamente.
 
 Na 0.17, o visual original usa arte detalhada adaptada das referências. Trocar um acessório usa o corpo básico detalhado com o item desenhado pelo app; todos os acessórios em camadas de igual acabamento ainda estão no roadmap. [Como funciona a arte e seus limites](docs/android/ARTE-HD.md).
+
+## Navegação por categorias
+
+A tela inicial usa uma lista vertical de categorias com **+ / −**: Personalização, Rotina, Notícias, Memória, Jogos e interações e Configurações. O estado aberto ou recolhido fica salvo no aparelho. Mostrar pet e Recolher pet continuam juntos no topo.
+
+Cuidados, Assistente e Radar também dividem opções em seções recolhíveis. O atalho de personalização abre as cores e acessórios diretamente; gerenciar fontes abre a seção de RSS.
 
 ## Como interagir
 
@@ -138,6 +144,7 @@ A personalidade combina regras, rede neural e textos escritos. **Não há LLM in
 - [ ] Refinar a fidelidade das artes às referências aprovadas.
 - [ ] Separar todos os acessórios em camadas intercambiáveis de igual acabamento.
 - [ ] Validar memória, bateria e fluidez das novas artes em aparelhos reais.
+- [ ] Criar um jogo de estilingue transparente com o pet (planejado, ainda não disponível).
 - [ ] Ampliar interações e personalidade dos pets.
 - [ ] Avaliar modelos locais leves para funções específicas, com ativação opcional.
 - [ ] Avaliar **Android de 32 bits (armeabi-v7a)**: suporte das dependências e testes em aparelho compatível; sem disponibilidade prometida.

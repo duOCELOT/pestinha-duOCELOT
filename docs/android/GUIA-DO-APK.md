@@ -1,6 +1,6 @@
 # Guia do APK: telas, funções e uso
 
-**Guia da versão atual: Pestinha Android 0.18 experimental.**
+**Guia da versão atual: Pestinha Android 0.19 experimental.**
 [Versões anteriores e seus arquivos](versions/README.md)
 [Apresentação](README.md) · [Referência técnica](REFERENCIA-TECNICA.md)
 
@@ -30,24 +30,19 @@ O cartão superior apresenta o personagem, sua prévia visual, o estado atual,
 a energia e o botão para soltá-lo. A autorização de overlay só aparece quando
 necessária. Quando o pet já está ativo, o botão indica que ele está solto.
 
-| Elemento | Para que serve |
+| Categoria | Conteúdo |
 | --- | --- |
-| Nome, desenho e seletor do pet | Conferir e escolher o personagem com o pet guardado |
-| Estado e energia | Acompanhar a emoção atual e a reserva de energia do pet |
-| Soltar o personagem | Iniciar o pet flutuante e seu serviço com notificação |
-| Meu radar | Selecionar os assuntos do dia, fontes e comentários de notícias |
-| Tarefas e prazos | Cadastrar entregas e informar o andamento |
-| Assistente | Abrir água, timers, lembretes, agenda, relógio e notícias |
-| Pausas conscientes | Configurar medição opcional de uso e consultar os recados do pet |
-| Memória e cérebro | Consultar estado, aprendizado, histórico e backups |
-| Brincar e interagir | Abrir ações e escolher o contexto de atividade |
-| Personagem e aparência | Ajustar tamanho, velocidade e travessuras/fogos; a escolha do pet fica no topo |
-| Movimento e inclinação | Ativar sensores, ajustar sensibilidade e calibrar |
-| Privacidade e informações | Ler informações, licença e ativar o modo de teste |
-| Recolher pet | Retirar o pet e seus objetos da tela, salvando o estado |
+| Cartão superior | Personagem, estado, Mostrar pet e Recolher pet |
+| Personalização | Cores e acessórios; ajustes de tamanho, velocidade e comportamento |
+| Rotina | Tarefas, água, foco, lembretes, cuidados e pausas conscientes |
+| Notícias | Radar e gerenciamento de fontes RSS |
+| Memória | Gráficos, aprendizado e backups |
+| Jogos e interações | Quebra-blocos, carinho, brinquedos, memes e atividades |
+| Configurações | Movimento, sensores, calibração, privacidade e licença |
 
-As seções de configuração começam recolhidas. Toque no título com **+** para
-abrir e novamente para recolher.
+Toque em **+** para abrir ou em **−** para recolher. A escolha fica salva por tela e categoria. Os cabeçalhos também informam o estado para leitores de tela. Os controles de cada seção aparecem em uma coluna vertical, com textos que podem ocupar mais de uma linha.
+
+O atalho **Cores e acessórios** abre a seção de personalização diretamente. **Gerenciar fontes RSS** abre a seção correspondente do Assistente. No Radar, os assuntos do dia e atualizar notícias ficam acessíveis; frequência e comentários ficam em Configurações do radar.
 
 **A energia mostrada é uma necessidade do personagem, não a bateria do celular.**
 Recolher pet não cancela timers, lembretes nem alarmes enviados ao relógio.
@@ -69,12 +64,12 @@ existem suavização, habituação e necessidades internas.
 
 ### Menu rápido
 
-<img src="images/menu-rapido.png" width="280" alt="Menu ao segurar, com posição fixa e nove atalhos incluindo Arkanoid">
+<img src="images/menu-rapido.png" width="280" alt="Menu ao segurar, com posição fixa e nove atalhos incluindo Quebra-blocos">
 
 | Ícone / rótulo | Descrição |
 | --- | --- |
 | Fixar no lugar / Soltar posição | Mantém o pet onde for solto ou restaura seu movimento |
-| Arkanoid | Abre o jogo sobre os apps, usando o próprio pet como plataforma |
+| Quebra-blocos | Abre o jogo sobre os apps, usando o próprio pet como plataforma |
 | Carinho | Faz carinho sem sair do aplicativo em uso |
 | Bolinha / Sem bola | Mostra ou guarda a bolinha |
 | Dormir / Acordar | Alterna o sono do personagem |
@@ -401,11 +396,11 @@ Se a orientação, o tamanho ou a área da tela mudar, a posição pode ser ajus
 para que o boneco continue dentro dos limites visíveis.
 
 
-## Arkanoid sobre os apps
+## Quebra-blocos sobre os apps
 
-Segure o pet e escolha **Arkanoid**. O próprio boneco vira a plataforma: arraste
+Segure o pet e escolha **Quebra-blocos**. O próprio boneco vira a plataforma: arraste
 para os lados, quebre os blocos, avance fases e guarde um recorde por personagem.
-Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).
+Pausar/fechar ficam no topo. Veja o [guia do jogo](QUEBRA-BLOCOS.md).
 
 [Histórico e versão disponível para download](../../CHANGELOG.md).
 
