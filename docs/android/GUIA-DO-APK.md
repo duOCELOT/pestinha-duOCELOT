@@ -1,6 +1,6 @@
 # Guia do APK: telas, funções e uso
 
-**Guia da versão atual: Pestinha Android 0.17 experimental.**
+**Guia da versão atual: Pestinha Android 0.18 experimental.**
 [Versões anteriores e seus arquivos](versions/README.md)
 [Apresentação](README.md) · [Referência técnica](REFERENCIA-TECNICA.md)
 
@@ -9,7 +9,7 @@
 1. [Baixe `Pestinha-Android.apk` diretamente da Release](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) e abra para instalar. Não precisa de login nem ZIP.
 2. Abra **Pestinha**.
 3. Se aparecer **Permitir aparecer sobre outros apps**, toque e autorize no Android.
-4. Volte ao app e toque em **Soltar o pet**.
+4. Volte ao app e toque em **Mostrar pet**.
 5. Permita notificações para acessar os controles e receber avisos.
 
 O personagem deve aparecer em uma pequena janela transparente. O restante da
@@ -23,6 +23,8 @@ antes cuidar do backup. Veja o [procedimento de migração](https://github.com/d
 ## 2. Tela principal
 
 <img src="images/inicio.png" width="300" alt="Exemplo da tela principal do Pestinha Android">
+
+O cartão superior reúne **Mostrar pet** e **Recolher pet** lado a lado, junto da escolha do personagem. Os controles habilitam conforme o estado do serviço.
 
 O cartão superior apresenta o personagem, sua prévia visual, o estado atual,
 a energia e o botão para soltá-lo. A autorização de overlay só aparece quando
@@ -42,13 +44,13 @@ necessária. Quando o pet já está ativo, o botão indica que ele está solto.
 | Personagem e aparência | Ajustar tamanho, velocidade e travessuras/fogos; a escolha do pet fica no topo |
 | Movimento e inclinação | Ativar sensores, ajustar sensibilidade e calibrar |
 | Privacidade e informações | Ler informações, licença e ativar o modo de teste |
-| Guardar o pet | Retirar o pet e seus objetos da tela, salvando o estado |
+| Recolher pet | Retirar o pet e seus objetos da tela, salvando o estado |
 
 As seções de configuração começam recolhidas. Toque no título com **+** para
 abrir e novamente para recolher.
 
 **A energia mostrada é uma necessidade do personagem, não a bateria do celular.**
-Guardar o pet não cancela timers, lembretes nem alarmes enviados ao relógio.
+Recolher pet não cancela timers, lembretes nem alarmes enviados ao relógio.
 
 ## 3. Pet flutuante e gestos
 
@@ -149,8 +151,8 @@ as travessuras automáticas. Desative-o para o uso normal.
 
 <img src="images/mimir.png" width="240" alt="Mimir com seu elmo viking e olhos azul-gelo">
 
-Para trocar: **Guardar o pet → aguardar o salvamento → seletor no cartão superior
-→ escolher o nome → Soltar**. A prévia muda assim que a seleção é aceita.
+Para trocar: **Recolher pet → aguardar o salvamento → seletor no cartão superior
+→ escolher o nome → Mostrar pet**. A prévia muda assim que a seleção é aceita.
 
 A 0.17 usa arte detalhada com olhos animados e cores independentes para moldura e olhos. Trocar um acessório usa a base detalhada com item desenhado pelo app; veja [os limites da arte](ARTE-HD.md).
 
@@ -411,5 +413,5 @@ Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).
 ## Cuidados, visual e novos personagens
 
 [Guia dos cuidados e guarda-roupa](CUIDADOS.md): fome, saúde, clima simulado, cores, acessórios e funções locais.
-O catálogo inclui Bryan, Jorge, Mimir, Luna e Presidente. Na 0.16, a escolha fica no cartão superior, junto da prévia. Guarde o pet antes de trocar.
+O catálogo inclui Bryan, Jorge, Mimir, Luna e Presidente. Na 0.16, a escolha fica no cartão superior, junto da prévia. Recolha o pet antes de trocar.
 Nos balões de notícias, tocar no texto ou em Fechar apenas dispensa. Use Ler notícia para abrir o cartão.

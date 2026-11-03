@@ -8,6 +8,7 @@ As prévias são renderizações de **Views Android reais em testes Robolectric*
 
 | Versão | Imagens arquivadas | Compilação de origem |
 | --- | --- | --- |
+| [0.18](../versions/0.18/README.md) | Início com Mostrar pet e Recolher pet no topo | [41651551275](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41651551275) |
 | [0.17](../versions/0.17/README.md#prévias-desta-versão) | Início, Bryan, Mimir, Luna e Presidente com arte detalhada | [41647993545](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41647993545) |
 | [0.16](../versions/0.16/README.md#prévias-desta-versão) | Início e quatro pets no acabamento Canvas anterior | [41645282506](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41645282506) |
 | [0.15](../versions/0.15/README.md#prévias-desta-versão) | Prévia do antigo L.U.L.A | [41639512540](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41639512540) |

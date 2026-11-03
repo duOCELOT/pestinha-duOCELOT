@@ -8,7 +8,7 @@ Pets sobre os aplicativos · Cuidados · Tarefas · Notícias · Arkanoid transp
 
 [**Baixar APK**](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Guia de uso](docs/android/GUIA-DO-APK.md) · [Versões](docs/android/versions/README.md)
 
-**0.17 experimental** · Android 8.0 ou superior · ARM64 / x86_64
+**0.18 experimental** · Android 8.0 ou superior · ARM64 / x86_64
 
 </div>
 
@@ -35,7 +35,7 @@ O Pestinha vive em uma janela transparente sobre os seus aplicativos. Você pode
 
 1. Baixe o APK e abra no celular. Se solicitado, permita a instalação para o navegador ou gerenciador usado.
 2. Abra **Pestinha** e autorize **Aparecer sobre outros apps**.
-3. Escolha um personagem no cartão superior e toque em **Soltar o pet**.
+3. Escolha um personagem no cartão superior e toque em **Mostrar pet**.
 4. Autorize notificações para receber os avisos e acessar os controles.
 
 **Já tem o app?** Instale sobre a versão atual para manter os dados. Desinstalar ou limpar os dados apaga os registros locais. Antes de qualquer remoção, consulte [memória e backup](docs/android/GUIA-DO-APK.md#salvar-exportar-e-restaurar). A versão 0.1 pode exigir [migração de assinatura](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md#instalações-antigas-01).
@@ -46,7 +46,7 @@ O Pestinha vive em uma janela transparente sobre os seus aplicativos. Você pode
 
 <table>
 <tr>
-<td align="center" width="33%"><img src="docs/android/versions/0.17/images/inicio.png" width="230" alt="Tela inicial da versão 0.17, com seletor do personagem junto da prévia"><br><b>Início · 0.17</b><br>Escolha o pet, acompanhe seu estado e acesse as funções.</td>
+<td align="center" width="33%"><img src="docs/android/versions/0.18/images/inicio.png" width="230" alt="Tela inicial da versão 0.18, com seletor do personagem junto da prévia"><br><b>Início · 0.18</b><br>Escolha o pet, acompanhe seu estado e acesse as funções.</td>
 <td align="center" width="33%"><img src="docs/android/versions/0.13/images/menu-rapido.png" width="230" alt="Menu rápido de ícones aberto ao segurar o pet"><br><b>Menu rápido · prévia 0.13</b><br>Interações, posição fixa e acesso ao Arkanoid.</td>
 <td align="center" width="33%"><img src="docs/android/versions/0.13/images/radar.png" width="230" alt="Seleção de interesses do dia em cartões"><br><b>Meu radar · prévia 0.13</b><br>Assuntos do dia e fontes de notícias.</td>
 </tr>
@@ -87,7 +87,7 @@ As imagens são **prévias de Views Android renderizadas em testes**, com dados 
 | **Luna** | Curiosa e afetuosa, com cabelo e laço |
 | **Presidente** | Bem-humorado, de fala popular e cheio de histórias |
 
-Cada personagem tem memória e temperamento próprios. **Guarde o pet antes de trocar** pelo seletor no topo. As cores da moldura e dos olhos podem ser ajustadas separadamente.
+Cada personagem tem memória e temperamento próprios. **Recolha o pet antes de trocar** pelo seletor no topo. As cores da moldura e dos olhos podem ser ajustadas separadamente.
 
 Na 0.17, o visual original usa arte detalhada adaptada das referências. Trocar um acessório usa o corpo básico detalhado com o item desenhado pelo app; todos os acessórios em camadas de igual acabamento ainda estão no roadmap. [Como funciona a arte e seus limites](docs/android/ARTE-HD.md).
 
