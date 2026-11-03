@@ -1,6 +1,6 @@
 # Guia do APK: telas, funções e uso
 
-**Guia da versão atual: Pestinha Android 0.21 experimental.**
+**Guia da versão atual: Pestinha Android 0.22 experimental.**
 [Versões anteriores e seus arquivos](versions/README.md)
 [Apresentação](README.md) · [Referência técnica](REFERENCIA-TECNICA.md)
 
@@ -414,3 +414,7 @@ Nos balões de notícias, tocar no texto ou em Fechar apenas dispensa. Use Ler n
 ## Correção do Bryan na 0.21
 
 O Bryan pode usar sua definição original sem campo de aparência: o app aplica a paleta padrão e depois as cores e acessórios escolhidos por você. Não é preciso apagar memória nem restaurar preferências. Os controles exibem o personagem selecionado, como Mostrar Bryan e Recolher Bryan; nome e descrição são atualizados independentemente da arte. Após atualizar, toque em Mostrar Bryan para iniciar uma nova sessão.
+
+## Interface de cores e protestos na 0.22
+
+Personalização abre um seletor de cores com prévia, HEX, RGB, HSL e CMY. A seleção de apps em Pausas conscientes mostra ícones e nomes com busca. O app tem um novo ícone adaptativo. Jogos e interações inclui uma prévia de cartazes, faixas e bandeiras animados; os protestos espontâneos usam as mesmas peças. [Guia completo dessas funções](CORES-E-PROTESTOS.md).

@@ -8,7 +8,7 @@ Pets sobre os aplicativos · Cuidados · Tarefas · Notícias · Quebra-blocos t
 
 [**Baixar APK**](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Guia de uso](docs/android/GUIA-DO-APK.md) · [Versões](docs/android/versions/README.md)
 
-**0.21 experimental** · Android 8.0 ou superior · ARM64 / x86_64
+**0.22 experimental** · Android 8.0 ou superior · ARM64 / x86_64
 
 </div>
 
@@ -46,7 +46,7 @@ O Pestinha vive em uma janela transparente sobre os seus aplicativos. Você pode
 
 <table>
 <tr>
-<td align="center" width="33%"><img src="docs/android/versions/0.21/images/inicio.png" width="230" alt="Tela inicial da versão 0.21, com seletor do personagem junto da prévia"><br><b>Início · 0.21</b><br>Escolha o pet, acompanhe seu estado e acesse as funções.</td>
+<td align="center" width="33%"><img src="docs/android/versions/0.22/images/inicio.png" width="230" alt="Tela inicial da versão 0.22, com seletor do personagem junto da prévia"><br><b>Início · 0.22</b><br>Escolha o pet, acompanhe seu estado e acesse as funções.</td>
 <td align="center" width="33%"><img src="docs/android/versions/0.19/images/menu-rapido.png" width="230" alt="Menu rápido de ícones aberto ao segurar o pet"><br><b>Menu rápido · 0.19</b><br>Interações, posição fixa e acesso ao Quebra-blocos.</td>
 <td align="center" width="33%"><img src="docs/android/versions/0.13/images/radar.png" width="230" alt="Seleção de interesses do dia em cartões"><br><b>Meu radar · prévia 0.13</b><br>Assuntos do dia e fontes de notícias.</td>
 </tr>
@@ -69,6 +69,15 @@ As imagens são **prévias de Views Android renderizadas em testes**, com dados 
 | Uso de aplicativos | Acompanhar o tempo estimado nos apps escolhidos, com autorização opcional | [Pausas conscientes](docs/android/PAUSAS-CONSCIENTES.md) |
 | Memória | Consultar gráficos, histórico e aprendizado; exportar ou restaurar a memória de cada pet | [Memória e cérebro](docs/android/GUIA-DO-APK.md#8-tela-memória-e-cérebro) |
 | Quebra-blocos | Jogar com o pet como plataforma, três vidas, fases e recordes por personagem | [Como jogar](docs/android/QUEBRA-BLOCOS.md) |
+
+## Novidades da 0.22
+
+- **Cores:** prévia do pet e controles sincronizados de HEX, RGB, CMY, matiz, saturação e luminosidade HSL.
+- **Apps acompanhados:** ícones e nomes, busca e seleção preservada ao filtrar.
+- **Ícone do app:** novo desenho adaptativo e versão para ícones temáticos.
+- **Protestos:** cartazes, faixas e bandeiras animados, com detalhes na cor do personagem.
+
+[Guia dessas funções](docs/android/CORES-E-PROTESTOS.md) · [Novas telas e assets](docs/android/versions/0.22/README.md#prévias)
 
 ## Personagens e personalização
 

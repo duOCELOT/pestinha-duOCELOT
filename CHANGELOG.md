@@ -1,6 +1,6 @@
 # Changelog — Pestinha Android
 
-**Atual: 0.21 experimental.** [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Catálogo completo](docs/android/versions/README.md) · [Projeto](README.md)
+**Atual: 0.22 experimental.** [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Catálogo completo](docs/android/versions/README.md) · [Projeto](README.md)
 
 ## Releases publicadas
 
@@ -8,7 +8,8 @@ Cada versão tem uma página própria com novidades, download fixo, requisitos, 
 
 | Versão | Mudança principal | Detalhes e arquivos |
 | --- | --- | --- |
-| 0.21 · atual | Correção da aparência do Bryan e dos nomes dos controles | [0.21/](docs/android/versions/0.21/README.md) |
+| 0.22 · atual | Seletor de cores, ícones de apps e protestos animados | [0.22/](docs/android/versions/0.22/README.md) |
+| 0.21 | Correção da aparência do Bryan e dos nomes dos controles | [0.21/](docs/android/versions/0.21/README.md) |
 | 0.20 | Presidente: barba curta e orelhas refinadas | [0.20/](docs/android/versions/0.20/README.md) |
 | 0.19 | Categorias recolhíveis e nome Quebra-blocos | [0.19/](docs/android/versions/0.19/README.md) |
 | 0.18 | Mostrar pet e Recolher pet juntos no topo | [0.18/](docs/android/versions/0.18/README.md) |
