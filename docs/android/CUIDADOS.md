@@ -19,7 +19,7 @@ Na tela principal ou no menu de segurar, abra **Cuidados**. Com o pet solto:
 O estado fica em `android.json` por personagem e acompanha o backup neural existente.
 Arquivos antigos sem o campo `care` recebem valores iniciais compatíveis, sem apagar o aprendizado.
 
-O guarda-roupa permite cor hexadecimal `#RRGGBB` para olhos/moldura e um acessório:
+O guarda-roupa permite paletas prontas ou cor hexadecimal `#RRGGBB` para olhos/moldura e um acessório:
 original, nenhum, laço, óculos, gravata, elmo ou barba. **Restaurar visual original** limpa só
 as preferências visuais deste personagem. Essas preferências são privadas (`appearance_<id>`)
 e ainda não entram no backup neural JSON. Não mudam a identidade/seed do personagem.
