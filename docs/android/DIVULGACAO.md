@@ -1,23 +1,25 @@
-# Link para divulgar
+# Links para divulgar
 
-**Passe este link para as pessoas:**
+## Página recomendada
 
 https://github.com/duOCELOT/pestinha-duOCELOT#readme
 
-A página principal tem o botão de baixar, a versão atual e o acesso ao histórico.
-Esse é o link recomendado para conhecer o app e acompanhar as atualizações.
+Esse endereço permanece igual. O botão **Baixar última versão** na página leva ao APK atual, com a versão no nome do arquivo.
 
-## Se quiser enviar só o download
+## Release mais recente
 
-https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk
+https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest
 
-Já é um APK, sem ZIP ou login. Acompanha a Release marcada como mais recente,
-enquanto o repositório e o arquivo estiverem disponíveis.
+Abre a página da publicação atual, com o arquivo APK e seu hash. Não depende de um nome de arquivo fixo.
 
-## Onde consultar as versões
+## Download direto da 0.22
 
-[Central de versões](../../CHANGELOG.md) — novidades e disponibilidade de cada versão.
+https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk
 
-[Releases](https://github.com/duOCELOT/pestinha-duOCELOT/releases) — arquivos publicados, hashes e código correspondente.
+Este link continua ligado à **0.22**, mesmo quando sair uma versão nova. Não é um link automático para futuras versões.
 
-[Voltar à página principal](../../README.md).
+## Versões anteriores
+
+[Catálogo de versões](versions/README.md) · [Releases](https://github.com/duOCELOT/pestinha-duOCELOT/releases)
+
+Há um único APK em cada Release. O nome versionado facilita identificar o download no celular; o nome externo não interfere na instalação ou na atualização do Android. As publicações anteriores à mudança mantêm seus arquivos originais.

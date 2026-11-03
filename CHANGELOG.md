@@ -1,6 +1,6 @@
 # Changelog — Pestinha Android
 
-**Atual: 0.22 experimental.** [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Catálogo completo](docs/android/versions/README.md) · [Projeto](README.md)
+**Atual: 0.22 experimental.** [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk) · [Catálogo completo](docs/android/versions/README.md) · [Projeto](README.md)
 
 ## Releases publicadas
 

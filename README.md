@@ -6,7 +6,7 @@
 
 Pets sobre os aplicativos · Cuidados · Tarefas · Notícias · Quebra-blocos transparente
 
-[**Baixar APK**](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Guia de uso](docs/android/GUIA-DO-APK.md) · [Versões](docs/android/versions/README.md)
+[**Baixar última versão**](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk) · [Guia de uso](docs/android/GUIA-DO-APK.md) · [Versões](docs/android/versions/README.md)
 
 **0.22 experimental** · Android 8.0 ou superior · ARM64 / x86_64
 
@@ -24,7 +24,7 @@ O Pestinha vive em uma janela transparente sobre os seus aplicativos. Você pode
 
 ## Instalar e atualizar
 
-### [↓ Baixar Pestinha-Android.apk](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)
+### [↓ Baixar última versão](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk)
 
 | Requisito | Disponibilidade |
 | --- | --- |
@@ -122,9 +122,30 @@ Notícias têm ações separadas: **Fechar** dispensa o balão; **Ler notícia**
 
 **[Catálogo de versões →](docs/android/versions/README.md)**
 
+<details>
+<summary>Baixar versões anteriores</summary>
+
+| Versão | Download | Informações |
+| --- | --- | --- |
+| 0.21 | [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.21.0/Pestinha-Android.apk) | [Novidades](docs/android/versions/0.21/README.md) |
+| 0.20 | [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.20.0/Pestinha-Android.apk) | [Novidades](docs/android/versions/0.20/README.md) |
+| 0.19 | [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.19.0/Pestinha-Android.apk) | [Novidades](docs/android/versions/0.19/README.md) |
+| 0.18 | [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.18.0/Pestinha-Android.apk) | [Novidades](docs/android/versions/0.18/README.md) |
+| 0.17 | [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.17.0/Pestinha-Android.apk) | [Novidades](docs/android/versions/0.17/README.md) |
+| 0.16 | [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.16.0/Pestinha-Android.apk) | [Novidades](docs/android/versions/0.16/README.md) |
+| 0.15 | [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.15.0/Pestinha-Android.apk) | [Novidades](docs/android/versions/0.15/README.md) |
+| 0.14 | [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.14.0/Pestinha-Android.apk) | [Novidades](docs/android/versions/0.14/README.md) |
+| 0.13 | [Baixar APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.13.0/Pestinha-Android.apk) | [Novidades](docs/android/versions/0.13/README.md) |
+
+As versões antigas mantêm os nomes originais dos arquivos. Os links são fixos por publicação.
+
+</details>
+
+O APK atual inclui a versão no nome (`Pestinha-Android-0.22.0.apk`). O botão acima mantém o texto e troca de URL a cada lançamento. Há apenas um APK por Release, sem cópias ou apelidos. Os arquivos antigos mantêm seus nomes e links originais.
+
 Cada versão publicada tem uma pasta própria com suas novidades, links fixos de APK e código, hash e metadados. As imagens históricas ficam na pasta da versão que as produziu. Os APKs ficam nas **Releases**, sem duplicar binários no repositório.
 
-- **Instalar agora:** [APK mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk).
+- **Instalar agora:** [APK mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk).
 - **Consultar uma versão específica:** [pastas de versões](docs/android/versions/README.md).
 - **Comparar mudanças:** [changelog](CHANGELOG.md).
 - **Consultar etapas anteriores à 0.13:** [histórico de desenvolvimento](docs/android/versions/HISTORICO.md), sem APK público separado.

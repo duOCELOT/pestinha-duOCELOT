@@ -18,7 +18,7 @@ Nenhuma permissão é concedida automaticamente e o acompanhamento de apps conti
 
 ## Arquivos
 
-- [Baixar APK 0.22](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android.apk)
+- [Baixar APK 0.22](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk)
 - [SHA256SUMS.txt](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/SHA256SUMS.txt)
 - [Release](https://github.com/duOCELOT/pestinha-duOCELOT/releases/tag/android-v0.22.0)
 - [Código correspondente](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android-v0.22.0)
@@ -48,3 +48,7 @@ Arte gerada para o primeiro plano do launcher; no aparelho ela é combinada com 
 ## Validação
 
 [Compilação aprovada](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41667351588), com lint, verificação de conteúdo e testes Python/JVM/Robolectric. Os testes verificam conversões de cores, HEX inválido, cancelar sem salvar, seleção de apps fora do filtro e o protocolo de estilos de protesto.
+
+## Nome do instalador
+
+O arquivo agora se chama **Pestinha-Android-0.22.0.apk**. Foi renomeado na mesma Release: tamanho, conteúdo, assinatura e SHA-256 do APK não mudaram. O arquivo SHA256SUMS.txt foi atualizado para mencionar o novo nome. Não é necessário atualizar o aplicativo instalado apenas por essa mudança. O antigo link direto com nome fixo deixou de funcionar; use o link acima ou o botão da página principal.

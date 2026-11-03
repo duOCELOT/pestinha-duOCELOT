@@ -15,15 +15,15 @@
   "artifact_location": "GitHub Releases",
   "assets": [
     {
-      "name": "Pestinha-Android.apk",
+      "name": "Pestinha-Android-0.22.0.apk",
       "bytes": 61236861,
       "sha256": "4f6544e47c7f0397befea5b1ec8417e3ff0c382b670b662cfb6ebc4c372fd459",
-      "url": "https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android.apk"
+      "url": "https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk"
     },
     {
       "name": "SHA256SUMS.txt",
-      "bytes": 87,
-      "sha256": "6126dd6de8aeec8709e8d6ad4b3b074ef0b7d8339688473a2f05f78b02d7c78d",
+      "bytes": 94,
+      "sha256": "03d44cd73b8cc06c43094fcee1e03c9def233917362eb5ef90f0a0be7c3ad2d6",
       "url": "https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/SHA256SUMS.txt"
     }
   ]

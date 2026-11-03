@@ -9,5 +9,6 @@
   "version_name": "0.22.0-alpha",
   "version_code": 23,
   "apk_sha256": "4f6544e47c7f0397befea5b1ec8417e3ff0c382b670b662cfb6ebc4c372fd459",
-  "notes": ".github/release-notes/android-v0.22.0.md"
+  "notes": ".github/release-notes/android-v0.22.0.md",
+  "asset_name": "Pestinha-Android-0.22.0.apk"
 }
