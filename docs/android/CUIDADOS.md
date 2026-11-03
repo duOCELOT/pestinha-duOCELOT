@@ -27,7 +27,7 @@ e ainda não entram no backup neural JSON. Não mudam a identidade/seed do perso
 ## Personagens novos
 
 - **Luna:** pet feminina, curiosa e afetuosa, moldura rosa e laço como visual inicial.
-- **Lula (caricatura):** robô com barba clara e moldura vermelha; caricatura fictícia
+- **L.U.L.A:** robô com barba clara e moldura vermelha; caricatura fictícia
   inspirada em Luiz Inácio Lula da Silva. Não oficial, sem endosso ou falas reais.
   As frases são brincadeiras do pet, não aconselhamento político ou campanha.
 
@@ -44,3 +44,6 @@ Não há modelo/LLM instalado, download automático ou envio desses dados à int
 A interface prepara o encaixe de provedores locais futuros, que ainda precisarão de
 seleção explícita, runtime compatível, limites de memória/tempo e execução fora da UI.
 Nenhuma saída do provedor pode virar código, comando ou ação arbitrária.
+
+
+Na 0.15, o nome exibido passa a L.U.L.A. O visual ganha cabelo grisalho, sobrancelhas e barba com bigode em camadas. O ID `lula` e a seed são preservados para manter memórias e backups compatíveis.
