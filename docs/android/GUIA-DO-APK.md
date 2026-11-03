@@ -1,6 +1,7 @@
 # Guia do APK: telas, funções e uso
 
-**Pestinha Android 0.14 experimental.**
+**Guia da versão atual: Pestinha Android 0.17 experimental.**
+[Versões anteriores e seus arquivos](versions/README.md)
 [Apresentação](README.md) · [Referência técnica](REFERENCIA-TECNICA.md)
 
 ## 1. Primeiro uso
@@ -29,7 +30,7 @@ necessária. Quando o pet já está ativo, o botão indica que ele está solto.
 
 | Elemento | Para que serve |
 | --- | --- |
-| Nome e desenho do pet | Conferir qual personagem está selecionado |
+| Nome, desenho e seletor do pet | Conferir e escolher o personagem com o pet guardado |
 | Estado e energia | Acompanhar a emoção atual e a reserva de energia do pet |
 | Soltar o personagem | Iniciar o pet flutuante e seu serviço com notificação |
 | Meu radar | Selecionar os assuntos do dia, fontes e comentários de notícias |
@@ -38,7 +39,7 @@ necessária. Quando o pet já está ativo, o botão indica que ele está solto.
 | Pausas conscientes | Configurar medição opcional de uso e consultar os recados do pet |
 | Memória e cérebro | Consultar estado, aprendizado, histórico e backups |
 | Brincar e interagir | Abrir ações e escolher o contexto de atividade |
-| Personagem e aparência | Trocar o pet, ajustar tamanho e velocidade e habilitar travessuras/fogos |
+| Personagem e aparência | Ajustar tamanho, velocidade e travessuras/fogos; a escolha do pet fica no topo |
 | Movimento e inclinação | Ativar sensores, ajustar sensibilidade e calibrar |
 | Privacidade e informações | Ler informações, licença e ativar o modo de teste |
 | Guardar o pet | Retirar o pet e seus objetos da tela, salvando o estado |
@@ -143,11 +144,15 @@ as travessuras automáticas. Desative-o para o uso normal.
 | Bryan | Verde, moldura e olhos do padrão original | Curioso, brincalhão e com as reações originais |
 | Jorge | Dourado, olhos amarelos e gravata | Coach fictício de sátira, com temperamento próprio |
 | Mimir | Azul-gelo e elmo viking com detalhes em latão | Sábio, resmungão, humor seco e referências nórdicas |
+| Luna | Cabelo e laço; paleta personalizável | Curiosa e afetuosa |
+| Presidente | Cabelo e barba brancos, moldura vermelha e faixa decorativa | Bem-humorado, fala popular e histórias |
 
 <img src="images/mimir.png" width="240" alt="Mimir com seu elmo viking e olhos azul-gelo">
 
-Para trocar: **Guardar o pet → aguardar o salvamento → Personagem e aparência
+Para trocar: **Guardar o pet → aguardar o salvamento → seletor no cartão superior
 → escolher o nome → Soltar**. A prévia muda assim que a seleção é aceita.
+
+A 0.17 usa arte detalhada com olhos animados e cores independentes para moldura e olhos. Trocar um acessório usa a base detalhada com item desenhado pelo app; veja [os limites da arte](ARTE-HD.md).
 
 Cada personagem mantém seu aprendizado e sua imagem personalizada. Tamanho,
 velocidade e várias preferências de interface são configurações gerais do app.

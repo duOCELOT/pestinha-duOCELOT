@@ -1,28 +1,42 @@
-# Guias do Pestinha Android
+# Documentação do Pestinha Android
 
-**[Baixar APK atual](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** ·
-[Central de versões e novidades](../../CHANGELOG.md) · [Página principal](../../README.md)
+[Projeto](../../README.md) · [Baixar APK atual](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Versões e arquivos](versions/README.md)
 
-As informações de versões ficam na **Central de versões**. Estes documentos explicam como usar e desenvolver as funções.
+## Comece por aqui
 
-## Usar o aplicativo
+1. **[Instalar e usar](GUIA-DO-APK.md):** primeiro uso, telas, gestos, permissões, atualização e backup.
+2. **[Consultar versões](versions/README.md):** uma pasta por Release, com novidades, download, código e hash.
+3. **[Ver as telas](images/README.md):** catálogo de prévias com origem e versão identificadas.
 
-| Assunto | Guia |
+## Guias por função
+
+| Área | Conteúdo |
 | --- | --- |
-| Instalação, atualização, gestos, permissões, memória e backup | [Guia de uso](GUIA-DO-APK.md) |
-| Arkanoid sobre os apps, com o pet como plataforma | [Arkanoid](ARKANOID.md) |
-| Cuidados, visuais, novos pets e base de IA leve | [Cuidados e guarda-roupa](CUIDADOS.md) |
-| Tarefas, prazos e andamento | [Tarefas e prazos](TAREFAS.md) |
-| Interesses do dia e comentários de notícias | [Meu radar](MEU-RADAR.md) |
-| Fontes de notícias, bolsa, cripto e outros assuntos | [Biblioteca de RSS](FONTES-RSS.md) |
-| Medição opcional de uso de aplicativos | [Pausas conscientes](PAUSAS-CONSCIENTES.md) |
-| Prévias visuais e origem das imagens | [Galeria](images/README.md) |
+| [Cuidados e guarda-roupa](CUIDADOS.md) | Fome, saúde e conforto simulados; cores e acessórios |
+| [Arte detalhada](ARTE-HD.md) | Como as imagens, olhos animados e cores são combinados; limitações atuais |
+| [Tarefas e prazos](TAREFAS.md) | Cadastro, entrega, acompanhamento e lembretes |
+| [Meu radar](MEU-RADAR.md) | Interesses do dia e notícias comentadas |
+| [Biblioteca RSS](FONTES-RSS.md) | Fontes de notícias, mercado, cripto e outros assuntos |
+| [Pausas conscientes](PAUSAS-CONSCIENTES.md) | Acompanhamento opcional do uso de aplicativos |
+| [Arkanoid](ARKANOID.md) | Jogo transparente e o pet como plataforma |
+| [Guia completo](GUIA-DO-APK.md) | Água, timers, lembretes, memória, movimento e demais controles |
 
-## Desenvolver e publicar
+## Desenvolvimento e publicação
 
-- [Compilar, testar e migrar memória](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md)
-- [Arquitetura, dados e permissões](REFERENCIA-TECNICA.md)
-- [Publicar uma Release](PUBLICAR-RELEASE.md)
+| Assunto | Documento |
+| --- | --- |
+| Código, requisitos e testes | [Desenvolvimento Android](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md) |
+| Arquitetura, dados e permissões | [Referência técnica](REFERENCIA-TECNICA.md) |
+| Publicação de APK e documentação | [Procedimento de Release](PUBLICAR-RELEASE.md) |
+| Links para compartilhar | [Divulgação](DIVULGACAO.md) |
 
-O código Android fica na branch `android`; a `main` é a página de entrada para quem quer conhecer e instalar.
-[Documentação original de desktop](../../README-DESKTOP.md) · [Licença](../../LICENSE).
+## Onde fica cada coisa?
+
+- **README da raiz:** apresentação, telas, instalação e próximos passos.
+- **Esta pasta:** guias da versão atual, organizados por função.
+- **`versions/<versão>/`:** registro fixo de uma versão publicada e suas imagens disponíveis.
+- **`images/`:** imagens usadas pelos guias atuais e catálogo de procedência.
+- **Releases:** APKs, hashes e acesso ao código de cada publicação.
+- **Branch `android`:** código do aplicativo; **branch `main`:** apresentação e documentação pública.
+
+[Documentação de desktop](../../README-DESKTOP.md) · [Licença](../../LICENSE).

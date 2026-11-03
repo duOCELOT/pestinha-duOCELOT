@@ -1,73 +1,147 @@
+<div align="center">
+
 # Pestinha Android
 
-Um pet sobre os seus aplicativos, com personalidade, memória, tarefas, notícias e um Arkanoid em que o próprio boneco vira a plataforma.
+**Um pequeno companheiro de tela, com personalidade, memória e suas próprias travessuras.**
 
-## Baixar e instalar
+Pets sobre os aplicativos · Cuidados · Tarefas · Notícias · Arkanoid transparente
 
-**Versão atual: 0.17 experimental.** Android 8.0+, ARM64 ou x86_64.
+[**Baixar APK**](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Guia de uso](docs/android/GUIA-DO-APK.md) · [Versões](docs/android/versions/README.md)
 
-### [⬇ Baixar Pestinha-Android.apk](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)
+**0.17 experimental** · Android 8.0 ou superior · ARM64 / x86_64
 
-APK direto, sem ZIP ou login. Não precisa de Termux, Ubuntu ou VNC.
+</div>
 
-1. Baixe e abra o APK no celular. Se solicitado, autorize a instalação para o navegador/gerenciador usado.
-2. Abra **Pestinha** e permita **Aparecer sobre outros apps**.
-3. Escolha o personagem e toque em **Soltar o pet**.
+---
 
-**Para atualizar:** instale sobre a versão atual. Não desinstale antes de exportar sua memória: desinstalar ou limpar dados apaga os registros locais.
+## Conheça o projeto
 
-## Versões e novidades
+O Pestinha vive em uma janela transparente sobre os seus aplicativos. Você pode arrastá-lo, fazer carinho, brincar, acompanhar suas necessidades e escolher um personagem com memória própria. Ele também reúne ferramentas para a rotina: tarefas com prazo, lembretes de água, foco, notícias RSS e pausas conscientes.
 
-**[Todas as informações das versões estão nesta página →](CHANGELOG.md)**
+É um aplicativo Android independente: **não precisa de Termux, Ubuntu ou VNC**.
 
-Ela reúne o que mudou, qual é a versão atual e quais versões têm APK publicado.
-A **0.17** traz arte detalhada dos cinco personagens, com transparência, olhos animados e cores de borda e olhos personalizáveis. Veja os [detalhes e limites da arte](docs/android/ARTE-HD.md). Inclui todas as funções anteriores.
+**Nesta página:** [Instalar](#instalar-e-atualizar) · [Telas](#telas-e-funções) · [Personagens](#personagens-e-personalização) · [Gestos](#como-interagir) · [Versões](#arquivos-e-versões) · [Guias](#documentação) · [Próximos passos](#próximos-passos)
 
-[Release atual: APK, hash e código correspondente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest)
+## Instalar e atualizar
 
-## Conheça o app
+### [↓ Baixar Pestinha-Android.apk](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)
 
-<p>
-  <img src="docs/android/images/inicio.png" width="210" alt="Tela principal com seletor de personagens junto da prévia">
-  <img src="docs/android/images/presidente.png" width="210" alt="Presidente com moldura vermelha, cabelo e barba brancos e faixa decorativa">
-  <img src="docs/android/images/menu-rapido.png" width="210" alt="Menu do pet com posição fixa e Arkanoid">
-  <img src="docs/android/images/radar.png" width="210" alt="Escolha dos interesses e fontes de notícias">
-  <img src="docs/android/images/arkanoid.png" width="210" alt="Arkanoid transparente com Mimir como plataforma">
+| Requisito | Disponibilidade |
+| --- | --- |
+| Android | 8.0 / API 26 ou superior |
+| Arquiteturas | ARM64 e x86_64; 32 bits ainda em avaliação |
+| Distribuição | APK experimental de desenvolvimento, com assinatura fixa desde 0.2 |
+| Download | Arquivo `.apk` direto, sem ZIP ou login |
+
+1. Baixe o APK e abra no celular. Se solicitado, permita a instalação para o navegador ou gerenciador usado.
+2. Abra **Pestinha** e autorize **Aparecer sobre outros apps**.
+3. Escolha um personagem no cartão superior e toque em **Soltar o pet**.
+4. Autorize notificações para receber os avisos e acessar os controles.
+
+**Já tem o app?** Instale sobre a versão atual para manter os dados. Desinstalar ou limpar os dados apaga os registros locais. Antes de qualquer remoção, consulte [memória e backup](docs/android/GUIA-DO-APK.md#salvar-exportar-e-restaurar). A versão 0.1 pode exigir [migração de assinatura](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md#instalações-antigas-01).
+
+[Release atual, hash e código correspondente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest) · [Problemas comuns](docs/android/GUIA-DO-APK.md#10-problemas-comuns)
+
+## Telas e funções
+
+<table>
+<tr>
+<td align="center" width="33%"><img src="docs/android/versions/0.17/images/inicio.png" width="230" alt="Tela inicial da versão 0.17, com seletor do personagem junto da prévia"><br><b>Início · 0.17</b><br>Escolha o pet, acompanhe seu estado e acesse as funções.</td>
+<td align="center" width="33%"><img src="docs/android/versions/0.13/images/menu-rapido.png" width="230" alt="Menu rápido de ícones aberto ao segurar o pet"><br><b>Menu rápido · prévia 0.13</b><br>Interações, posição fixa e acesso ao Arkanoid.</td>
+<td align="center" width="33%"><img src="docs/android/versions/0.13/images/radar.png" width="230" alt="Seleção de interesses do dia em cartões"><br><b>Meu radar · prévia 0.13</b><br>Assuntos do dia e fontes de notícias.</td>
+</tr>
+<tr>
+<td align="center"><img src="docs/android/versions/0.13/images/memoria.png" width="230" alt="Painel de memória e necessidades, com valores de exemplo"><br><b>Memória · prévia 0.13</b><br>Gráficos, estado do pet, aprendizado e backup.</td>
+<td align="center"><img src="docs/android/versions/0.13/images/arkanoid.png" width="230" alt="Arkanoid transparente com Mimir como plataforma"><br><b>Arkanoid · prévia 0.13</b><br>O próprio pet vira a plataforma sobre o app aberto.</td>
+<td align="center"><img src="docs/android/versions/0.17/images/presidente.png" width="230" alt="Presidente com arte detalhada, barba branca e faixa decorativa"><br><b>Arte dos pets · 0.17</b><br>Olhos animados e cores personalizáveis.</td>
+</tr>
+</table>
+
+As imagens são **prévias de Views Android renderizadas em testes**, com dados de exemplo; não são capturas de um telefone. Cada imagem indica sua versão de origem. O Arkanoid tem fundo transparente: no aparelho, o aplicativo aberto fica visível por baixo. [Origem e catálogo das imagens](docs/android/images/README.md).
+
+| Função | O que você pode fazer | Guia |
+| --- | --- | --- |
+| Pet flutuante | Arrastar, brincar, fazer carinho, usar inclinação e fixar a posição | [Gestos e movimento](docs/android/GUIA-DO-APK.md#3-pet-flutuante-e-gestos) |
+| Cuidados e visual | Dar lanche, cuidar do mal-estar fictício, aliviar frio/calor simulados e escolher cores e itens | [Cuidados e guarda-roupa](docs/android/CUIDADOS.md) |
+| Tarefas | Cadastrar entregas, definir prazo, informar andamento e receber lembretes | [Tarefas e prazos](docs/android/TAREFAS.md) |
+| Água e foco | Configurar lembretes de água, timers, pausas e avisos locais | [Assistente](docs/android/GUIA-DO-APK.md#7-tela-assistente) |
+| Notícias | Escolher interesses e feeds RSS; ler manchetes com comentários em texto | [Meu radar](docs/android/MEU-RADAR.md) |
+| Uso de aplicativos | Acompanhar o tempo estimado nos apps escolhidos, com autorização opcional | [Pausas conscientes](docs/android/PAUSAS-CONSCIENTES.md) |
+| Memória | Consultar gráficos, histórico e aprendizado; exportar ou restaurar a memória de cada pet | [Memória e cérebro](docs/android/GUIA-DO-APK.md#8-tela-memória-e-cérebro) |
+| Arkanoid | Jogar com o pet como plataforma, três vidas, fases e recordes por personagem | [Como jogar](docs/android/ARKANOID.md) |
+
+## Personagens e personalização
+
+<p align="center">
+<img src="docs/android/versions/0.17/images/bryan.png" width="155" alt="Bryan">
+<img src="docs/android/versions/0.17/images/mimir.png" width="155" alt="Mimir de elmo viking">
+<img src="docs/android/versions/0.17/images/luna.png" width="155" alt="Luna com cabelo e laço">
+<img src="docs/android/versions/0.17/images/presidente.png" width="155" alt="Presidente">
 </p>
 
-Prévias da interface renderizadas em testes, com dados de exemplo. O campo do jogo é transparente; no celular, você vê o aplicativo aberto por baixo.
+| Personagem | Personalidade e identidade |
+| --- | --- |
+| **Bryan** | Curioso e brincalhão; o pequeno caos original |
+| **Jorge** | Coach fictício de sátira, com traje dourado e gravata |
+| **Mimir** | Sábio, resmungão e inteligente, com referências nórdicas e elmo viking |
+| **Luna** | Curiosa e afetuosa, com cabelo e laço |
+| **Presidente** | Bem-humorado, de fala popular e cheio de histórias |
 
-- **Bryan, Jorge, Mimir, Luna e Presidente:** aparência, temperamento e memórias separados.
-- **Interação:** carinho, brinquedos, sensores e opção de fixar o pet onde soltar.
-- **Arkanoid:** pet como plataforma, três vidas, fases e recorde por personagem.
-- **Organização:** tarefas com prazo, água, foco e lembretes.
-- **Meu radar:** interesses do dia, RSS e manchetes comentadas em texto.
-- **Cuidados e guarda-roupa:** fome, saúde e clima fictícios; cores e acessórios por personagem.
-- **Memória e pausas conscientes:** gráficos do pet e acompanhamento opcional do tempo nos apps escolhidos.
+Cada personagem tem memória e temperamento próprios. **Guarde o pet antes de trocar** pelo seletor no topo. As cores da moldura e dos olhos podem ser ajustadas separadamente.
+
+Na 0.17, o visual original usa arte detalhada adaptada das referências. Trocar um acessório usa o corpo básico detalhado com o item desenhado pelo app; todos os acessórios em camadas de igual acabamento ainda estão no roadmap. [Como funciona a arte e seus limites](docs/android/ARTE-HD.md).
+
+## Como interagir
+
+| Gesto | Ação |
+| --- | --- |
+| Toque | Cutucar e provocar uma reação |
+| Dois toques | Fazer carinho |
+| Arrastar | Levar o pet para outra posição |
+| Segurar | Abrir os pequenos ícones do menu rápido |
+| Menu → Fixar no lugar | Desativar o movimento automático; arrastar continua permitido |
+
+Notícias têm ações separadas: **Fechar** dispensa o balão; **Ler notícia** abre o cartão da matéria. Alguns aplicativos e telas protegidas do sistema podem ocultar o pet.
+
+## Arquivos e versões
+
+**[Catálogo de versões →](docs/android/versions/README.md)**
+
+Cada versão publicada tem uma pasta própria com suas novidades, links fixos de APK e código, hash e metadados. As imagens históricas ficam na pasta da versão que as produziu. Os APKs ficam nas **Releases**, sem duplicar binários no repositório.
+
+- **Instalar agora:** [APK mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk).
+- **Consultar uma versão específica:** [pastas de versões](docs/android/versions/README.md).
+- **Comparar mudanças:** [changelog](CHANGELOG.md).
+- **Consultar etapas anteriores à 0.13:** [histórico de desenvolvimento](docs/android/versions/HISTORICO.md), sem APK público separado.
+
+## Documentação
+
+| Para quem | Onde começar |
+| --- | --- |
+| Quero instalar e usar | [Guia completo de telas, gestos e permissões](docs/android/GUIA-DO-APK.md) |
+| Quero explorar uma função | [Índice dos guias](docs/android/README.md) |
+| Quero divulgar o projeto | [Links para compartilhar](docs/android/DIVULGACAO.md) |
+| Quero compilar ou contribuir | [Desenvolvimento Android](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md) · [Referência técnica](docs/android/REFERENCIA-TECNICA.md) |
+| Quero publicar uma versão | [Procedimento de Release](docs/android/PUBLICAR-RELEASE.md) |
+
+O código do aplicativo fica na branch **[android](https://github.com/duOCELOT/pestinha-duOCELOT/tree/android)**. A **main** reúne a apresentação e os guias públicos. O projeto de desktop tem [documentação própria](README-DESKTOP.md).
+
+## Privacidade e limites
+
+Memórias e registros ficam no aparelho. RSS usa internet quando ativado; o Acesso ao uso é opcional. O app não lê o conteúdo da tela nem os compromissos da agenda. Os cuidados e o clima são simulados.
+
+A personalidade combina regras, rede neural e textos escritos. **Não há LLM instalado, conversa livre ou voz.** O APK é experimental e usa assinatura pública de desenvolvimento; não é uma versão de produção para a Play Store. [Permissões e detalhes](docs/android/GUIA-DO-APK.md#9-permissões-e-telas-externas).
 
 ## Próximos passos
 
-- [ ] Avaliar Android de **32 bits (armeabi-v7a)**: conferir suporte do Python/Chaquopy e demais dependências, tamanho do APK e testes em aparelho compatível. Ainda sem suporte prometido.
-- [x] Integrar arte detalhada dos cinco personagens, adaptada das referências, com transparência e olhos animados.
+- [x] Integrar arte detalhada dos cinco personagens, com transparência e olhos animados.
 - [ ] Refinar a fidelidade das artes às referências aprovadas.
-- [ ] Separar todos os acessórios da arte detalhada em camadas intercambiáveis, mantendo cores de borda e olhos independentes.
-- [ ] Testar consumo de memória, bateria e fluidez das novas artes em aparelhos reais.
+- [ ] Separar todos os acessórios em camadas intercambiáveis de igual acabamento.
+- [ ] Validar memória, bateria e fluidez das novas artes em aparelhos reais.
 - [ ] Ampliar interações e personalidade dos pets.
 - [ ] Avaliar modelos locais leves para funções específicas, com ativação opcional.
+- [ ] Avaliar **Android de 32 bits (armeabi-v7a)**: suporte das dependências e testes em aparelho compatível; sem disponibilidade prometida.
 
-## Precisa de ajuda?
+## Créditos e licença
 
-| Você procura | Abra |
-| --- | --- |
-| Instalação, atualização, gestos, permissões e backup | [Guia de uso](docs/android/GUIA-DO-APK.md) |
-| Novidades e disponibilidade de cada versão | [Central de versões](CHANGELOG.md) |
-| Explicação de cada função | [Guias do Android](docs/android/README.md) |
-| Código, compilação e publicação | [Área de desenvolvimento](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/README.md) |
-
-Memória e registros ficam no aparelho. RSS usa internet quando escolhido/ativado;
-o Acesso ao uso é opcional. O app não lê conteúdo da tela ou compromissos e não tem LLM, conversa livre ou voz.
-Este é um APK **experimental de desenvolvimento**, com assinatura pública fixa desde 0.2.
-[Limites, privacidade e compatibilidade](docs/android/GUIA-DO-APK.md).
-
-Adaptação por duOCELOT de [mille-okws/pestinha](https://github.com/mille-okws/pestinha), sob [GPL-3.0-or-later](LICENSE).
-[Documentação original de desktop](README-DESKTOP.md) · [Origem das imagens](docs/android/images/README.md).
+Adaptação Android por **duOCELOT**, a partir de [mille-okws/pestinha](https://github.com/mille-okws/pestinha). Código sob [GPL-3.0-or-later](LICENSE). [Origem das imagens e prévias](docs/android/images/README.md).
