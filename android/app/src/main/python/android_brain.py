@@ -125,6 +125,7 @@ class AndroidBrain:
             if result:
                 self.counts[kind] = self.counts.get(kind, 0) + 1
                 self.events['TOY_NEAR'] = .6
+                self.emotion.force('contente', 2.0, priority=15)
                 self._action('care', ('Hmpf. ' if self.name == 'Mimir' else '') + result)
             return
         if kind in ('game_start', 'game_end', 'game_hit', 'game_brick', 'game_life', 'game_win', 'game_over', 'game_launch'):

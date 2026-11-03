@@ -15,3 +15,17 @@ class CareTest(unittest.TestCase):
     def test_active_tick_only(self):
         c=CareState();before=c.hunger;c.tick(.2);self.assertGreater(c.hunger,before)
         c.act('cold');c.tick(300);self.assertLess(c.temperature,0)
+
+    def test_care_is_added_to_existing_memory_without_erasing_counts(self):
+        import tempfile, json
+        from pathlib import Path
+        from android_brain import AndroidBrain
+        definition = (Path(__file__).resolve().parents[2] / 'pets/bryan.json').read_text()
+        with tempfile.TemporaryDirectory() as directory:
+            Path(directory, 'android.json').write_text(json.dumps({'counts': {'caress': 12}}))
+            b=AndroidBrain(directory,definition)
+            b.event('care:feed');b.tick(.2);b.save()
+            restored=AndroidBrain(directory,definition)
+            self.assertEqual(restored.counts['caress'],12)
+            self.assertLess(restored.care.hunger,.2)
+            self.assertEqual(restored.counts['care:feed'],1)
