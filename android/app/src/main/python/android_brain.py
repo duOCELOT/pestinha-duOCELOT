@@ -100,7 +100,7 @@ class AndroidBrain:
             phrases = ['Pausa para um carinho?', 'Estou de olho em você.', 'Bora brincar?', 'Seu pequeno caos está aqui.']
             if self.name == 'Luna':
                 phrases = ['Uma ideia brilhante: pausa para brincar?', 'Estou aqui, uma estrelinha de cada vez.', 'Carinho recebido. Vou guardar esse momento.']
-            if self.name == 'Lula (caricatura)':
+            if self.name in ('L.U.L.A', 'Lula (caricatura)'):
                 phrases = ['Caricatura em serviço: minha pauta é a bolinha.', 'Uma pausa para o meu lanche virtual?', 'Este pet é uma caricatura fictícia, não uma fala real.']
             if self.name == 'Jorge':
                 phrases = ['Minha mentoria custa um carinho.', 'Diversifique seus investimentos em bolinhas.', 'Retorno garantido: mais travessuras.']

@@ -33,7 +33,7 @@ public class DesignTest {
         pet.bodyAngle=18;Bitmap tilted=draw(pet,320,260);for(int x=0;x<320;x++)assertEquals(0,Color.alpha(tilted.getPixel(x,0)));
     }
     @Test public void allThreeCharactersCanBeSelectedAndHaveIndependentMemoryPaths() throws Exception {
-        assertArrayEquals(new String[]{"Bryan","Jorge","Mimir","Luna","Lula (caricatura)"},Characters.names(context));
+        assertArrayEquals(new String[]{"Bryan","Jorge","Mimir","Luna","L.U.L.A"},Characters.names(context));
         assertEquals(104729,Characters.definition(context,"mimir").getInt("seed"));
         context.getSharedPreferences("pet",0).edit().putString("character","mimir").commit();assertEquals("mimir",MemoryActivity.petId(context));
         java.io.File mimir=MemoryActivity.directory(context);
