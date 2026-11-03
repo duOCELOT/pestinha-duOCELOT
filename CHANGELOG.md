@@ -2,7 +2,7 @@
 
 Este é o lugar para consultar **o que mudou e qual APK baixar**.
 
-## Versão atual: 0.16 experimental
+## Versão atual: 0.17 experimental
 
 **[Baixar o APK atual](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** ·
 [Release com hash e código-fonte](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest) ·
@@ -15,7 +15,8 @@ Android 8.0+, ARM64 ou x86_64. O arquivo já é `.apk`, sem ZIP ou login.
 
 | Versão | Principal novidade | APK público |
 | --- | --- | --- |
-| **0.16 — atual** | Presidente, novo acabamento e seletor de pet no topo | **[Baixar 0.16](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.16.0/Pestinha-Android.apk)** |
+| **0.17 — atual** | Arte detalhada, transparência e cores personalizáveis | **[Baixar 0.17](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.17.0/Pestinha-Android.apk)** |
+| 0.16 | Presidente, novo acabamento e seletor de pet no topo | **[Baixar 0.16](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.16.0/Pestinha-Android.apk)** |
 | 0.15 | Novo nome e visual do L.U.L.A | **[Baixar 0.15](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.15.0/Pestinha-Android.apk)** |
 | 0.14 | Notícias: fechar sem abrir; cuidados, visual e dois pets novos | **[Baixar 0.14](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.14.0/Pestinha-Android.apk)** |
 | 0.13 | Fundo transparente no Arkanoid | **[Baixar 0.13](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.13.0/Pestinha-Android.apk)** |
@@ -27,11 +28,20 @@ Android 8.0+, ARM64 ou x86_64. O arquivo já é `.apk`, sem ZIP ou login.
 | 0.7 | Biblioteca RSS e pausas conscientes | Histórico de desenvolvimento |
 | Anteriores | Pet nativo, personagens, memória e interações | Histórico de desenvolvimento |
 
-**0.16, 0.15, 0.14 e 0.13 têm Releases públicas.** As linhas marcadas como histórico
+**0.17, 0.16, 0.15, 0.14 e 0.13 têm Releases públicas.** As linhas marcadas como histórico
 registram a evolução do app e não têm pacotes separados para instalar. Seus antigos
 artefatos de teste não são o canal de download. Para novas instalações, use o APK atual.
 
 ## Detalhes das mudanças
+
+### 0.17 — Arte detalhada
+
+- Arte com brilho, cabelo, roupas e acessórios adaptada das referências fornecidas.
+- Transparência, limpeza de pixels isolados e margem para inclinação.
+- Olhos animados e cores independentes da moldura/olhos.
+- Troca de acessório usa a base detalhada com item desenhado pelo app; camadas detalhadas intercambiáveis ainda no roadmap.
+- Lista de próximos passos no README, incluindo avaliar 32 bits. APK continua ARM64/x86_64.
+- [Arquitetura e limites da arte](docs/android/ARTE-HD.md).
 
 ### 0.16 — Presidente e visual dos personagens
 

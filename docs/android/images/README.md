@@ -27,3 +27,7 @@ Interface e documentação seguem a [licença do projeto](../../../LICENSE).
 ## Atualização 0.16
 
 `inicio.png`, `mimir.png`, `bryan.png`, `luna.png` e `presidente.png` vêm da [compilação validada 0.16](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41645282506), via `DesignTest`. Mostram o desenho Canvas real, com transparência, gradientes e acessórios em camadas. `lula.png` permanece como registro da versão 0.15.
+
+## Atualização 0.17
+
+`inicio.png`, `bryan.png`, `mimir.png`, `luna.png` e `presidente.png` foram atualizadas a partir da [compilação validada 0.17](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41647993545). A arte detalhada é derivada das referências fornecidas pelo mantenedor via geração de imagens; olhos e cores são renderizados pelo código Android. São testes de Views reais, não capturas de telefone.

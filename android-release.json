@@ -1,13 +1,13 @@
 {
   "repository": "duOCELOT/pestinha-duOCELOT",
-  "tag": "android-v0.16.0",
-  "title": "Pestinha Android 0.16 — Presidente e novo visual dos pets",
-  "run_id": 41645282506,
-  "artifact_id": 13234788076,
+  "tag": "android-v0.17.0",
+  "title": "Pestinha Android 0.17 — arte detalhada e personalização",
+  "run_id": 41647993545,
+  "artifact_id": 13236940490,
   "artifact_name": "pestinha-android-debug",
-  "source_sha": "fb1021c3d332adf826d4472bf1d128b687a3cd0c",
-  "version_name": "0.16.0-alpha",
-  "version_code": 17,
-  "apk_sha256": "29b3ee65edf8d5b03e04bba613de6232e9454c23ba3a54af2e916fb30ebd0a21",
-  "notes": ".github/release-notes/android-v0.16.0.md"
+  "source_sha": "360ff5873a466024b1a2187c2f6c4a766e093463",
+  "version_name": "0.17.0-alpha",
+  "version_code": 18,
+  "apk_sha256": "3e5578cdaae5b8fa61a8d10e65ed7f5182419d702785ab92f9beb9061f5666b5",
+  "notes": ".github/release-notes/android-v0.17.0.md"
 }
