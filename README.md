@@ -4,7 +4,7 @@ Um pet sobre os seus aplicativos, com personalidade, memória, tarefas, notícia
 
 ## Baixar e instalar
 
-**Versão atual: 0.16 experimental.** Android 8.0+, ARM64 ou x86_64.
+**Versão atual: 0.17 experimental.** Android 8.0+, ARM64 ou x86_64.
 
 ### [⬇ Baixar Pestinha-Android.apk](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)
 
@@ -21,7 +21,7 @@ APK direto, sem ZIP ou login. Não precisa de Termux, Ubuntu ou VNC.
 **[Todas as informações das versões estão nesta página →](CHANGELOG.md)**
 
 Ela reúne o que mudou, qual é a versão atual e quais versões têm APK publicado.
-A **0.16** traz o **Presidente**, acabamento com brilho nos personagens, cores de borda e olhos personalizáveis e escolha do pet junto da prévia no topo. Inclui todas as funções anteriores.
+A **0.17** traz arte detalhada dos cinco personagens, com transparência, olhos animados e cores de borda e olhos personalizáveis. Veja os [detalhes e limites da arte](docs/android/ARTE-HD.md). Inclui todas as funções anteriores.
 
 [Release atual: APK, hash e código correspondente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest)
 
@@ -48,7 +48,8 @@ Prévias da interface renderizadas em testes, com dados de exemplo. O campo do j
 ## Próximos passos
 
 - [ ] Avaliar Android de **32 bits (armeabi-v7a)**: conferir suporte do Python/Chaquopy e demais dependências, tamanho do APK e testes em aparelho compatível. Ainda sem suporte prometido.
-- [ ] Aproximar os cinco personagens das referências aprovadas, com arte detalhada, transparência e olhos animados.
+- [x] Integrar arte detalhada dos cinco personagens, adaptada das referências, com transparência e olhos animados.
+- [ ] Refinar a fidelidade das artes às referências aprovadas.
 - [ ] Separar todos os acessórios da arte detalhada em camadas intercambiáveis, mantendo cores de borda e olhos independentes.
 - [ ] Testar consumo de memória, bateria e fluidez das novas artes em aparelhos reais.
 - [ ] Ampliar interações e personalidade dos pets.
