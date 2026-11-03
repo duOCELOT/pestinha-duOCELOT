@@ -58,7 +58,7 @@ public class DesignTest {
         assertEquals("Presidente",((android.widget.TextView)root.findViewWithTag("character_name")).getText().toString());
         ((android.widget.Spinner)root.findViewWithTag("character_picker")).setSelection(0);draw(root,360,780);org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
         assertEquals("bryan",MemoryActivity.petId(activity));assertEquals("Bryan",((android.widget.TextView)root.findViewWithTag("character_name")).getText().toString());
-        assertEquals("Mostrar Bryan",root.findViewWithTag("primary").getContentDescription().toString());assertEquals("Recolher Bryan",root.findViewWithTag("retract").getContentDescription().toString());activity.finish();
+        assertEquals("Mostrar Bryan",((android.widget.Button)root.findViewWithTag("primary")).getText().toString());assertEquals("Recolher Bryan",((android.widget.Button)root.findViewWithTag("retract")).getText().toString());assertEquals("Mostrar Bryan",root.findViewWithTag("primary").getContentDescription().toString());assertEquals("Recolher Bryan",root.findViewWithTag("retract").getContentDescription().toString());activity.finish();
     }
 
 }

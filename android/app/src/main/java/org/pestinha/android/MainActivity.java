@@ -177,7 +177,7 @@ public class MainActivity extends Activity {
         else status.setText(running?nameTitle.getText()+" está "+PetService.emotion+".":"Pronto para ficar por perto.");
         energyLabel.setText(running?"Energia • "+Math.round(PetService.energy*100)+"%":"Sua memória continua salva.");energyBar.setProgress(running?(int)Math.round(PetService.energy*100):100);
         permission.setVisibility(Settings.canDrawOverlays(this)?View.GONE:View.VISIBLE);
-        launch.setText(PetService.busy&&!running?"Aguarde…":"Mostrar pet");launch.setEnabled(!running&&!PetService.busy);launch.setAlpha(launch.isEnabled()?1:.5f);retract.setEnabled(running);retract.setAlpha(running?1:.5f);
+        launch.setText(PetService.busy&&!running?"Aguarde…":"Mostrar "+nameTitle.getText());retract.setText("Recolher "+nameTitle.getText());launch.setEnabled(!running&&!PetService.busy);launch.setAlpha(launch.isEnabled()?1:.5f);retract.setEnabled(running);retract.setAlpha(running?1:.5f);
         if(running){try{org.json.JSONObject state=new org.json.JSONObject(PetService.liveSnapshot);preview.emotion=PetService.emotion;preview.face(state.optJSONObject("face"),state.optBoolean("caressing"));preview.notebook=state.optBoolean("notebook");}catch(Exception ignored){}}
         else {preview.emotion="observando";preview.caressing=false;preview.notebook=false;preview.face(null,false);}
         preview.invalidate();
