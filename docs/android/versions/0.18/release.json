@@ -1,0 +1,30 @@
+{
+  "version": "0.18",
+  "version_name": "0.18.0-alpha",
+  "version_code": 19,
+  "status": "atual",
+  "tag": "android-v0.18.0",
+  "published_at": "2026-11-03T14:17:15Z",
+  "commit": "750287f3aa2fd2cb1840e71adafd835a5fd3fb4e",
+  "release_url": "https://github.com/duOCELOT/pestinha-duOCELOT/releases/tag/android-v0.18.0",
+  "min_android": "8.0",
+  "architectures": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "artifact_location": "GitHub Releases",
+  "assets": [
+    {
+      "name": "Pestinha-Android.apk",
+      "bytes": 58608064,
+      "sha256": "4566336e70a4e152265d4bbda28a87870a19a525ab6facb5b6e29530e1a0789e",
+      "url": "https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.18.0/Pestinha-Android.apk"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 87,
+      "sha256": "81d01ec3093aec9e7e8d0c70f0abb0bf458996dbd1856f4e3d93ea891d1ec3d8",
+      "url": "https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.18.0/SHA256SUMS.txt"
+    }
+  ]
+}

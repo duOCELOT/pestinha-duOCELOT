@@ -1,6 +1,6 @@
 # Android 0.17 — Arte detalhada e personalização
 
-**Versão atual · experimental** · Publicada em 2026-11-03 (UTC)
+**Versão arquivada · experimental** · Publicada em 2026-11-03 (UTC)
 
 [Catálogo de versões](../README.md) · [Guia atual](../../GUIA-DO-APK.md) · [Projeto](../../../../README.md)
 

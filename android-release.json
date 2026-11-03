@@ -1,13 +1,13 @@
 {
   "repository": "duOCELOT/pestinha-duOCELOT",
-  "tag": "android-v0.17.0",
-  "title": "Pestinha Android 0.17 — arte detalhada e personalização",
-  "run_id": 41647993545,
-  "artifact_id": 13236940490,
+  "tag": "android-v0.18.0",
+  "title": "Pestinha Android 0.18 — controles do pet juntos no topo",
+  "run_id": 41651551275,
+  "artifact_id": 13237806641,
   "artifact_name": "pestinha-android-debug",
-  "source_sha": "360ff5873a466024b1a2187c2f6c4a766e093463",
-  "version_name": "0.17.0-alpha",
-  "version_code": 18,
-  "apk_sha256": "3e5578cdaae5b8fa61a8d10e65ed7f5182419d702785ab92f9beb9061f5666b5",
-  "notes": ".github/release-notes/android-v0.17.0.md"
+  "source_sha": "750287f3aa2fd2cb1840e71adafd835a5fd3fb4e",
+  "version_name": "0.18.0-alpha",
+  "version_code": 19,
+  "apk_sha256": "4566336e70a4e152265d4bbda28a87870a19a525ab6facb5b6e29530e1a0789e",
+  "notes": ".github/release-notes/android-v0.18.0.md"
 }
