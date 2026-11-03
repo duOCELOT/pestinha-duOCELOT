@@ -1,6 +1,6 @@
 # Guia do APK: telas, funções e uso
 
-**Pestinha Android 0.13 experimental.**
+**Pestinha Android 0.14 experimental.**
 [Apresentação](README.md) · [Referência técnica](REFERENCIA-TECNICA.md)
 
 ## 1. Primeiro uso
@@ -401,3 +401,10 @@ para os lados, quebre os blocos, avance fases e guarde um recorde por personagem
 Pausar/fechar ficam no topo. Veja o [guia do jogo](ARKANOID.md).
 
 [Histórico e versão disponível para download](../../CHANGELOG.md).
+
+
+## Cuidados, visual e novos personagens
+
+[Guia dos cuidados e guarda-roupa](CUIDADOS.md): fome, saúde, clima simulado, cores, acessórios e funções locais.
+O catálogo agora inclui Luna e Lula (caricatura não oficial), além de Bryan, Jorge e Mimir.
+Nos balões de notícias, tocar no texto ou em Fechar apenas dispensa. Use Ler notícia para abrir o cartão.

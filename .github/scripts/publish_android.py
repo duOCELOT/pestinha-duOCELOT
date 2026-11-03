@@ -8,6 +8,7 @@ import shutil
 import struct
 import subprocess
 import tempfile
+import time
 import zipfile
 
 CONFIG = Path('android-release.json')
@@ -170,7 +171,11 @@ def publish(data, folder):
             command('release', 'create', data['tag'], '--repo', REPOSITORY,
                     '--target', data['source_sha'], '--draft', '--title', data['title'],
                     '--notes-file', data['notes'])
-        matches = [r for r in api('releases?per_page=100') if r['tag_name'] == data['tag']]
+        for attempt in range(6):
+            matches = [r for r in api('releases?per_page=100') if r['tag_name'] == data['tag']]
+            if matches:
+                break
+            time.sleep(2)
         if len(matches) != 1:
             raise ValueError('Expected exactly one Release draft after creation')
         route = f"releases/{matches[0]['id']}"

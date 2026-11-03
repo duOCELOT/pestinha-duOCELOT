@@ -11,6 +11,7 @@ As informações de versões ficam na **Central de versões**. Estes documentos 
 | --- | --- |
 | Instalação, atualização, gestos, permissões, memória e backup | [Guia de uso](GUIA-DO-APK.md) |
 | Arkanoid sobre os apps, com o pet como plataforma | [Arkanoid](ARKANOID.md) |
+| Cuidados, visuais, novos pets e base de IA leve | [Cuidados e guarda-roupa](CUIDADOS.md) |
 | Tarefas, prazos e andamento | [Tarefas e prazos](TAREFAS.md) |
 | Interesses do dia e comentários de notícias | [Meu radar](MEU-RADAR.md) |
 | Fontes de notícias, bolsa, cripto e outros assuntos | [Biblioteca de RSS](FONTES-RSS.md) |

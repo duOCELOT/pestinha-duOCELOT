@@ -1,13 +1,13 @@
 {
   "repository": "duOCELOT/pestinha-duOCELOT",
-  "tag": "android-v0.13.0",
-  "title": "Pestinha Android 0.13 — experimental",
-  "run_id": 41541064297,
-  "artifact_id": 13187236170,
+  "tag": "android-v0.14.0",
+  "title": "Pestinha Android 0.14 — cuidados e novos personagens",
+  "run_id": 41631214323,
+  "artifact_id": 13228312800,
   "artifact_name": "pestinha-android-debug",
-  "source_sha": "9a9d79a63946d7030bb7e4f2248e2b93084b3ff3",
-  "version_name": "0.13.0-alpha",
-  "version_code": 14,
-  "apk_sha256": "e39356425d1f6fc8439397044395f9357c977f1a41c8af94abad41f6b1cb85ba",
-  "notes": ".github/release-notes/android-v0.13.0.md"
+  "source_sha": "285c972935c26fe16e5daea5e2100388fe64ebd2",
+  "version_name": "0.14.0-alpha",
+  "version_code": 15,
+  "apk_sha256": "333e5df4cbe51586cf7b9d82767ee55f7621be1ca431dd0397b06aa6102aab75",
+  "notes": ".github/release-notes/android-v0.14.0.md"
 }
