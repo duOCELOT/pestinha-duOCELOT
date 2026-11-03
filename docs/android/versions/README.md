@@ -4,7 +4,7 @@
 
 ## Baixar agora
 
-**[Baixar o APK mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** — versão atual: **0.20 experimental**.
+**[Baixar o APK mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** — versão atual: **0.21 experimental**.
 
 O APK atual inclui as funções anteriores; não é necessário instalar as versões em sequência. Android 8.0+, ARM64 ou x86_64.
 
@@ -14,7 +14,8 @@ Cada pasta é independente: contém novidades, links fixos e metadados do seu AP
 
 | Versão | Destaque | Pasta e detalhes | Download fixo |
 | --- | --- | --- | --- |
-| **0.20 · atual** | Presidente com barba e orelhas refinadas | [0.20/](0.20/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.20.0/Pestinha-Android.apk) |
+| **0.21 · atual** | Bryan inicia com aparência padrão; controles identificam o personagem | [0.21/](0.21/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.21.0/Pestinha-Android.apk) |
+| **0.20** | Presidente com barba e orelhas refinadas | [0.20/](0.20/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.20.0/Pestinha-Android.apk) |
 | **0.19** | Categorias verticais e Quebra-blocos | [0.19/](0.19/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.19.0/Pestinha-Android.apk) |
 | **0.18** | Controles do pet no topo | [0.18/](0.18/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.18.0/Pestinha-Android.apk) |
 | **0.17** | Arte detalhada e personalização | [0.17/](0.17/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.17.0/Pestinha-Android.apk) |
@@ -29,10 +30,11 @@ Cada pasta é independente: contém novidades, links fixos e metadados do seu AP
 versions/
 ├── README.md           # catálogo e versão atual
 ├── HISTORICO.md        # etapas sem APK público separado
-├── 0.20/
+├── 0.21/
 │   ├── README.md       # novidades, arquivos e integridade
 │   ├── release.json    # tag, commit, hashes e requisitos
 │   └── images/         # prévias produzidas nesta versão
+├── 0.20/               # mesma organização
 ├── 0.19/               # mesma organização
 ├── 0.18/               # mesma organização
 ├── 0.17/               # mesma organização

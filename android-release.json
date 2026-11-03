@@ -1,13 +1,13 @@
 {
   "repository": "duOCELOT/pestinha-duOCELOT",
-  "tag": "android-v0.20.0",
-  "title": "Pestinha Android 0.20 — Presidente com barba e orelhas refinadas",
-  "run_id": 41655741049,
-  "artifact_id": 13240216054,
+  "tag": "android-v0.21.0",
+  "title": "Pestinha Android 0.21 — correção do Bryan e dos controles",
+  "run_id": 41657008720,
+  "artifact_id": 13239922411,
   "artifact_name": "pestinha-android-debug",
-  "source_sha": "d5b0f68d753ca00ea02258c003ff83eddc23b0eb",
-  "version_name": "0.20.0-alpha",
-  "version_code": 21,
-  "apk_sha256": "c897803e83618284f32bbd286e8e8f6a6a7054eba634edeb7f1b7c9f9d9ea69e",
-  "notes": ".github/release-notes/android-v0.20.0.md"
+  "source_sha": "1c32cbf1ccbd734a55e9b981e561cd7b8a8537ee",
+  "version_name": "0.21.0-alpha",
+  "version_code": 22,
+  "apk_sha256": "447c673e7791d7d179eab67205cce50de983051178884f7f009258872f4c1988",
+  "notes": ".github/release-notes/android-v0.21.0.md"
 }

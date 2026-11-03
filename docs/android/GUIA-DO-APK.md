@@ -1,6 +1,6 @@
 # Guia do APK: telas, funções e uso
 
-**Guia da versão atual: Pestinha Android 0.20 experimental.**
+**Guia da versão atual: Pestinha Android 0.21 experimental.**
 [Versões anteriores e seus arquivos](versions/README.md)
 [Apresentação](README.md) · [Referência técnica](REFERENCIA-TECNICA.md)
 
@@ -410,3 +410,7 @@ Pausar/fechar ficam no topo. Veja o [guia do jogo](QUEBRA-BLOCOS.md).
 [Guia dos cuidados e guarda-roupa](CUIDADOS.md): fome, saúde, clima simulado, cores, acessórios e funções locais.
 O catálogo inclui Bryan, Jorge, Mimir, Luna e Presidente. Na 0.16, a escolha fica no cartão superior, junto da prévia. Recolha o pet antes de trocar.
 Nos balões de notícias, tocar no texto ou em Fechar apenas dispensa. Use Ler notícia para abrir o cartão.
+
+## Correção do Bryan na 0.21
+
+O Bryan pode usar sua definição original sem campo de aparência: o app aplica a paleta padrão e depois as cores e acessórios escolhidos por você. Não é preciso apagar memória nem restaurar preferências. Os controles exibem o personagem selecionado, como Mostrar Bryan e Recolher Bryan; nome e descrição são atualizados independentemente da arte. Após atualizar, toque em Mostrar Bryan para iniciar uma nova sessão.
