@@ -1,0 +1,30 @@
+{
+  "version": "0.15",
+  "tag": "android-v0.15.0",
+  "published_at": "2026-11-03T12:57:15Z",
+  "commit": "066414c4330bb1129cfdc033e45e3d319a10ac53",
+  "release_url": "https://github.com/duOCELOT/pestinha-duOCELOT/releases/tag/android-v0.15.0",
+  "assets": [
+    {
+      "name": "Pestinha-Android.apk",
+      "bytes": 56822032,
+      "sha256": "60ffc0620e01ce9a001e7c65847e6228fa720bbf6aa0162100c9286191729dc7",
+      "url": "https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.15.0/Pestinha-Android.apk"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 87,
+      "sha256": "07f54a96a547f32ff113cdfd93615c96859588534c61cedd021060126a0d5204",
+      "url": "https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.15.0/SHA256SUMS.txt"
+    }
+  ],
+  "version_name": "0.15.0-alpha",
+  "version_code": 16,
+  "min_android": "8.0",
+  "architectures": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "status": "arquivada",
+  "artifact_location": "GitHub Releases"
+}

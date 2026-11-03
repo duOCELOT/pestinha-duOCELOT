@@ -88,3 +88,11 @@ Para uma distribuição de produção, planeje a assinatura/migração e informe
 como os usuários preservam seus dados. Não inclua chaves privadas no repositório.
 
 [Instalação e backup](GUIA-DO-APK.md) · [Novidades](../../CHANGELOG.md)
+
+## Documentar cada versão separadamente
+
+Depois de validar a Release, crie `docs/android/versions/<versão>/README.md` e `release.json`. Registre tag, commit correspondente, requisitos, links fixos, tamanho e SHA-256 dos assets reais. Não copie o hash ou o commit de uma versão anterior.
+
+Arquive as prévias disponíveis em `versions/<versão>/images/`, indicando o run de teste que as produziu. Não use imagens posteriores como se fossem daquela versão. Não coloque APKs no Git: mantenha-os na Release.
+
+Atualize o catálogo `versions/README.md`, o resumo em `CHANGELOG.md`, a apresentação da raiz e o catálogo de imagens. Os guias por função acompanham a versão atual; os registros numerados preservam a história. Sincronize a documentação nas branches `main` e `android`, sem copiar o código do app para `main`.

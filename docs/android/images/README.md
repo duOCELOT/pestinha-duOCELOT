@@ -1,33 +1,35 @@
-# Prévias da interface Android
+# Telas e origem das imagens
 
-As imagens são renderizações de **Views Android reais**, executadas por Robolectric
-com gráficos nativos. **Não são capturas de um telefone nem imagens de uma sessão pessoal.**
-Dados exibidos nos testes de memória são exemplos de teste, não medições de um usuário.
+[Projeto](../../../README.md) · [Guias](../README.md) · [Versões](../versions/README.md)
 
-As imagens originais foram extraídas dos logs da
-[compilação validada 0.13](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41541064297).
+As prévias são renderizações de **Views Android reais em testes Robolectric**, com gráficos nativos. Não são capturas de telefone. Dados de memória e atividade são exemplos de teste. Densidade, fontes, permissões e estado do pet podem alterar o resultado no aparelho.
 
-| Arquivo | Conteúdo | Teste de origem |
+## Galerias separadas por versão
+
+| Versão | Imagens arquivadas | Compilação de origem |
 | --- | --- | --- |
-| [inicio.png](inicio.png) | Tela principal 0.16 com escolha do pet junto da prévia | `DesignTest` |
-| [menu-rapido.png](menu-rapido.png) | Menu de segurar com Fixar no lugar e Arkanoid | `DesignTest` |
-| [mimir.png](mimir.png) | Mimir 0.16 com elmo, gola e medalhão | `DesignTest` |
-| [memoria.png](memoria.png) | Painel de Mimir com valores de exemplo | `DashboardTest` |
-| [radar.png](radar.png) | Seleção diária por cartões de assuntos | `InterestsDesignTest` |
-| [arkanoid.png](arkanoid.png) | Campo, controles e o PetView original como plataforma | `ArkanoidOverlayTest` |
+| [0.17](../versions/0.17/README.md#prévias-desta-versão) | Início, Bryan, Mimir, Luna e Presidente com arte detalhada | [41647993545](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41647993545) |
+| [0.16](../versions/0.16/README.md#prévias-desta-versão) | Início e quatro pets no acabamento Canvas anterior | [41645282506](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41645282506) |
+| [0.15](../versions/0.15/README.md#prévias-desta-versão) | Prévia do antigo L.U.L.A | [41639512540](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41639512540) |
+| [0.13](../versions/0.13/README.md#prévias-desta-versão) | Menu rápido, radar, memória e Arkanoid | [41541064297](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41541064297) |
 
-O PNG do Arkanoid tem canal alfa: suas áreas vazias são transparentes. O teste
-compõe o campo e o PetView real em um único arquivo para documentar as duas janelas.
-No telefone, o app que estiver aberto aparece por baixo. A cor de fundo do visualizador
-do GitHub não faz parte do jogo.
+A 0.14 tem Release e metadados, mas não uma galeria arquivada neste catálogo. Imagens posteriores não são apresentadas como capturas daquela versão.
 
-O aspecto varia com densidade, tamanho da tela, fontes, permissões, estado do pet e Android.
+## Arquivos usados pelos guias atuais
+
+| Arquivos | Versão de origem | Teste |
+| --- | --- | --- |
+| `inicio.png`, `bryan.png`, `mimir.png`, `luna.png`, `presidente.png` | 0.17 | `DesignTest` |
+| `menu-rapido.png` | 0.13 | `DesignTest` |
+| `radar.png` | 0.13 | `InterestsDesignTest` |
+| `memoria.png` | 0.13 | `DashboardTest` |
+| `arkanoid.png` | 0.13 | `ArkanoidOverlayTest` |
+| `lula.png` | 0.15, histórico | `DesignTest` |
+
+A arte detalhada da 0.17 foi gerada a partir das referências fornecidas pelo mantenedor. O app desenha os olhos e aplica as cores configuradas. [Arquitetura da arte](../ARTE-HD.md).
+
+O PNG do Arkanoid tem canal alfa: as áreas vazias são transparentes e o visualizador pode mostrar uma cor por baixo. O teste compõe o campo e o PetView em uma imagem para documentar as duas janelas. No telefone, o aplicativo aberto aparece sob o jogo.
+
+Ao publicar novas prévias, copie os arquivos para a pasta da versão e registre a compilação de origem antes de atualizar as imagens dos guias. Não substitua imagens de uma versão arquivada por arte de outra.
+
 Interface e documentação seguem a [licença do projeto](../../../LICENSE).
-
-## Atualização 0.16
-
-`inicio.png`, `mimir.png`, `bryan.png`, `luna.png` e `presidente.png` vêm da [compilação validada 0.16](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41645282506), via `DesignTest`. Mostram o desenho Canvas real, com transparência, gradientes e acessórios em camadas. `lula.png` permanece como registro da versão 0.15.
-
-## Atualização 0.17
-
-`inicio.png`, `bryan.png`, `mimir.png`, `luna.png` e `presidente.png` foram atualizadas a partir da [compilação validada 0.17](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41647993545). A arte detalhada é derivada das referências fornecidas pelo mantenedor via geração de imagens; olhos e cores são renderizados pelo código Android. São testes de Views reais, não capturas de telefone.
