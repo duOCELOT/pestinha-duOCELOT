@@ -1,6 +1,6 @@
 # Documentação do Pestinha Android
 
-[Projeto](../../README.md) · [Baixar APK atual](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) · [Versões e arquivos](versions/README.md)
+[Projeto](../../README.md) · [Baixar APK atual](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk) · [Versões e arquivos](versions/README.md)
 
 ## Comece por aqui
 

@@ -3,7 +3,7 @@
 [**Versão atual e histórico do Android**](../CHANGELOG.md).
 Android 8.0/API 26+, ARM64 e x86_64. Interface Java/Canvas com o cérebro Python original via Chaquopy.
 
-**Quer instalar? [Baixe o APK direto da Release](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk).**
+**Quer instalar? [Baixe o APK direto da Release](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk).**
 Não precisa de GitHub Actions, ZIP, Termux, Ubuntu ou VNC no celular.
 [Apresentação e funções](../README.md) · [Guia de uso](../docs/android/GUIA-DO-APK.md) · [Referência técnica](../docs/android/REFERENCIA-TECNICA.md).
 
@@ -41,12 +41,11 @@ arraste, sensores, notificações e atualização em aparelhos reais.
 ## Distribuição pública
 
 [Releases](https://github.com/duOCELOT/pestinha-duOCELOT/releases) é o canal de instalação.
-Cada Release tem `Pestinha-Android.apk`, `SHA256SUMS.txt`, notas, origem da compilação
-e tag apontando para o código que produziu o APK. O link permanente de divulgação é:
+Cada nova Release tem um APK **`Pestinha-Android-<versão>.apk`**, `SHA256SUMS.txt`, notas e tag apontando para o código que produziu o arquivo. Há apenas um APK por Release.
 
-```text
-https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk
-```
+O botão **Baixar última versão** da [página principal](https://github.com/duOCELOT/pestinha-duOCELOT#readme) aponta para a URL exata do APK atual. Atualize esse destino junto com a documentação a cada publicação. Os links na lista de versões são fixos por tag.
+
+Para divulgar, use a página principal ou `https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest`, que abre a página da Release atual. O caminho antigo com `/latest/download/Pestinha-Android.apk` deixa de ser o endereço permanente de download.
 
 O artefato de Actions continua útil para desenvolvimento; pode expirar e exigir login.
 A publicação em Release não muda o APK, sua assinatura ou seu versionCode.

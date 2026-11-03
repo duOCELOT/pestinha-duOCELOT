@@ -4,7 +4,7 @@
 
 ## Baixar agora
 
-**[Baixar o APK mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** — versão atual: **0.22 experimental**.
+**[Baixar o APK mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk)** — versão atual: **0.22 experimental**.
 
 O APK atual inclui as funções anteriores; não é necessário instalar as versões em sequência. Android 8.0+, ARM64 ou x86_64.
 
@@ -14,7 +14,7 @@ Cada pasta é independente: contém novidades, links fixos e metadados do seu AP
 
 | Versão | Destaque | Pasta e detalhes | Download fixo |
 | --- | --- | --- | --- |
-| **0.22 · atual** | Cores, seleção visual de apps e protestos animados | [0.22/](0.22/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android.apk) |
+| **0.22 · atual** | Cores, seleção visual de apps e protestos animados | [0.22/](0.22/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk) |
 | **0.21** | Bryan inicia com aparência padrão; controles identificam o personagem | [0.21/](0.21/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.21.0/Pestinha-Android.apk) |
 | **0.20** | Presidente com barba e orelhas refinadas | [0.20/](0.20/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.20.0/Pestinha-Android.apk) |
 | **0.19** | Categorias verticais e Quebra-blocos | [0.19/](0.19/README.md) | [APK](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.19.0/Pestinha-Android.apk) |
@@ -51,8 +51,12 @@ As pastas só incluem imagens cuja origem foi identificada. A ausência de uma g
 ## Qual link usar?
 
 - **Para divulgar o projeto:** [página principal](https://github.com/duOCELOT/pestinha-duOCELOT).
-- **Para receber sempre a versão atual:** link de download em `releases/latest`.
+- **Para encontrar sempre a versão atual:** botão da página principal ou página `releases/latest`.
 - **Para consultar ou reproduzir uma versão:** pasta numerada e tag fixa.
 - **Para as etapas 0.12 e anteriores:** [histórico de desenvolvimento](HISTORICO.md). Não há APK público separado dessas etapas neste catálogo.
 
-O nome `Pestinha-Android.apk` é igual nas Releases para manter o link permanente. A versão é distinguida pela pasta, tag, versão interna e SHA-256. Não renomeamos nem recompilamos os APKs ao organizar estes documentos.
+O padrão atual é **`Pestinha-Android-<versão>.apk`**, com um único APK por Release. O botão “Baixar última versão” aponta para a URL exata da publicação atual; o texto permanece igual quando a URL muda.
+
+As versões 0.21 e anteriores mantêm os nomes originais para preservar seus links. A Release 0.22 foi renomeada sem alterar o APK, a assinatura, o tamanho ou seu SHA-256; apenas `SHA256SUMS.txt` passou a mencionar o novo nome. Links antigos diretos para o arquivo 0.22 com nome fixo deixam de funcionar.
+
+Para divulgar um endereço permanente, use a [página do projeto](https://github.com/duOCELOT/pestinha-duOCELOT#readme) ou a [Release mais recente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest). A página e sua lista levam aos arquivos corretos. Não há mais um caminho permanente `/latest/download/` com nome fixo.

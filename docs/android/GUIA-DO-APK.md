@@ -6,7 +6,7 @@
 
 ## 1. Primeiro uso
 
-1. [Baixe `Pestinha-Android.apk` diretamente da Release](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk) e abra para instalar. Não precisa de login nem ZIP.
+1. [Baixe `Pestinha-Android.apk` diretamente da Release](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.22.0/Pestinha-Android-0.22.0.apk) e abra para instalar. Não precisa de login nem ZIP.
 2. Abra **Pestinha**.
 3. Se aparecer **Permitir aparecer sobre outros apps**, toque e autorize no Android.
 4. Volte ao app e toque em **Mostrar pet**.

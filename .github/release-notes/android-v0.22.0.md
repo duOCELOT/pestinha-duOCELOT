@@ -6,4 +6,4 @@
 - Cartazes, faixas e bandeiras vetoriais animados, com cor do personagem, texto e acompanhamento da posição do pet.
 - Prévia das peças em Jogos e interações. Protestos espontâneos usam a peça escolhida pelo cérebro; animação pausa com a tela apagada e respeita animações desativadas.
 
-As cores e seleções existentes são mantidas. A atualização não ativa acompanhamento de apps nem concede permissões. Instale **Pestinha-Android.apk** sobre a versão atual para preservar os dados. Android 8.0+, ARM64/x86_64. APK experimental de desenvolvimento, com assinatura fixa e debuggable=true.
+As cores e seleções existentes são mantidas. A atualização não ativa acompanhamento de apps nem concede permissões. Instale **Pestinha-Android-0.22.0.apk** sobre a versão atual para preservar os dados. Android 8.0+, ARM64/x86_64. APK experimental de desenvolvimento, com assinatura fixa e debuggable=true.

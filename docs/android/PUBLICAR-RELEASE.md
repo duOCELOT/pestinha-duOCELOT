@@ -1,98 +1,62 @@
 # Publicar e manter o download Android
 
-O canal público é [Releases](https://github.com/duOCELOT/pestinha-duOCELOT/releases),
-com um arquivo de nome constante: **`Pestinha-Android.apk`**. Assim, este endereço
-continua apontando para a Release marcada como mais recente:
+[Projeto](../../README.md) · [Catálogo de versões](versions/README.md)
+
+## Um APK por versão
+
+Cada nova Release publica um arquivo **`Pestinha-Android-<versão>.apk`** e seu `SHA256SUMS.txt`. Exemplo: `Pestinha-Android-0.22.0.apk`. Não existe uma segunda cópia com nome fixo.
+
+O botão **Baixar última versão** mantém seu texto, mas aponta para a URL exata do arquivo atual. O nome externo não interfere na atualização: o Android verifica o pacote, a assinatura e o versionCode do APK.
+
+Para divulgar um endereço estável, use:
 
 ```text
-https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk
+https://github.com/duOCELOT/pestinha-duOCELOT#readme
+https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest
 ```
 
-A Release 0.13 usa a tag `android-v0.13.0`, apontando para o commit que produziu
-o APK. A branch `main` apresenta o projeto; o app é desenvolvido na `android`.
-Atualizar somente documentação não exige publicar novamente o binário.
+O primeiro abre a apresentação com o botão; o segundo abre a página da Release atual. Um link direto de arquivo versionado continua ligado àquela versão, mesmo depois de sair outra.
 
-## Fluxo automatizado recomendado
+## Fluxo automatizado
 
-O [workflow Publish Android Release](../../.github/workflows/publish-android.yml)
-publica o APK de uma compilação já aprovada, sem recompilar ou reassinar.
-A [configuração](../../android-release.json) fixa versão, commit, run, artifact e SHA-256.
-O script confere pacote, versionCode/versionName, Android mínimo e arquiteturas,
-verifica os anexos ainda em rascunho e só então torna a Release pública.
-Uma Release já publicada com os mesmos anexos é preservada.
+O [workflow de publicação](../../.github/workflows/publish-android.yml) recupera um APK de uma compilação aprovada, verifica sua identidade e integridade e o publica sem recompilar ou reassinar. A [configuração](../../android-release.json) fixa tag, versão, commit, run, artefato e SHA-256; `asset_name` pode explicitar o nome, mas deve corresponder à tag e à versão interna.
 
-Para publicar outra versão, atualize `android-release.json` e suas notas na branch
-`android`, após a compilação aprovada. O push da configuração inicia a publicação.
-Também pode executar **Actions → Publish Android Release → Run workflow**, escolhendo `android`.
-O job usa `GITHUB_TOKEN` temporário do próprio repositório, com permissões de conteúdos/escrita
-para Releases e ações/leitura para recuperar o artefato. Nenhum token privado é versionado.
+1. Atualize versionName e aumente versionCode no aplicativo.
+2. Envie o código para a branch `android` e aguarde o workflow Android passar.
+3. Atualize `android-release.json` com os dados reais da compilação e suas notas.
+4. O push inicia o publisher, que valida o APK e cria a Release em rascunho.
+5. O script usa o nome versionado, gera o checksum com esse nome e publica somente após verificar os anexos.
+6. Depois de confirmar a Release, atualize o destino do botão no README, os guias atuais e o catálogo de versões nas branches `main` e `android`.
 
-Validação local do arquivo, antes de enviar:
+O script tem testes de nome, versão, idempotência e preservação do APK. O job usa o token temporário do GitHub Actions; nenhum segredo de publicação é versionado.
+
+A atualização dos links da documentação faz parte da publicação: eles não descobrem sozinhos o nome do próximo arquivo. O destino deve ser `https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/<tag>/<nome-versionado>.apk`.
+
+## Integridade e arquivos existentes
+
+O publisher confere pacote, versionCode/versionName, Android mínimo, arquiteturas e SHA-256. Uma Release existente correta é preservada. APK divergente ou dois APKs na mesma Release bloqueiam a operação, sem apagar arquivos automaticamente.
+
+A migração da 0.22 renomeou o asset existente por API, mantendo seu ID, bytes, tamanho e SHA-256. Apenas o arquivo de checksums mudou para mencionar o novo nome. Não houve recompilação, nova assinatura nem segunda cópia do APK. As versões 0.21 e anteriores mantêm os nomes originais para preservar seus links.
+
+Renomear um asset muda sua URL: links antigos diretos para `Pestinha-Android.apk` na 0.22 deixam de funcionar. Por isso o endereço permanente de divulgação é a página do projeto ou da Release atual, e não um caminho `/latest/download/` com nome fixo.
+
+## Verificações locais
 
 ```sh
+python -m unittest discover -s .github/scripts/tests -v
 python .github/scripts/publish_android.py --verify-only pasta-com-o-apk
 ```
 
-## Para as próximas versões
+No arquivo de configuração, não reutilize hash ou commit de outra compilação. Se o artefato expirar, obtenha uma nova compilação validada, sem tratar um binário de origem desconhecida como o APK aprovado.
 
-1. Atualize `versionName` e aumente `versionCode` em `android/app/build.gradle`.
-2. Envie o código para `android` e aguarde o workflow Android concluir com sucesso.
-3. Confira que o run corresponde ao commit desejado e que o job `apk` passou.
-4. Baixe o artefato, confira o pacote/versão/arquiteturas e use o APK aprovado sem modificá-lo.
-5. Copie como `Pestinha-Android.apk`; gere `SHA256SUMS.txt`.
-6. Atualize README, changelog, guias e notas da nova Release.
-7. Crie uma **Release em rascunho**, com tag nova apontando para o commit da compilação.
-8. Anexe o APK e o arquivo de hash. Confira nomes, tamanhos e origem.
-9. Publique e marque como mais recente para atualizar o link permanente.
-10. Abra o link público e confira os assets/notas. Não substitua silenciosamente um APK já publicado: use versão e tag novas.
+## Registro de cada versão
 
-No GitHub, isso pode ser feito por **Releases → Draft a new release**.
-As Releases públicas não exigem login para baixar assets e não têm a expiração dos artefatos de Actions.
-O link permanece válido enquanto o repositório e a Release/asset estiverem disponíveis.
+Crie `docs/android/versions/<versão>/README.md` e `release.json`, com tag, commit, requisitos, tamanho, hash e URLs reais dos assets. Preserve as prévias identificadas em `images/`, com o run que as produziu.
 
-## Exemplo com GitHub CLI
+Atualize `versions/README.md`, `CHANGELOG.md`, README principal e guias pertinentes. O texto do botão permanece **Baixar última versão**; o destino muda e a versão anterior entra na lista recolhível do README. As linhas históricas continuam apontando para os arquivos específicos de cada Release. Os APKs ficam nas Releases, sem cópias no Git.
 
-Use o `gh` autenticado com sua conta autorizada a publicar no repositório.
-Não coloque tokens, senhas ou chaves privadas nos comandos/documentação.
+## Assinatura e atualização
 
-```sh
-# Substitua pelos dados da nova compilação; não reutilize o tag da 0.13.
-ANDROID_RUN_ID=123456789
-ANDROID_SOURCE_SHA=COMMIT_COMPLETO_DA_COMPILACAO
-ANDROID_RELEASE_TAG=android-v0.14.0
+As versões atuais usam a assinatura pública de desenvolvimento fixa desde 0.2. Mudar o nome do arquivo não altera essa assinatura. Não substitua silenciosamente o conteúdo de um APK já publicado: alterações no aplicativo exigem nova versão, versionCode e tag.
 
-gh run view "$ANDROID_RUN_ID" --repo duOCELOT/pestinha-duOCELOT --json conclusion,headSha,headBranch
-gh run download "$ANDROID_RUN_ID" --repo duOCELOT/pestinha-duOCELOT --name pestinha-android-debug --dir release-download
-
-# Após conferir o APK e sua versão:
-cp release-download/app-debug.apk Pestinha-Android.apk
-sha256sum Pestinha-Android.apk > SHA256SUMS.txt
-gh release create "$ANDROID_RELEASE_TAG" Pestinha-Android.apk SHA256SUMS.txt \
-  --repo duOCELOT/pestinha-duOCELOT --target "$ANDROID_SOURCE_SHA" --draft \
-  --title 'Pestinha Android 0.14 — experimental' --notes-file notas-da-release.md
-
-# Confira os assets antes de publicar:
-gh release view "$ANDROID_RELEASE_TAG" --repo duOCELOT/pestinha-duOCELOT --json tagName,isDraft,assets
-gh release edit "$ANDROID_RELEASE_TAG" --repo duOCELOT/pestinha-duOCELOT --draft=false --latest
-```
-
-Se um artefato tiver expirado, gere uma nova compilação validada do código correspondente;
-não trate um arquivo sem origem verificável como o mesmo APK aprovado.
-
-## Assinatura e compatibilidade
-
-As versões atuais são APKs de desenvolvimento com chave pública fixa desde 0.2.
-Isso preserva atualizações compatíveis, mas não equivale a uma chave privada de produção.
-Não publique uma nova assinatura como se fosse uma atualização compatível.
-Para uma distribuição de produção, planeje a assinatura/migração e informe claramente
-como os usuários preservam seus dados. Não inclua chaves privadas no repositório.
-
-[Instalação e backup](GUIA-DO-APK.md) · [Novidades](../../CHANGELOG.md)
-
-## Documentar cada versão separadamente
-
-Depois de validar a Release, crie `docs/android/versions/<versão>/README.md` e `release.json`. Registre tag, commit correspondente, requisitos, links fixos, tamanho e SHA-256 dos assets reais. Não copie o hash ou o commit de uma versão anterior.
-
-Arquive as prévias disponíveis em `versions/<versão>/images/`, indicando o run de teste que as produziu. Não use imagens posteriores como se fossem daquela versão. Não coloque APKs no Git: mantenha-os na Release.
-
-Atualize o catálogo `versions/README.md`, o resumo em `CHANGELOG.md`, a apresentação da raiz e o catálogo de imagens. Os guias por função acompanham a versão atual; os registros numerados preservam a história. Sincronize a documentação nas branches `main` e `android`, sem copiar o código do app para `main`.
+Para distribuição de produção, planeje a assinatura e a migração de dados separadamente. [Instalação e backup](GUIA-DO-APK.md).
