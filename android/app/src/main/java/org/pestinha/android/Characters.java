@@ -20,5 +20,6 @@ final class Characters {
         String item=p.getString("item","original");if(!item.equals("original")){JSONObject items=new JSONObject();switch(item){case "laco":items.put("laco","#eb86bf");break;case "elmo_viking":items.put("elmo_viking","#77929c");break;case "oculos":items.put("oculos","#b3dce1");break;case "gravata":items.put("gravata","#b3261e");break;case "barba":items.put("barba","#e8e9e6");break;default:break;}a.put("acessorios",items);}return a;
     }
     static String name(Context context,String id){try{return definition(context,id).getString("nome");}catch(Exception e){String safe=normalize(id);return Character.toUpperCase(safe.charAt(0))+safe.substring(1);}}
+    static String speak(Context c,String text){return MemoryActivity.petId(c).equals("lula")?"Companheiro, veja bem: "+text:text;}
     static String[] names(Context context){String[] names=new String[IDS.length];for(int i=0;i<IDS.length;i++)names[i]=name(context,IDS[i]);return names;}
 }

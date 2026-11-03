@@ -17,8 +17,8 @@ public class PetService extends Service {
     private static volatile PetService instance;
     static void assistantNotice(String text,String event){
         PetService service=instance;if(service==null||service.closed)return;
-        if(event!=null)service.event(event);if(playing)return;
-        service.ui.post(()->{if(!service.closed&&service.world!=null&&service.screenOn){lastNoticeAt=SystemClock.uptimeMillis();service.world.message(text,false,service.pos.x,service.pos.y,()->{});}});
+        if(event!=null)service.event(event);if(playing)return;String spoken=Characters.speak(service,text);
+        service.ui.post(()->{if(!service.closed&&service.world!=null&&service.screenOn){lastNoticeAt=SystemClock.uptimeMillis();service.world.message(spoken,false,service.pos.x,service.pos.y,()->{});}});
     }
     private static volatile long lastNoticeAt=0;
     static void newsSettingsChanged(){PetService service=instance;if(service!=null)service.ui.post(()->{if(!service.closed&&service.newsMonitor!=null)service.newsMonitor.update(service.screenOn);});}

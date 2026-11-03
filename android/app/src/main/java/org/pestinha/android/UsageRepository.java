@@ -36,6 +36,7 @@ final class UsageRepository {
     }
     static String commentary(String character,String app,long millis,boolean daily){
         long minutes=Math.max(1,millis/60000);String time=daily?"Hoje você já somou cerca de "+minutes+" min no "+app:"Você já está há cerca de "+minutes+" min no "+app+" nesta sessão";
+        if(character.equals("lula"))return "Companheiro, veja bem: "+time+". Uma pausa agora cai bem, não é pouca coisa.";
         if(character.equals("mimir"))return "Hmpf. "+time+". Pelos galhos de Yggdrasil, já está bom, não? Uma pausa lhe faria bem.";
         if(character.equals("jorge"))return time+". Essa rolagem está rendendo? Bora investir numa pausa.";
         return time+". Que tal dar uma pausa e brincar um pouco comigo?";

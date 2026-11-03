@@ -39,6 +39,7 @@ public class PetView extends View {
         if(bow!=0)drawHair(canvas);
         if(lulaStyle){p.setColor(0xffe7b090);canvas.drawOval(-71,-7,-58,19,p);Path ear=new Path();ear.moveTo(59,-6);ear.cubicTo(79,-14,76,6,66,17);ear.quadTo(58,21,59,-6);canvas.drawPath(ear,p);p.setColor(0xffa66c57);p.setStrokeWidth(1.5f);canvas.drawArc(-68,-3,-60,13,110,200,false,p);canvas.drawArc(62,-5,72,10,200,190,false,p);}
         if(lulaStyle){p.setColor(Color.rgb(208,211,208));Path hair=new Path();hair.moveTo(-59,-19);hair.cubicTo(-66,-47,-46,-58,-27,-49);hair.lineTo(-40,-40);hair.quadTo(-55,-39,-54,-17);hair.close();canvas.drawPath(hair,p);canvas.save();canvas.scale(-1,1);canvas.drawPath(hair,p);canvas.restore();p.setColor(Color.rgb(241,240,231));p.setStrokeWidth(2);p.setStyle(Paint.Style.STROKE);canvas.drawArc(-59,-47,-33,-23,190,100,false,p);canvas.drawArc(33,-47,59,-23,250,100,false,p);p.setStyle(Paint.Style.FILL);}
+        if(lulaStyle){p.setColor(0xffe5e5e0);Path forelock=new Path();forelock.moveTo(-43,-45);forelock.cubicTo(-25,-65,-8,-53,6,-54);forelock.quadTo(23,-63,37,-50);forelock.quadTo(10,-46,-5,-44);forelock.quadTo(-22,-55,-43,-45);canvas.drawPath(forelock,p);p.setColor(0xfffaf9f4);p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(1.5f);canvas.drawArc(-33,-59,27,-42,195,145,false,p);p.setStyle(Paint.Style.FILL);}
         if(tie!=0)drawTie(canvas);
         float blink=now%4800<110?.08f:1;
         for(int side:new int[]{-1,1}){

@@ -27,9 +27,8 @@ e ainda não entram no backup neural JSON. Não mudam a identidade/seed do perso
 ## Personagens novos
 
 - **Luna:** pet feminina, curiosa e afetuosa, moldura rosa e laço como visual inicial.
-- **L.U.L.A:** robô com barba clara e moldura vermelha; caricatura fictícia
-  inspirada em Luiz Inácio Lula da Silva. Não oficial, sem endosso ou falas reais.
-  As frases são brincadeiras do pet, não aconselhamento político ou campanha.
+- **Presidente:** pet de barba branca, moldura vermelha e faixa decorativa.
+  Descrição curta e falas de humor sobre a rotina do personagem.
 
 Ambos mantêm o formato do projeto e têm memórias próprias. Guarde o pet antes de trocar.
 
@@ -51,3 +50,9 @@ Na 0.15, o nome exibido passa a L.U.L.A. O visual ganha cabelo grisalho, sobranc
 <img src="images/lula.png" width="240" alt="L.U.L.A com cabelo grisalho, sobrancelhas, bigode e barba em camadas">
 
 Prévia nativa renderizada nos testes da compilação 0.15, não captura de um aparelho.
+
+
+## Visual e seleção na 0.16
+
+O nome exibido é Presidente. O ID `lula` e a seed continuam iguais para preservar a memória. A descrição no app não cita nomes ou partidos. As falas são textos autorais com bordões populares, não citações reais nem voz clonada.
+O acabamento usa gradientes nativos e acessórios em camadas, não uma imagem 3D estática. Borda e olhos continuam independentes. O seletor de pets fica no cartão superior, junto da prévia.
