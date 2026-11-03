@@ -4,7 +4,7 @@ Um pet sobre os seus aplicativos, com personalidade, memória, tarefas, notícia
 
 ## Baixar e instalar
 
-**Versão atual: 0.15 experimental.** Android 8.0+, ARM64 ou x86_64.
+**Versão atual: 0.16 experimental.** Android 8.0+, ARM64 ou x86_64.
 
 ### [⬇ Baixar Pestinha-Android.apk](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)
 
@@ -21,13 +21,15 @@ APK direto, sem ZIP ou login. Não precisa de Termux, Ubuntu ou VNC.
 **[Todas as informações das versões estão nesta página →](CHANGELOG.md)**
 
 Ela reúne o que mudou, qual é a versão atual e quais versões têm APK publicado.
-A **0.15** renomeia e melhora o visual do **L.U.L.A**, preservando os cuidados, a personalização e as funções anteriores. As funções anteriores continuam incluídas.
+A **0.16** traz o **Presidente**, acabamento com brilho nos personagens, cores de borda e olhos personalizáveis e escolha do pet junto da prévia no topo. Inclui todas as funções anteriores.
 
 [Release atual: APK, hash e código correspondente](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest)
 
 ## Conheça o app
 
 <p>
+  <img src="docs/android/images/inicio.png" width="210" alt="Tela principal com seletor de personagens junto da prévia">
+  <img src="docs/android/images/presidente.png" width="210" alt="Presidente com moldura vermelha, cabelo e barba brancos e faixa decorativa">
   <img src="docs/android/images/menu-rapido.png" width="210" alt="Menu do pet com posição fixa e Arkanoid">
   <img src="docs/android/images/radar.png" width="210" alt="Escolha dos interesses e fontes de notícias">
   <img src="docs/android/images/arkanoid.png" width="210" alt="Arkanoid transparente com Mimir como plataforma">
@@ -35,7 +37,7 @@ A **0.15** renomeia e melhora o visual do **L.U.L.A**, preservando os cuidados, 
 
 Prévias da interface renderizadas em testes, com dados de exemplo. O campo do jogo é transparente; no celular, você vê o aplicativo aberto por baixo.
 
-- **Bryan, Jorge, Mimir, Luna e L.U.L.A:** aparência, temperamento e memórias separados.
+- **Bryan, Jorge, Mimir, Luna e Presidente:** aparência, temperamento e memórias separados.
 - **Interação:** carinho, brinquedos, sensores e opção de fixar o pet onde soltar.
 - **Arkanoid:** pet como plataforma, três vidas, fases e recorde por personagem.
 - **Organização:** tarefas com prazo, água, foco e lembretes.

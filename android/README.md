@@ -59,8 +59,9 @@ O APK publicado é uma versão experimental de desenvolvimento, com `debuggable=
 
 ## Memória
 
-Os estados de Bryan, Jorge e Mimir ficam na área privada do app:
-`files/memory/bryan/`, `files/memory/jorge/` e `files/memory/mimir/`.
+Os cinco personagens têm estados separados na área privada do app:
+`files/memory/<id>/`, com IDs `bryan`, `jorge`, `mimir`, `luna` e `lula`.
+O último ID permanece `lula` por compatibilidade; o nome exibido é **Presidente**.
 Há salvamentos periódicos, ao apagar a tela e ao guardar. O painel mostra dados reais
 persistidos ou ao vivo do personagem ativo; o temperamento inicial vem da sua definição.
 

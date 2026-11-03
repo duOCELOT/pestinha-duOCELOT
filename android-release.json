@@ -1,13 +1,13 @@
 {
   "repository": "duOCELOT/pestinha-duOCELOT",
-  "tag": "android-v0.15.0",
-  "title": "Pestinha Android 0.15 — novo visual do L.U.L.A",
-  "run_id": 41639512540,
-  "artifact_id": 13231634930,
+  "tag": "android-v0.16.0",
+  "title": "Pestinha Android 0.16 — Presidente e novo visual dos pets",
+  "run_id": 41645282506,
+  "artifact_id": 13234788076,
   "artifact_name": "pestinha-android-debug",
-  "source_sha": "066414c4330bb1129cfdc033e45e3d319a10ac53",
-  "version_name": "0.15.0-alpha",
-  "version_code": 16,
-  "apk_sha256": "60ffc0620e01ce9a001e7c65847e6228fa720bbf6aa0162100c9286191729dc7",
-  "notes": ".github/release-notes/android-v0.15.0.md"
+  "source_sha": "fb1021c3d332adf826d4472bf1d128b687a3cd0c",
+  "version_name": "0.16.0-alpha",
+  "version_code": 17,
+  "apk_sha256": "29b3ee65edf8d5b03e04bba613de6232e9454c23ba3a54af2e916fb30ebd0a21",
+  "notes": ".github/release-notes/android-v0.16.0.md"
 }
