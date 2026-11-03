@@ -14,7 +14,7 @@ final class AppPickerDialog {
     static final class Entry {final String id,name;final Drawable icon;final boolean available;Entry(String id,String name,Drawable icon,boolean available){this.id=id;this.name=name;this.icon=icon;this.available=available;}}
     static AlertDialog show(Activity a,List<Entry> apps,JSONObject old,Consumer<JSONObject> save){
         LinkedHashSet<String> chosen=new LinkedHashSet<>();for(Entry e:apps)if(old.has(e.id))chosen.add(e.id);
-        LinearLayout box=Design.column(a);int pad=Design.dp(a,16);box.setPadding(pad,pad,pad,pad);
+        LinearLayout box=Design.column(a);box.setTag("app_picker_content");int pad=Design.dp(a,16);box.setPadding(pad,pad,pad,pad);
         EditText search=new EditText(a);search.setSingleLine();search.setHint("Buscar aplicativo pelo nome");search.setTag("app_search");box.addView(search);
         TextView count=Design.text(a,"",14,Design.MUTED);box.addView(count);Runnable summary=()->count.setText(chosen.size()+" de 20 aplicativos selecionados");summary.run();
         ArrayList<Entry> visible=new ArrayList<>(apps);ListView list=new ListView(a);list.setTag("app_list");list.setDivider(null);list.setEmptyView(null);box.addView(list,new LinearLayout.LayoutParams(-1,Design.dp(a,320)));

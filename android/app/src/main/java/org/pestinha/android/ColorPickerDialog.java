@@ -20,7 +20,7 @@ final class ColorPickerDialog {
     private ColorPickerDialog(Activity a,JSONObject appearance,String key){owner=a;this.appearance=appearance;this.key=key;state=new ColorState(appearance.optString(key,"#63e56f"));updatePreview=()->{try{JSONObject next=new JSONObject(this.appearance.toString());next.put(this.key,state.hex());pet.appearance(next);}catch(org.json.JSONException ignored){}};}
     static AlertDialog show(Activity a,JSONObject appearance,String key,Consumer<String> save){return new ColorPickerDialog(a,appearance,key).open(save);}
     private AlertDialog open(Consumer<String> save){
-        ScrollView scroll=new ScrollView(owner);LinearLayout root=Design.column(owner);int pad=Design.dp(owner,18);root.setPadding(pad,pad,pad,pad);scroll.addView(root);
+        ScrollView scroll=new ScrollView(owner);LinearLayout root=Design.column(owner);root.setTag("color_picker_content");int pad=Design.dp(owner,18);root.setPadding(pad,pad,pad,pad);scroll.addView(root);
         pet=new PetView(owner);root.addView(pet,new LinearLayout.LayoutParams(-1,Design.dp(owner,105)));
         swatch=Design.text(owner,"",18,Design.TEXT);swatch.setGravity(Gravity.CENTER);swatch.setPadding(pad,pad,pad,pad);swatch.setTag("color_swatch");root.addView(swatch);
         hex=new EditText(owner);hex.setTag("color_hex");hex.setSingleLine();hex.setHint("#RRGGBB");hex.setContentDescription("Cor hexadecimal, cerquilha e seis dígitos");hex.setInputType(android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);root.addView(hex);
