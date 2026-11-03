@@ -62,3 +62,7 @@ O visual original agora usa arte raster detalhada com olhos animados separados. 
 ## Presidente na 0.20
 
 Barba mais curta e arredondada, bigode natural e orelhas com novos contornos. O novo desenho mantém olhos animados e cores personalizáveis. Para usar a arte refinada, selecione o acessório Original; cores e outros itens já escolhidos não são apagados pela atualização.
+
+## Seletor de cores na 0.22
+
+Cor da moldura e Cor dos olhos abrem um seletor com prévia do pet, HEX, RGB, CMY, matiz, saturação e luminosidade HSL. Os grupos podem ser recolhidos; salvar confirma a cor e cancelar preserva o visual. [Guia dos controles e das peças de protesto](CORES-E-PROTESTOS.md).

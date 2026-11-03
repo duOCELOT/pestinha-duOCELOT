@@ -1,13 +1,13 @@
 {
   "repository": "duOCELOT/pestinha-duOCELOT",
-  "tag": "android-v0.21.0",
-  "title": "Pestinha Android 0.21 — correção do Bryan e dos controles",
-  "run_id": 41657008720,
-  "artifact_id": 13239922411,
+  "tag": "android-v0.22.0",
+  "title": "Pestinha Android 0.22 — cores, ícones e protestos animados",
+  "run_id": 41667351588,
+  "artifact_id": 13247375149,
   "artifact_name": "pestinha-android-debug",
-  "source_sha": "1c32cbf1ccbd734a55e9b981e561cd7b8a8537ee",
-  "version_name": "0.21.0-alpha",
-  "version_code": 22,
-  "apk_sha256": "447c673e7791d7d179eab67205cce50de983051178884f7f009258872f4c1988",
-  "notes": ".github/release-notes/android-v0.21.0.md"
+  "source_sha": "8d5c67434e4b5925b6f132843e8c5fd62f8d4c10",
+  "version_name": "0.22.0-alpha",
+  "version_code": 23,
+  "apk_sha256": "4f6544e47c7f0397befea5b1ec8417e3ff0c382b670b662cfb6ebc4c372fd459",
+  "notes": ".github/release-notes/android-v0.22.0.md"
 }

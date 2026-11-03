@@ -12,6 +12,7 @@
 
 | Área | Conteúdo |
 | --- | --- |
+| [Cores e protestos](CORES-E-PROTESTOS.md) | HEX, RGB, HSL, CMY; ícone, seleção visual de apps e peças animadas |
 | [Cuidados e guarda-roupa](CUIDADOS.md) | Fome, saúde e conforto simulados; cores e acessórios |
 | [Arte detalhada](ARTE-HD.md) | Como as imagens, olhos animados e cores são combinados; limitações atuais |
 | [Tarefas e prazos](TAREFAS.md) | Cadastro, entrega, acompanhamento e lembretes |

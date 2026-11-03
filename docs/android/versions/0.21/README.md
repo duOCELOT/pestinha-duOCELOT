@@ -1,6 +1,6 @@
 # Android 0.21 — Bryan e controles corrigidos
 
-**Versão atual · experimental** · Android 8.0+, ARM64/x86_64 · versionCode 22.
+**Versão arquivada · experimental** · Android 8.0+, ARM64/x86_64 · versionCode 22.
 
 [Catálogo](../README.md) · [Guia atual](../../GUIA-DO-APK.md) · [Projeto](../../../../README.md)
 

@@ -20,9 +20,9 @@ A 0.14 tem Release e metadados, mas não uma galeria arquivada neste catálogo. 
 
 | Arquivos | Versão de origem | Teste |
 | --- | --- | --- |
-| `inicio.png`, `bryan.png`, `mimir.png`, `luna.png` | 0.17 | `DesignTest` |
+| `bryan.png`, `mimir.png`, `luna.png` | 0.17 | `DesignTest` |
 | `presidente.png` | 0.20 | `DesignTest` |
-| `menu-rapido.png` | 0.13 | `DesignTest` |
+| `inicio.png`, `menu-rapido.png` | 0.22 | `DesignTest` |
 | `radar.png` | 0.13 | `InterestsDesignTest` |
 | `memoria.png` | 0.13 | `DashboardTest` |
 | `arkanoid.png` | 0.13 | `ArkanoidOverlayTest` |
@@ -47,3 +47,11 @@ A [galeria 0.19](../versions/0.19/README.md) traz início, menu rápido e Quebra
 ## Início na 0.21
 
 A [prévia da versão 0.21](../versions/0.21/images/inicio.png) mostra Bryan e os controles com o nome selecionado. Origem: `DesignTest`, [compilação 41657008720](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41657008720). As imagens históricas continuam preservadas.
+
+## Telas e assets da 0.22
+
+A [galeria 0.22](../versions/0.22/README.md#prévias) inclui início, seletor de cores, seleção de apps, menu e três peças de protesto, da compilação indicada na página da versão. As telas de cores e seleção mostram o conteúdo dos diálogos, sem a moldura de botões do Android; os apps e ícones coloridos são dados de teste. As peças têm fundo transparente e são geradas por Views nativas.
+
+`icone-app.png` é a arte de primeiro plano gerada para o launcher, não uma captura de um aparelho. O app usa fundo adaptativo e uma versão vetorial monocromática. Os arquivos vetoriais dos protestos foram criados para o projeto. As galerias anteriores continuam preservadas.
+
+[Compilação de origem das prévias 0.22](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41667351588).

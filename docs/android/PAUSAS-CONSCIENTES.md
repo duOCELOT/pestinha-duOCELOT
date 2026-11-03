@@ -98,3 +98,7 @@ poderá voltar a mostrar os dados que o sistema disponibilizar.
 - [`UsageMonitor`](https://github.com/duOCELOT/pestinha-duOCELOT/blob/android/android/app/src/main/java/org/pestinha/android/UsageMonitor.java): ciclo de vida junto ao serviço do pet.
 
 [Guia do APK](GUIA-DO-APK.md) · [Fontes RSS](FONTES-RSS.md)
+
+## Seleção visual na 0.22
+
+Escolher aplicativos mostra ícone e nome, busca por nome e contador de até 20 escolhas. As seleções permanecem marcadas mesmo fora do filtro de busca. Salvar seleção confirma; Cancelar não modifica os apps acompanhados. Identificadores de pacote continuam privados na configuração, sem a linha de caminhos na lista. Apps anteriormente escolhidos que ficaram indisponíveis podem ser removidos. [Guia da interface](CORES-E-PROTESTOS.md#aplicativos-acompanhados).
