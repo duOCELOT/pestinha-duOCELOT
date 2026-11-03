@@ -20,7 +20,8 @@ A 0.14 tem Release e metadados, mas não uma galeria arquivada neste catálogo. 
 
 | Arquivos | Versão de origem | Teste |
 | --- | --- | --- |
-| `inicio.png`, `bryan.png`, `mimir.png`, `luna.png`, `presidente.png` | 0.17 | `DesignTest` |
+| `inicio.png`, `bryan.png`, `mimir.png`, `luna.png` | 0.17 | `DesignTest` |
+| `presidente.png` | 0.20 | `DesignTest` |
 | `menu-rapido.png` | 0.13 | `DesignTest` |
 | `radar.png` | 0.13 | `InterestsDesignTest` |
 | `memoria.png` | 0.13 | `DashboardTest` |
@@ -38,3 +39,7 @@ Interface e documentação seguem a [licença do projeto](../../../LICENSE).
 ## Prévias da 0.19
 
 A [galeria 0.19](../versions/0.19/README.md) traz início, menu rápido e Quebra-blocos, extraídos dos testes DesignTest e BrickGameOverlayTest na [compilação validada](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41654350495). As galerias antigas mantêm suas imagens originais.
+
+## Presidente na 0.20
+
+`presidente.png` foi atualizado e arquivado também em [0.20/images/presidente.png](../versions/0.20/images/presidente.png), a partir de `DesignTest` na [compilação validada 41655741049](https://github.com/duOCELOT/pestinha-duOCELOT/actions/runs/41655741049). Barba e orelhas usam arte dedicada gerada a partir da referência do mantenedor; olhos e cor de borda são aplicados pelo app. As galerias anteriores permanecem intactas.

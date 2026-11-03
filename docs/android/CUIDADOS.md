@@ -53,8 +53,12 @@ O acabamento usa gradientes nativos e acessórios em camadas, não uma imagem 3D
 
 <img src="images/presidente.png" width="280" alt="Presidente com moldura vermelha forte, barba branca e faixa decorativa">
 
-Prévia nativa renderizada nos testes da compilação 0.17; não é captura de um aparelho. Preferências de cor salvas são mantidas: use **Restaurar visual original** para voltar à paleta padrão do personagem.
+Prévia nativa renderizada nos testes da compilação 0.20; não é captura de um aparelho. Preferências de cor salvas são mantidas: use **Restaurar visual original** para voltar à paleta padrão do personagem.
 
 ## Arte detalhada na 0.17
 
 O visual original agora usa arte raster detalhada com olhos animados separados. Cores da moldura e dos olhos seguem configuráveis. Ao escolher outro acessório, usa-se o corpo básico detalhado com o item desenhado pelo app. Veja [arte e limitações](ARTE-HD.md).
+
+## Presidente na 0.20
+
+Barba mais curta e arredondada, bigode natural e orelhas com novos contornos. O novo desenho mantém olhos animados e cores personalizáveis. Para usar a arte refinada, selecione o acessório Original; cores e outros itens já escolhidos não são apagados pela atualização.

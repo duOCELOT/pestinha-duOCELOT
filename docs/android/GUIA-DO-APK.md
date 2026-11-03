@@ -1,6 +1,6 @@
 # Guia do APK: telas, funções e uso
 
-**Guia da versão atual: Pestinha Android 0.19 experimental.**
+**Guia da versão atual: Pestinha Android 0.20 experimental.**
 [Versões anteriores e seus arquivos](versions/README.md)
 [Apresentação](README.md) · [Referência técnica](REFERENCIA-TECNICA.md)
 
