@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import struct
@@ -15,6 +16,19 @@ CONFIG = Path('android-release.json')
 REPOSITORY = 'duOCELOT/pestinha-duOCELOT'
 
 
+def apk_name(data):
+    tag = data['tag']
+    if not re.fullmatch(r'android-v[0-9]+\.[0-9]+\.[0-9]+', tag):
+        raise ValueError('Invalid Android version tag')
+    version = tag.removeprefix('android-v')
+    if data['version_name'].split('-', 1)[0] != version:
+        raise ValueError('Filename version must match the APK version')
+    name = 'Pestinha-Android-' + version + '.apk'
+    if data.get('asset_name', name) != name:
+        raise ValueError('APK asset name must match the Release version')
+    return name
+
+
 def config():
     data = json.loads(CONFIG.read_text())
     if data['repository'] != REPOSITORY:
@@ -23,6 +37,7 @@ def config():
         raise ValueError('Publication is restricted to the intended repository')
     if not Path(data['notes']).is_file():
         raise ValueError('Release notes are missing')
+    apk_name(data)
     return data
 
 
@@ -146,14 +161,44 @@ def check_assets(release, expected):
             raise ValueError(f'Release asset hash mismatch: {name}')
 
 
+def refresh_public_assets(release, data, staged, sums, expected):
+    """Rename the existing APK in place; never create an APK alias or change bytes."""
+    apks = [a for a in release['assets'] if a['name'].endswith('.apk')]
+    if len(apks) != 1:
+        raise ValueError('Expected one APK; refusing to change ambiguous Release assets')
+    asset = apks[0]
+    if asset['name'] not in (staged.name, 'Pestinha-Android.apk'):
+        raise ValueError('Unexpected APK filename on the existing Release')
+    if asset['size'] != expected[staged.name][0] or asset.get('digest') != 'sha256:' + data['apk_sha256'] or asset.get('state') != 'uploaded':
+        raise ValueError('Public APK does not match the verified build')
+    if asset['name'] != staged.name:
+        subprocess.run(['gh', 'api', '--method', 'PATCH',
+                        f"repos/{REPOSITORY}/releases/assets/{asset['id']}", '--input', '-'],
+                       input=json.dumps({'name': staged.name}), text=True, check=True,
+                       capture_output=True)
+    # The APK hash stays the same; the checksum file must mention its new filename.
+    current_sum = next((a for a in release['assets'] if a['name'] == sums.name), None)
+    if not current_sum or current_sum.get('digest') != 'sha256:' + expected[sums.name][1]:
+        command('release', 'upload', data['tag'], str(sums), '--repo', REPOSITORY, '--clobber')
+    body = release.get('body') or ''
+    updated = body.replace('Pestinha-Android.apk', staged.name)
+    if updated != body:
+        subprocess.run(['gh', 'api', '--method', 'PATCH',
+                        f"repos/{REPOSITORY}/releases/{release['id']}", '--input', '-'],
+                       input=json.dumps({'body': updated}), text=True, check=True,
+                       capture_output=True)
+    check_assets(api(f"releases/{release['id']}"), expected)
+    print('Public Release verified: one versioned APK, unchanged bytes and updated checksum.')
+
+
 def publish(data, folder):
     check_build(data)
     apk = verify_apk(data, folder)
     with tempfile.TemporaryDirectory(prefix='pestinha-release-') as tmp:
-        staged = Path(tmp) / 'Pestinha-Android.apk'
+        staged = Path(tmp) / apk_name(data)
         shutil.copyfile(apk, staged)
         sums = Path(tmp) / 'SHA256SUMS.txt'
-        sums.write_text(data['apk_sha256'] + '  Pestinha-Android.apk\n')
+        sums.write_text(data['apk_sha256'] + '  ' + staged.name + '\n')
         expected = {p.name: (p.stat().st_size, hashlib.sha256(p.read_bytes()).hexdigest())
                     for p in (staged, sums)}
         matches = [r for r in api('releases?per_page=100') if r['tag_name'] == data['tag']]
@@ -161,8 +206,7 @@ def publish(data, folder):
             raise ValueError('Ambiguous duplicate Release drafts; review them before publishing')
         release = matches[0] if matches else None
         if release and not release['draft']:
-            check_assets(release, expected)
-            print('Release already public with the expected assets; leaving it unchanged.')
+            refresh_public_assets(release, data, staged, sums, expected)
             return
         if release:
             if release['target_commitish'] != data['source_sha'] or data['source_sha'] not in release['body']:
