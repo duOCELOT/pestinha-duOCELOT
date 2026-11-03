@@ -14,7 +14,9 @@ final class Characters {
         try(InputStream in=context.getAssets().open("pets/"+normalize(id)+".json")){return new JSONObject(MemoryActivity.read(in));}
     }
     static JSONObject appearance(Context c,String id) throws Exception {
-        JSONObject a=new JSONObject(definition(c,id).getJSONObject("aparencia").toString());
+        JSONObject a=new JSONObject("{\"moldura\":\"#63e56f\",\"casca\":\"#101512\",\"tela\":\"#171e19\",\"olho\":\"#3ee877\",\"brilho\":\"#c8ffd8\",\"acessorios\":{}}");
+        JSONObject supplied=definition(c,id).optJSONObject("aparencia");
+        if(supplied!=null){java.util.Iterator<String> keys=supplied.keys();while(keys.hasNext()){String key=keys.next();a.put(key,supplied.get(key));}}
         android.content.SharedPreferences p=c.getSharedPreferences("appearance_"+normalize(id),0);
         for(String key:new String[]{"moldura","olho"}){String value=p.getString(key,"");if(value.matches("#[0-9a-fA-F]{6}"))a.put(key,value);}
         String item=p.getString("item","original");if(!item.equals("original")){JSONObject items=new JSONObject();switch(item){case "laco":items.put("laco","#eb86bf");break;case "elmo_viking":items.put("elmo_viking","#77929c");break;case "oculos":items.put("oculos","#b3dce1");break;case "gravata":items.put("gravata","#b3261e");break;case "barba":items.put("barba","#e8e9e6");break;default:break;}a.put("acessorios",items);}a.put("arte",item.equals("original")?normalize(id):"bryan");return a;

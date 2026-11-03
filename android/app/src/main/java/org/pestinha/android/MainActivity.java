@@ -35,11 +35,11 @@ public class MainActivity extends Activity {
         TextView brand=Design.text(this,"PESTINHA",13,Design.ACCENT);brand.setLetterSpacing(.18f);brand.setPadding(dp(4),dp(4),0,dp(16));layout.addView(brand);
         LinearLayout hero=Design.card(this,layout);
         Design.label(hero,"SEU COMPANHEIRO DE TELA");
-        nameTitle=Design.text(this,"Bryan",32,Design.TEXT);nameTitle.setTypeface(android.graphics.Typeface.create("sans-serif-medium",android.graphics.Typeface.NORMAL));hero.addView(nameTitle);
+        nameTitle=Design.text(this,"Bryan",32,Design.TEXT);nameTitle.setTag("character_name");nameTitle.setTypeface(android.graphics.Typeface.create("sans-serif-medium",android.graphics.Typeface.NORMAL));hero.addView(nameTitle);
         preview=new PetView(this);preview.autoAnimate=true;
         LinearLayout.LayoutParams portrait=new LinearLayout.LayoutParams(-1,dp(110));portrait.gravity=android.view.Gravity.CENTER;hero.addView(preview,portrait);
         Design.label(hero,"ESCOLHA SEU PET");
-        Spinner character=new Spinner(this);
+        Spinner character=new Spinner(this);character.setTag("character_picker");
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,Characters.names(this)){
             @Override public View getView(int position,View convert,android.view.ViewGroup parent){View v=super.getView(position,convert,parent);if(v instanceof TextView){((TextView)v).setTextColor(Design.TEXT);((TextView)v).setTextSize(18);}return v;}
             @Override public View getDropDownView(int position,View convert,android.view.ViewGroup parent){View v=super.getDropDownView(position,convert,parent);v.setBackgroundColor(Design.RAISED);if(v instanceof TextView)((TextView)v).setTextColor(Design.TEXT);return v;}
@@ -105,7 +105,7 @@ public class MainActivity extends Activity {
         button(physics,"Calibrar nesta posição",()->send("calibrate"));button(physics,"Restaurar gravidade natural",()->send("reset_tilt"));
         LinearLayout about=Design.fold(this,settings,"privacy","Privacidade e informações","Dados locais, permissões e licença",false);
         text(about,"A memória fica no aparelho. A internet consulta somente os feeds escolhidos, manualmente ou pelo radar opcional. Sem leitura de tela ou da agenda. O acompanhamento de apps usa estatísticas do Android somente se você autorizar e ativar. Sensores desligam com a tela apagada.",14,Design.MUTED);
-        text(about,"Pestinha Android • 0.20 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
+        text(about,"Pestinha Android • 0.21 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
         button(about,"Modo de teste • tempos curtos",()->send("fast"));
         button(about,"Licença e projeto original",()->new AlertDialog.Builder(this).setTitle("Pestinha • GPL-3.0-or-later").setMessage("Adaptação independente de mille-okws/pestinha. Código-fonte: github.com/duOCELOT/pestinha-duOCELOT, branch android.\n\n"+license()).setPositiveButton("Fechar",null).show());
         setContentView(scroll);Design.install(this,scroll);loadAppearance();updateStatus();
@@ -116,7 +116,12 @@ public class MainActivity extends Activity {
         if(Build.VERSION.SDK_INT>=33&&checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},7);
         try{startForegroundService(new Intent(this,PetService.class));}catch(RuntimeException e){new AlertDialog.Builder(this).setMessage("Não foi possível iniciar: "+e.getMessage()).setPositiveButton("OK",null).show();}
     }
-    private void loadAppearance(){try(java.io.InputStream in=getAssets().open("pets/"+MemoryActivity.petId(this)+".json")){org.json.JSONObject pet=new org.json.JSONObject(readText(in));preview.jorge=MemoryActivity.petId(this).equals("jorge");preview.appearance(Characters.appearance(this,MemoryActivity.petId(this)));nameTitle.setText(pet.optString("nome","Bryan"));if(characterDescription!=null)characterDescription.setText(pet.optString("descricao",pet.optString("nome")+" tem temperamento e memória próprios."));}catch(Exception ignored){preview.appearance(null);}}
+    private void loadAppearance(){
+        String id=MemoryActivity.petId(this);nameTitle.setText(Characters.name(this,id));preview.jorge=id.equals("jorge");
+        launch.setContentDescription("Mostrar "+nameTitle.getText());retract.setContentDescription("Recolher "+nameTitle.getText());
+        try{org.json.JSONObject pet=Characters.definition(this,id);if(characterDescription!=null)characterDescription.setText(pet.optString("descricao",nameTitle.getText()+" tem temperamento e memória próprios."));}catch(Exception ignored){}
+        try{preview.appearance(Characters.appearance(this,id));}catch(Exception ignored){preview.appearance(null);}
+    }
     private CheckBox check(LinearLayout box,String title,String key,boolean fallback){CheckBox b=new CheckBox(this);b.setText(title);b.setChecked(getSharedPreferences("pet",0).getBoolean(key,fallback));box.addView(b);return b;}
     private void navigation(LinearLayout parent,String icon,String title,String subtitle,Runnable action){LinearLayout row=new LinearLayout(this);row.setGravity(android.view.Gravity.CENTER_VERTICAL);row.setPadding(dp(18),dp(18),dp(16),dp(18));row.setBackground(Design.touch(this,Design.CARD,Design.BORDER));row.setFocusable(true);row.setContentDescription(title+". "+subtitle);
         ActionIcon graphic=new ActionIcon(this,icon);row.addView(graphic,new LinearLayout.LayoutParams(dp(28),dp(28)));LinearLayout labels=Design.column(this);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,-2,1);lp.leftMargin=dp(16);row.addView(labels,lp);labels.addView(Design.text(this,title,18,Design.TEXT));TextView sub=Design.text(this,subtitle,13,Design.MUTED);sub.setPadding(0,dp(3),0,0);labels.addView(sub);row.addView(Design.text(this,"›",24,Design.MUTED));LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,-2);rp.bottomMargin=dp(12);parent.addView(row,rp);row.setOnClickListener(v->action.run());}

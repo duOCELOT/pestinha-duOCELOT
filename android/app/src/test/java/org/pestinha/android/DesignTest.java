@@ -51,4 +51,14 @@ public class DesignTest {
         activity.finish();Activity restored=Robolectric.buildActivity(MainActivity.class).create().get();assertEquals(View.VISIBLE,restored.findViewById(android.R.id.content).findViewWithTag("body:play").getVisibility());restored.finish();
     }
 
+    @Test public void switchingFromPresidenteToBryanRefreshesNameAndControls(){
+        context.getSharedPreferences("pet",0).edit().putString("character","lula").commit();
+        Activity activity=Robolectric.buildActivity(MainActivity.class).create().get();View root=activity.findViewById(android.R.id.content);
+        draw(root,360,780);org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+        assertEquals("Presidente",((android.widget.TextView)root.findViewWithTag("character_name")).getText().toString());
+        ((android.widget.Spinner)root.findViewWithTag("character_picker")).setSelection(0);draw(root,360,780);org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+        assertEquals("bryan",MemoryActivity.petId(activity));assertEquals("Bryan",((android.widget.TextView)root.findViewWithTag("character_name")).getText().toString());
+        assertEquals("Mostrar Bryan",root.findViewWithTag("primary").getContentDescription().toString());assertEquals("Recolher Bryan",root.findViewWithTag("retract").getContentDescription().toString());activity.finish();
+    }
+
 }
