@@ -1,0 +1,13 @@
+package org.pestinha.android;
+import java.util.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
+public class BrickGameModelTest {
+ @Test public void startsWithThreeLivesAndBallOnPetWithinHorizontalBounds(){BrickGameModel m=new BrickGameModel(780,null);assertEquals(3,m.lives);assertEquals(28,m.remaining);assertEquals(BrickGameModel.State.READY,m.state);m.move(-100);assertEquals(55,m.paddleX,0);assertEquals(m.paddleX,m.ballX,0);m.move(900);assertEquals(305,m.paddleX,0);assertEquals(690,m.paddleY,0);}
+ @Test public void launchAndSideWallsKeepTheBallInside(){BrickGameModel m=new BrickGameModel(780,null);m.launch();assertTrue(m.vy<0);m.ballX=13;m.ballY=350;m.vx=-205;m.vy=0;m.tick(.03f);assertTrue(m.vx>0);assertTrue(m.ballX>=12);}
+ @Test public void petBounceUsesHitPositionAndHeadsUp(){BrickGameModel m=new BrickGameModel(780,null);m.launch();m.ballX=m.paddleX+30;m.ballY=m.paddleY-7;m.vx=0;m.vy=205;m.tick(.03f);assertTrue(m.vy<0);assertTrue(m.vx>0);assertEquals(3,m.lives);}
+ @Test public void losingThreeBallsEndsWithoutEndlessLifeLoss(){ArrayList<String> events=new ArrayList<>();BrickGameModel m=new BrickGameModel(780,(k,x,y)->events.add(k));for(int i=0;i<3;i++){m.launch();m.ballY=m.height+10;m.vy=205;m.tick(.01f);}assertEquals(0,m.lives);assertEquals(BrickGameModel.State.OVER,m.state);m.tick(.05f);assertEquals(0,m.lives);assertEquals(3,Collections.frequency(events,"life"));assertEquals(1,Collections.frequency(events,"over"));m.restart();assertEquals(3,m.lives);assertEquals(0,m.score);}
+ @Test public void finalBrickScoresExactlyOnceAndAdvancesPhase(){BrickGameModel m=new BrickGameModel(780,null);Arrays.fill(m.bricks,false);m.bricks[0]=true;m.remaining=1;m.launch();m.ballX=m.brickX(0)+22;m.ballY=m.brickY(0)+m.brickH()+7;m.vx=0;m.vy=-205;m.tick(.03f);assertEquals(BrickGameModel.State.WON,m.state);assertEquals(40,m.score);m.tick(.05f);assertEquals(40,m.score);m.next();assertEquals(2,m.level);assertEquals(28,m.remaining);assertEquals(40,m.score);assertEquals(BrickGameModel.State.READY,m.state);}
+ @Test public void pauseAndRotationDoNotSpendLivesOrAdvanceTheBall(){BrickGameModel m=new BrickGameModel(780,null);m.launch();m.pause();float y=m.ballY;m.tick(10);assertEquals(y,m.ballY,0);m.resume();assertEquals(BrickGameModel.State.PLAYING,m.state);m.resize(520);assertEquals(BrickGameModel.State.PAUSED,m.state);assertEquals(3,m.lives);assertEquals(430,m.paddleY,0);m.tick(.05f);assertEquals(3,m.lives);}
+ @Test public void boundedSubstepsPreventFastBallPassingThroughBricks(){BrickGameModel m=new BrickGameModel(780,null);m.launch();m.ballX=m.brickX(22)+22;m.ballY=m.brickY(22)+m.brickH()+7;m.vx=0;m.vy=-320;m.tick(5);assertFalse(m.bricks[22]);assertTrue(m.vy>0);assertEquals(27,m.remaining);}
+}

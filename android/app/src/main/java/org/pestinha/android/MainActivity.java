@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
         Design.label(hero,"SEU COMPANHEIRO DE TELA");
         nameTitle=Design.text(this,"Bryan",32,Design.TEXT);nameTitle.setTypeface(android.graphics.Typeface.create("sans-serif-medium",android.graphics.Typeface.NORMAL));hero.addView(nameTitle);
         preview=new PetView(this);preview.autoAnimate=true;
-        LinearLayout.LayoutParams portrait=new LinearLayout.LayoutParams(-1,dp(150));portrait.gravity=android.view.Gravity.CENTER;hero.addView(preview,portrait);
+        LinearLayout.LayoutParams portrait=new LinearLayout.LayoutParams(-1,dp(110));portrait.gravity=android.view.Gravity.CENTER;hero.addView(preview,portrait);
         Design.label(hero,"ESCOLHA SEU PET");
         Spinner character=new Spinner(this);
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,Characters.names(this)){
@@ -62,14 +62,20 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams hideParams=new LinearLayout.LayoutParams(0,-2,1);hideParams.topMargin=dp(8);retract.setLayoutParams(hideParams);retract.setTag("retract");
         permission=Design.button(hero,"Permitir aparecer sobre outros apps","secondary",()->startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:"+getPackageName()))));
         TextView hint=Design.text(this,"Segure para abrir os atalhos. Dois toques fazem carinho.",14,Design.MUTED);hint.setPadding(0,dp(12),0,0);hero.addView(hint);
-        navigation(layout,"note","Meu radar","Assuntos do dia e notícias com o pet",()->startActivity(new Intent(this,NewsActivity.class)));
-        navigation(layout,"assistant","Assistente","Foco, lembretes e notícias",()->startActivity(new Intent(this,AssistantActivity.class)));
-        navigation(layout,"note","Tarefas e prazos","Conte o que precisa fazer e acompanhe",()->startActivity(new Intent(this,TaskActivity.class)));
-        navigation(layout,"caress","Cuidados e guarda-roupa","Fome, saúde, clima, cores e acessórios",()->startActivity(new Intent(this,CareActivity.class)));
-        navigation(layout,"memory","Memória e cérebro","Personalidade, gráficos e tempo de cada pet",()->startActivity(new Intent(this,MemoryActivity.class)));
-        navigation(layout,"assistant","Pausas conscientes","Tempo nos apps e recados do pet",()->startActivity(new Intent(this,UsageActivity.class)));
-        LinearLayout play=expandable(layout,"Brincar e interagir");
-        button(play,"Jogar Arkanoid • o pet é a plataforma",()->send("arcade"));
+        LinearLayout customize=Design.fold(this,layout,"customization","Personalização","Cores, acessórios e aparência do personagem",false);
+        navigation(customize,"caress","Cores e acessórios","Ajuste o visual deste pet",()->startActivity(new Intent(this,CareActivity.class).putExtra("section","appearance")));
+        LinearLayout routine=Design.fold(this,layout,"routine","Rotina","Tarefas, água, foco e lembretes",false);
+        navigation(routine,"note","Tarefas e prazos","Criar tarefas e acompanhar entregas",()->startActivity(new Intent(this,TaskActivity.class)));
+        navigation(routine,"assistant","Água, foco e lembretes","Organize seus avisos locais",()->startActivity(new Intent(this,AssistantActivity.class)));
+        navigation(routine,"caress","Cuidados do pet","Lanche, descanso e conforto simulado",()->startActivity(new Intent(this,CareActivity.class)));
+        navigation(routine,"assistant","Pausas conscientes","Tempo nos aplicativos escolhidos",()->startActivity(new Intent(this,UsageActivity.class)));
+        LinearLayout newsCategory=Design.fold(this,layout,"news","Notícias","Interesses do dia, manchetes e fontes RSS",false);
+        navigation(newsCategory,"note","Meu radar","Escolher assuntos e ler manchetes",()->startActivity(new Intent(this,NewsActivity.class)));
+        navigation(newsCategory,"assistant","Gerenciar fontes RSS","Adicionar e organizar feeds",()->startActivity(new Intent(this,AssistantActivity.class).putExtra("section","Notícias • RSS / Atom")));
+        LinearLayout memoryCategory=Design.fold(this,layout,"memory","Memória","Personalidade, gráficos e backups",false);
+        navigation(memoryCategory,"memory","Memória e cérebro","Estado e aprendizado de cada personagem",()->startActivity(new Intent(this,MemoryActivity.class)));
+        LinearLayout play=Design.fold(this,layout,"play","Jogos e interações","Quebra-blocos, carinho, brinquedos e atividades",false);
+        button(play,"Jogar Quebra-blocos • o pet é a plataforma",()->send("arcade"));
         button(play,"Fazer carinho",()->send("caress"));
         button(play,"Mostrar / guardar bolinha",()->send("ball"));
         button(play,"Dormir / acordar",()->send("sleep"));
@@ -81,13 +87,14 @@ public class MainActivity extends Activity {
         button(play,"Escolher atividade",()->new AlertDialog.Builder(this).setTitle("O que estamos fazendo?").setItems(new String[]{"Livre","Trabalho","Jogo","Música","Social"},(d,which)->{
             String value=new String[]{"livre","trabalho","jogo","musica","social"}[which];getSharedPreferences("pet",0).edit().putString("context",value).apply();if(PetService.running)send("context:"+value);
         }).show());
-        LinearLayout appearance=expandable(layout,"Personagem e aparência");
-        text(appearance,"Escolha o personagem no cartão superior. Guarde o pet antes de trocar; cada um mantém sua própria memória.",14,Design.MUTED);
+        LinearLayout appearance=Design.fold(this,customize,"appearance","Ajustes de aparência","Tamanho, velocidade e comportamento",false);
+        text(appearance,"Escolha o personagem no cartão superior. Recolha o pet antes de trocar; cada um mantém sua própria memória.",14,Design.MUTED);
         characterDescription=text(appearance,"",14,Design.MUTED);
         slider(appearance,"Tamanho","size",60,160);slider(appearance,"Velocidade","speed",25,200);
         CheckBox mischief=check(appearance,"Travessuras automáticas","mischief",false);mischief.setOnCheckedChangeListener((b,value)->{getSharedPreferences("pet",0).edit().putBoolean("mischief",value).apply();if(PetService.running)send("mischief");});
         CheckBox fireworks=check(appearance,"Fogos quando ficar feliz","fireworks",true);fireworks.setOnCheckedChangeListener((b,value)->getSharedPreferences("pet",0).edit().putBoolean("fireworks",value).apply());
-        LinearLayout physics=expandable(layout,"Movimento e inclinação");
+        LinearLayout settings=Design.fold(this,layout,"settings","Configurações","Movimento, sensores, privacidade e informações",false);
+        LinearLayout physics=Design.fold(this,settings,"motion","Movimento e inclinação","Sensibilidade e calibração",false);
         text(physics,"Segure o pet → Fixar no lugar. Ele fica onde você soltar ao arrastar. Use Soltar posição para voltar ao movimento normal.",14,Design.MUTED);
         android.hardware.SensorManager sensors=getSystemService(android.hardware.SensorManager.class);
         boolean hasTilt=sensors!=null&&(sensors.getDefaultSensor(android.hardware.Sensor.TYPE_GRAVITY)!=null||sensors.getDefaultSensor(android.hardware.Sensor.TYPE_ACCELEROMETER)!=null);
@@ -96,9 +103,9 @@ public class MainActivity extends Activity {
         text(physics,hasTilt?"Incline devagar para mover o pet e a bolinha. Calibre para escolher uma posição neutra.":"Sensor de inclinação indisponível. Você pode continuar arrastando o pet.",14,Design.MUTED);
         slider(physics,"Sensibilidade","sensitivity",25,200);
         button(physics,"Calibrar nesta posição",()->send("calibrate"));button(physics,"Restaurar gravidade natural",()->send("reset_tilt"));
-        LinearLayout about=expandable(layout,"Privacidade e informações");
+        LinearLayout about=Design.fold(this,settings,"privacy","Privacidade e informações","Dados locais, permissões e licença",false);
         text(about,"A memória fica no aparelho. A internet consulta somente os feeds escolhidos, manualmente ou pelo radar opcional. Sem leitura de tela ou da agenda. O acompanhamento de apps usa estatísticas do Android somente se você autorizar e ativar. Sensores desligam com a tela apagada.",14,Design.MUTED);
-        text(about,"Pestinha Android • 0.18 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
+        text(about,"Pestinha Android • 0.19 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
         button(about,"Modo de teste • tempos curtos",()->send("fast"));
         button(about,"Licença e projeto original",()->new AlertDialog.Builder(this).setTitle("Pestinha • GPL-3.0-or-later").setMessage("Adaptação independente de mille-okws/pestinha. Código-fonte: github.com/duOCELOT/pestinha-duOCELOT, branch android.\n\n"+license()).setPositiveButton("Fechar",null).show());
         setContentView(scroll);Design.install(this,scroll);loadAppearance();updateStatus();
@@ -111,7 +118,6 @@ public class MainActivity extends Activity {
     }
     private void loadAppearance(){try(java.io.InputStream in=getAssets().open("pets/"+MemoryActivity.petId(this)+".json")){org.json.JSONObject pet=new org.json.JSONObject(readText(in));preview.jorge=MemoryActivity.petId(this).equals("jorge");preview.appearance(Characters.appearance(this,MemoryActivity.petId(this)));nameTitle.setText(pet.optString("nome","Bryan"));if(characterDescription!=null)characterDescription.setText(pet.optString("descricao",pet.optString("nome")+" tem temperamento e memória próprios."));}catch(Exception ignored){preview.appearance(null);}}
     private CheckBox check(LinearLayout box,String title,String key,boolean fallback){CheckBox b=new CheckBox(this);b.setText(title);b.setChecked(getSharedPreferences("pet",0).getBoolean(key,fallback));box.addView(b);return b;}
-    private LinearLayout expandable(LinearLayout parent,String title){LinearLayout card=Design.card(this,parent);TextView heading=Design.text(this,title+"   +",17,Design.TEXT);heading.setMinHeight(dp(46));heading.setGravity(android.view.Gravity.CENTER_VERTICAL);heading.setFocusable(true);card.addView(heading);LinearLayout body=Design.column(this);body.setVisibility(View.GONE);card.addView(body);heading.setOnClickListener(v->{boolean open=body.getVisibility()!=View.VISIBLE;body.setVisibility(open?View.VISIBLE:View.GONE);heading.setText(title+(open?"   −":"   +"));});return body;}
     private void navigation(LinearLayout parent,String icon,String title,String subtitle,Runnable action){LinearLayout row=new LinearLayout(this);row.setGravity(android.view.Gravity.CENTER_VERTICAL);row.setPadding(dp(18),dp(18),dp(16),dp(18));row.setBackground(Design.touch(this,Design.CARD,Design.BORDER));row.setFocusable(true);row.setContentDescription(title+". "+subtitle);
         ActionIcon graphic=new ActionIcon(this,icon);row.addView(graphic,new LinearLayout.LayoutParams(dp(28),dp(28)));LinearLayout labels=Design.column(this);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,-2,1);lp.leftMargin=dp(16);row.addView(labels,lp);labels.addView(Design.text(this,title,18,Design.TEXT));TextView sub=Design.text(this,subtitle,13,Design.MUTED);sub.setPadding(0,dp(3),0,0);labels.addView(sub);row.addView(Design.text(this,"›",24,Design.MUTED));LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,-2);rp.bottomMargin=dp(12);parent.addView(row,rp);row.setOnClickListener(v->action.run());}
     private void slider(LinearLayout layout,String label,String key,int min,int max){

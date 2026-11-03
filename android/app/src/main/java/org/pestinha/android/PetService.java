@@ -58,7 +58,7 @@ public class PetService extends Service {
     private UsageMonitor usageMonitor;
     private NewsMonitor newsMonitor;
     private QuickMenu quickMenu;
-    private ArkanoidOverlay arcade;
+    private BrickGameOverlay arcade;
     private int beforeGameX,beforeGameY;
     private boolean menuOpenedByHold=false;
     private MotionSensors motion;
@@ -306,7 +306,7 @@ public class PetService extends Service {
     private void startArcade(){
         if(closed||!running||playing||pet==null)return;
         beforeGameX=pos.x;beforeGameY=pos.y;storePosition();pressed=dragging=false;vx=vy=0;quickMenu.dismiss();world.clearMessage();world.show(false);playing=true;updateMotion();
-        arcade=new ArkanoidOverlay(this,wm,pet,(x,y,w,h)->{if(closed||!playing)return;pos.x=x;pos.y=y;pos.width=w;pos.height=h;xFloat=x;yFloat=y;if(pet.isAttachedToWindow())try{wm.updateViewLayout(pet,pos);}catch(IllegalArgumentException ignored){}},this::finishArcade,value->event(value.equals("restart")?"game_start":"game_"+value));
+        arcade=new BrickGameOverlay(this,wm,pet,(x,y,w,h)->{if(closed||!playing)return;pos.x=x;pos.y=y;pos.width=w;pos.height=h;xFloat=x;yFloat=y;if(pet.isAttachedToWindow())try{wm.updateViewLayout(pet,pos);}catch(IllegalArgumentException ignored){}},this::finishArcade,value->event(value.equals("restart")?"game_start":"game_"+value));
         if(!arcade.show()){finishArcade();android.widget.Toast.makeText(this,"Não foi possível abrir o jogo. Confira a permissão de sobreposição.",android.widget.Toast.LENGTH_LONG).show();return;}
         try{if(pet.isAttachedToWindow())wm.removeView(pet);wm.addView(pet,pos);}catch(RuntimeException error){arcade.close();return;}
         event("release");event("game_start");

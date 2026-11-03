@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 public class DesignTest {
     private Context context;
-    @Before public void setup(){context=RuntimeEnvironment.getApplication();context.getSharedPreferences("pet",0).edit().clear().commit();PetService.running=false;PetService.busy=false;org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(600));}
+    @Before public void setup(){context=RuntimeEnvironment.getApplication();context.getSharedPreferences("pet",0).edit().clear().commit();context.getSharedPreferences("ui_sections",0).edit().clear().commit();PetService.running=false;PetService.busy=false;org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(600));}
     private Bitmap draw(View view,int width,int height){view.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(height,View.MeasureSpec.EXACTLY));view.layout(0,0,width,height);Bitmap b=Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);view.draw(new Canvas(b));return b;}
     private void preview(String name,Bitmap bitmap){ByteArrayOutputStream out=new ByteArrayOutputStream();bitmap.compress(Bitmap.CompressFormat.PNG,100,out);System.out.println("DESIGN_PREVIEW_"+name+"="+Base64.getEncoder().encodeToString(out.toByteArray()));}
     @Test public void originalBryanFrameScreenAndTransparencyArePreserved(){PetView pet=new PetView(context);Bitmap b=draw(pet,320,260);assertTrue(Color.green(b.getPixel(86,130))>Color.red(b.getPixel(86,130)));assertTrue(Color.red(b.getPixel(160,130))<60);assertEquals(0,Color.alpha(b.getPixel(0,0)));preview("PET",b);}
@@ -44,4 +44,11 @@ public class DesignTest {
     @Test public void menuRoutesActionsWithoutOpeningThePanel(){AtomicReference<String> selected=new AtomicReference<>();QuickMenu menu=new QuickMenu(context,context.getSystemService(WindowManager.class),selected::set);LinearLayout content=menu.content(false,false,false,4);View heart=content.findViewWithTag("caress");assertNotNull(heart);heart.performClick();assertEquals("caress",selected.get());assertFalse(menu.isShowing());preview("MENU",draw(content,280,390));}
     @Test public void menuPlacementFitsAllPhoneCorners(){for(int x:new int[]{0,200,330})for(int y:new int[]{0,390,700}){int[] p=QuickMenu.place(360,780,280,390,x,y,100,90,12);assertTrue(p[0]>=0);assertTrue(p[1]>=0);assertTrue(p[0]+280<=360);assertTrue(p[1]+390<=780);}}
     @Test public void mainScreenHasRealNavigationAndRenders(){Activity activity=Robolectric.buildActivity(MainActivity.class).create().get();View content=((android.view.ViewGroup)activity.findViewById(android.R.id.content)).getChildAt(0);preview("HOME",draw(content,360,780));assertNotNull(content.findViewWithTag("primary"));View show=content.findViewWithTag("primary"),hide=content.findViewWithTag("retract");assertNotNull(hide);assertSame(show.getParent(),hide.getParent());assertFalse(hide.isEnabled());assertTrue(show.isEnabled());activity.finish();}
+    @Test public void categoriesToggleAndRememberOpenState(){
+        Activity activity=Robolectric.buildActivity(MainActivity.class).create().get();View root=activity.findViewById(android.R.id.content);
+        View group=root.findViewWithTag("body:play"),heading=root.findViewWithTag("category:play");assertEquals(View.GONE,group.getVisibility());
+        heading.performClick();assertEquals(View.VISIBLE,group.getVisibility());assertTrue(heading.getContentDescription().toString().contains("Expandido"));
+        activity.finish();Activity restored=Robolectric.buildActivity(MainActivity.class).create().get();assertEquals(View.VISIBLE,restored.findViewById(android.R.id.content).findViewWithTag("body:play").getVisibility());restored.finish();
+    }
+
 }

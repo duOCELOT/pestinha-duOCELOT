@@ -19,6 +19,19 @@ final class Design {
     static LinearLayout card(Context c,LinearLayout parent){LinearLayout v=column(c);v.setBackground(shape(c,CARD,24,BORDER));v.setPadding(dp(c,18),dp(c,18),dp(c,18),dp(c,18));LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=dp(c,14);parent.addView(v,p);return v;}
     static void label(LinearLayout parent,String text){TextView v=text(parent.getContext(),text,13,MUTED);v.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));v.setLetterSpacing(.06f);v.setPadding(0,0,0,dp(parent.getContext(),12));parent.addView(v);}
     static Button button(LinearLayout parent,String label,String style,Runnable action){Context c=parent.getContext();Button b=new Button(c);b.setText(label);b.setTag(style);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.topMargin=dp(c,6);parent.addView(b,p);styleButton(b);b.setOnClickListener(v->action.run());return b;}
+    static LinearLayout fold(Activity activity,LinearLayout parent,String key,String title,String subtitle,boolean initiallyOpen){
+        LinearLayout card=card(activity,parent);
+        LinearLayout heading=column(activity);heading.setTag("category:"+key);heading.setFocusable(true);heading.setClickable(true);heading.setMinimumHeight(dp(activity,56));
+        TextView label=text(activity,"",18,TEXT);heading.addView(label);
+        TextView detail=text(activity,subtitle,13,MUTED);detail.setPadding(0,dp(activity,4),0,dp(activity,8));heading.addView(detail);card.addView(heading);
+        LinearLayout body=column(activity);body.setTag("body:"+key);card.addView(body);
+        String pref=activity.getClass().getSimpleName()+"/"+key;
+        android.content.SharedPreferences saved=activity.getSharedPreferences("ui_sections",0);
+        Runnable sync=()->{boolean open=body.getVisibility()==View.VISIBLE;label.setText(title+(open?"   −":"   +"));heading.setContentDescription(title+". "+subtitle+(open?". Expandido. Toque para recolher.":". Recolhido. Toque para expandir."));};
+        body.setVisibility(saved.getBoolean(pref,initiallyOpen)?View.VISIBLE:View.GONE);sync.run();
+        heading.setOnClickListener(v->{boolean open=body.getVisibility()!=View.VISIBLE;body.setVisibility(open?View.VISIBLE:View.GONE);saved.edit().putBoolean(pref,open).apply();sync.run();});return body;
+    }
+    static void reveal(LinearLayout body){if(body.getVisibility()!=View.VISIBLE)((ViewGroup)body.getParent()).getChildAt(0).performClick();}
     static void styleButton(Button b){Context c=b.getContext();String style=String.valueOf(b.getTag());boolean primary=style.equals("primary"),danger=style.equals("danger");b.setAllCaps(false);b.setTextSize(15);b.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));b.setTextColor(primary?BG:danger?Color.rgb(255,164,150):TEXT);b.setBackground(touch(c,primary?ACCENT:RAISED,primary?0:BORDER));b.setMinHeight(dp(c,50));b.setMinimumHeight(dp(c,50));b.setPadding(dp(c,14),dp(c,10),dp(c,14),dp(c,10));b.setStateListAnimator(null);}
     static void styleTree(View view){
         if(view instanceof CheckBox){CheckBox b=(CheckBox)view;b.setTextColor(TEXT);b.setButtonTintList(ColorStateList.valueOf(ACCENT));b.setMinHeight(dp(view.getContext(),48));b.setPadding(0,dp(view.getContext(),8),0,dp(view.getContext(),8));}

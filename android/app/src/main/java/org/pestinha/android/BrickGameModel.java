@@ -1,7 +1,7 @@
 package org.pestinha.android;
 
 /** Deterministic, Android-independent arcade simulation in a 360-unit-wide field. */
-public final class ArkanoidModel {
+public final class BrickGameModel {
     public enum State { READY, PLAYING, PAUSED, WON, OVER }
     public interface Events { void event(String kind,float x,float y); }
     public static final float WIDTH=360,RADIUS=5,PADDLE_WIDTH=90,TOP=110;
@@ -12,7 +12,7 @@ public final class ArkanoidModel {
     public State state=State.READY;
     private State beforePause=State.READY;
     private final Events events;
-    public ArkanoidModel(float h,Events callback){events=callback;resize(h);fill();attach();}
+    public BrickGameModel(float h,Events callback){events=callback;resize(h);fill();attach();}
     public float brickX(int i){return 14+(i%COLUMNS)*48;}
     public float brickY(int i){return 134+(i/COLUMNS)*25;}
     public float brickW(){return 44;}

@@ -27,7 +27,7 @@ public class AssistantActivity extends Activity {
     private void toast(String s){Toast.makeText(this,s,Toast.LENGTH_LONG).show();}
     private TextView text(LinearLayout box,String title,int size){TextView t=new TextView(this);t.setText(title);t.setTextColor(size>=18?Design.TEXT:Design.MUTED);t.setTextSize(size);t.setLineSpacing(dp(2),1);t.setPadding(0,dp(8),0,dp(10));box.addView(t);return t;}
     private void button(LinearLayout box,String label,Runnable action){Design.button(box,label,"secondary",action);}
-    private LinearLayout section(String title){LinearLayout box=Design.card(this,layout);Design.label(box,title.toUpperCase(java.util.Locale.ROOT));return box;}
+    private LinearLayout section(String title){boolean requested=title.equals(getIntent().getStringExtra("section"));LinearLayout box=Design.fold(this,layout,title,title,"Toque para abrir ou recolher",requested);if(requested)Design.reveal(box);return box;}
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved);LocalAssistant.channel(this);LocalAssistant.rearm(this);Tasks.rearm(this);
         ScrollView scroll=new ScrollView(this);scroll.setBackgroundColor(Design.BG);
