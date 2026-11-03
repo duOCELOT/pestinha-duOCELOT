@@ -2,7 +2,7 @@
 
 Este é o lugar para consultar **o que mudou e qual APK baixar**.
 
-## Versão atual: 0.13 experimental
+## Versão atual: 0.14 experimental
 
 **[Baixar o APK atual](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest/download/Pestinha-Android.apk)** ·
 [Release com hash e código-fonte](https://github.com/duOCELOT/pestinha-duOCELOT/releases/latest) ·
@@ -15,7 +15,8 @@ Android 8.0+, ARM64 ou x86_64. O arquivo já é `.apk`, sem ZIP ou login.
 
 | Versão | Principal novidade | APK público |
 | --- | --- | --- |
-| **0.13 — atual** | Fundo transparente no Arkanoid | **[Baixar 0.13](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.13.0/Pestinha-Android.apk)** |
+| **0.14 — atual** | Notícias: fechar sem abrir; cuidados, visual e dois pets novos | **[Baixar 0.14](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.14.0/Pestinha-Android.apk)** |
+| 0.13 | Fundo transparente no Arkanoid | **[Baixar 0.13](https://github.com/duOCELOT/pestinha-duOCELOT/releases/download/android-v0.13.0/Pestinha-Android.apk)** |
 | 0.12 | Arkanoid com o próprio pet como plataforma | Histórico de desenvolvimento |
 | 0.11 | Fixar o pet onde ele for solto | Histórico de desenvolvimento |
 | 0.10 | Meu radar: interesses do dia e manchetes | Histórico de desenvolvimento |
@@ -24,11 +25,20 @@ Android 8.0+, ARM64 ou x86_64. O arquivo já é `.apk`, sem ZIP ou login.
 | 0.7 | Biblioteca RSS e pausas conscientes | Histórico de desenvolvimento |
 | Anteriores | Pet nativo, personagens, memória e interações | Histórico de desenvolvimento |
 
-**Só a 0.13 tem uma Release pública nesta organização atual.** As entradas anteriores
-registram a evolução do app; não são pacotes separados para instalar. Seus antigos
+**0.14 e 0.13 têm Releases públicas.** As linhas marcadas como histórico
+registram a evolução do app e não têm pacotes separados para instalar. Seus antigos
 artefatos de teste não são o canal de download. Para novas instalações, use o APK atual.
 
 ## Detalhes das mudanças
+
+### 0.14 — Cuidados e personagens
+
+- Notícias com ações separadas de fechar e ler.
+- Fome, saúde e conforto térmico simulados; sem punição offline.
+- Paletas de cores, cor personalizada e acessórios por personagem.
+- Luna e Lula (caricatura não oficial), com memórias próprias.
+- Interface tipada para futuros modelos leves; provedor atual é de regras locais, sem modelo instalado.
+- [Guia de cuidados e personalização](docs/android/CUIDADOS.md).
 
 ### 0.13 — Arkanoid transparente
 
