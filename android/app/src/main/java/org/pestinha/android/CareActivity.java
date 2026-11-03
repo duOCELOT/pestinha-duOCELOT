@@ -7,7 +7,7 @@ import org.json.*;
 import java.io.File;
 
 public class CareActivity extends Activity {
-    private TextView state;private final Handler ui=new Handler(Looper.getMainLooper());
+    private AlertDialog colorDialog;private TextView state;private final Handler ui=new Handler(Looper.getMainLooper());
     private final Runnable refresh=new Runnable(){public void run(){render();ui.postDelayed(this,1500);}};
     private String id(){return MemoryActivity.petId(this);}
     private void toast(String s){Toast.makeText(this,s,Toast.LENGTH_LONG).show();}
@@ -22,8 +22,8 @@ public class CareActivity extends Activity {
         Design.button(suggestions,"Sugerir cuidado","secondary",()->{try{JSONObject data=care();if(data==null){toast("Solte o pet para gerar seu estado.");return;}LocalFunctions.Suggestion s=LocalFunctions.request(new LocalFunctions.Rules(),data,consent.isChecked());new AlertDialog.Builder(this).setTitle("Sugestão local • regras").setMessage(s.text).setPositiveButton("Entendi",null).show();}catch(Exception e){toast(e.getMessage());}});
         l.addView(Design.text(this,"Fome, saúde e clima são fictícios. Não lemos temperatura corporal ou calor do aparelho. Não há morte, progresso offline ou castigo por fechar o app. Sugestões atuais são regras, não um LLM. Nenhum modelo é baixado e nenhum dado é enviado.",14,Design.MUTED));setContentView(scroll);Design.install(this,scroll);render();}
     private void appearanceChanged(){if(PetService.running)startService(new Intent(this,PetService.class).setAction("appearance"));toast("Visual salvo para "+Characters.name(this,id()));}
-    private void color(String key){new AlertDialog.Builder(this).setTitle("Escolha uma cor").setItems(new String[]{"Verde","Azul-gelo","Rosa","Dourado","Vermelho","Branco","Personalizada (#RRGGBB)"},(d,n)->{if(n==6){colorCustom(key);return;}getSharedPreferences("appearance_"+id(),0).edit().putString(key,new String[]{"#63e56f","#8bbcc7","#ed9fce","#e2b13c","#df655f","#eeeeee"}[n]).apply();appearanceChanged();}).show();}
-    private void colorCustom(String key){EditText input=new EditText(this);input.setSingleLine();input.setHint("#63e56f");input.setText(getSharedPreferences("appearance_"+id(),0).getString(key,""));AlertDialog d=new AlertDialog.Builder(this).setTitle("Cor hexadecimal #RRGGBB").setView(input).setNegativeButton("Cancelar",null).setPositiveButton("Salvar",null).create();d.setOnShowListener(v->d.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(b->{String value=input.getText().toString().trim();if(!value.matches("#[0-9a-fA-F]{6}")){input.setError("Use # e seis dígitos, por exemplo #63e56f");return;}getSharedPreferences("appearance_"+id(),0).edit().putString(key,value).apply();appearanceChanged();d.dismiss();}));d.show();}
+    private void color(String key){try{colorDialog=ColorPickerDialog.show(this,Characters.appearance(this,id()),key,value->{getSharedPreferences("appearance_"+id(),0).edit().putString(key,value).apply();appearanceChanged();});}catch(Exception error){toast("Não foi possível abrir o seletor: "+error.getMessage());}}
+    @Override protected void onDestroy(){if(colorDialog!=null)colorDialog.dismiss();super.onDestroy();}
     private void render(){JSONObject c=care();state.setText(Characters.name(this,id())+(c==null?"\nSolte o pet para iniciar os cuidados.":"\nFome: "+Math.round(c.optDouble("hunger")*100)+"%\nSaúde: "+Math.round((1-c.optDouble("illness"))*100)+"%\nConforto térmico: "+(c.optDouble("temperature")<-.3?"frio":c.optDouble("temperature")>.3?"calor":"confortável")));}
     @Override protected void onResume(){super.onResume();ui.post(refresh);}
     @Override protected void onPause(){ui.removeCallbacks(refresh);super.onPause();}

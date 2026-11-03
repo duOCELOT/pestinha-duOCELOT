@@ -241,7 +241,8 @@ public class PetService extends Service {
                         if(action!=null&&action.optLong("id")!=lastAction){
                             lastAction=action.optLong("id");String kind=action.optString("kind");
                             if(!playing&&kind.equals("care"))world.message(action.optString("text"),false,pos.x,pos.y,()->{});
-                            if(!playing&&(kind.equals("note")||kind.equals("sign")||kind.equals("image")))world.message(action.optString("text"),kind.equals("image"),pos.x,pos.y,()->event("dismiss"));
+                            if(!playing&&kind.equals("sign"))world.sign(action.optString("text"),action.optString("style","placard"),pos.x,pos.y,()->event("dismiss"));
+                            if(!playing&&(kind.equals("note")||kind.equals("image")))world.message(action.optString("text"),kind.equals("image"),pos.x,pos.y,()->event("dismiss"));
                             if(!playing&&!fixed&&kind.equals("roam"))vx=(float)(getResources().getDisplayMetrics().density*speed);
                         }
                     } });
@@ -340,6 +341,7 @@ public class PetService extends Service {
         else if(i!=null&&"reset_tilt".equals(i.getAction())&&motion!=null){motion.resetCalibration();vx=vy=0;}
         else if(i!=null&&"settings".equals(i.getAction())) { if(!playing){applySettings();clamp();} }
         else if(i!=null&&"arcade".equals(i.getAction()))startArcade();
+        else if(i!=null&&i.getAction()!=null&&i.getAction().startsWith("protest_demo:")&&world!=null){if(!playing){String text=petId.equals("mimir")?"Hmpf. Exijo um descanso!":petId.equals("jorge")?"Meu retorno é um carinho!":petId.equals("luna")?"Mais carinho, por favor!":petId.equals("lula")?"Companheiro, cadê meu carinho?":"Cadê minha bolinha?";world.sign(text,i.getAction().substring("protest_demo:".length()),pos.x,pos.y,()->{});}}
         else if(i!=null&&"appearance".equals(i.getAction())){try{pet.appearance(Characters.appearance(this,petId));}catch(Exception ignored){}}
         else if(i!=null&&"export".equals(i.getAction())&&worker!=null){
             String uri=i.getStringExtra("uri");worker.post(()->{save();try{

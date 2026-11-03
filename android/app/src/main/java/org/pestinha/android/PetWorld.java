@@ -40,6 +40,7 @@ final class PetWorld {
     void limitBall(){bx=Math.max(0,Math.min(Math.max(0,width-dp(46)),bx));by=Math.max(0,Math.min(Math.max(0,height-dp(80)),by));ballPos.x=Math.round(bx);ballPos.y=Math.round(by);if(ball!=null)wm.updateViewLayout(ball,ballPos);}
     void gravity(boolean enabled,float x,float y){tilted=enabled;forceX=enabled?x:0;forceY=enabled?y:750;}
     void frame(float dt,int petX,int petY,int petW,int petH){
+        if(bubble instanceof ProtestView)positionSign(petX,petY,petH);
         if(ball==null)return;
         if(!held){
             if(tilted){bvx=TiltPhysics.velocity(bvx,forceX*density,dt,dp(650));bvy=TiltPhysics.velocity(bvy,forceY*density,dt,dp(650));}
@@ -72,6 +73,11 @@ final class PetWorld {
         wm.addView(bubble,bubblePos);bubble.setVisibility(visible?View.VISIBLE:View.INVISIBLE);
         ui.postDelayed(this::clearMessage,19000);
     }
+    void sign(String text,String style,int x,int y,Runnable dismissed){
+        clearMessage();bubble=new ProtestView(context,text,style);bubblePos=params(270,166,true);bubblePos.width=Math.min(bubblePos.width,Math.max(dp(100),width-dp(8)));bubblePos.height=Math.min(bubblePos.height,Math.max(dp(80),height-dp(8)));
+        bubble.setOnClickListener(v->{dismissed.run();clearMessage();});bubblePos.x=Math.max(0,Math.min(width-bubblePos.width,x));bubblePos.y=Math.max(0,Math.min(height-bubblePos.height,y-bubblePos.height));wm.addView(bubble,bubblePos);bubble.setVisibility(visible?View.VISIBLE:View.INVISIBLE);ui.postDelayed(this::clearMessage,19000);
+    }
+    private void positionSign(int x,int y,int petH){int nextX=Math.max(0,Math.min(width-bubblePos.width,x));int above=y-bubblePos.height;int nextY=Math.max(0,Math.min(height-bubblePos.height,above>=0?above:y+petH));if(nextX!=bubblePos.x||nextY!=bubblePos.y){bubblePos.x=nextX;bubblePos.y=nextY;wm.updateViewLayout(bubble,bubblePos);}}
     void clearMessage(){ui.removeCallbacksAndMessages(null);if(bubble!=null){remove(bubble);bubble=null;}if(sparks!=null){remove(sparks);sparks=null;}}
     void fireworks(int x,int y){
         if(sparks!=null)return;

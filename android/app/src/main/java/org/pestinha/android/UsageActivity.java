@@ -15,7 +15,7 @@ import java.util.concurrent.*;
 
 /** Explicit opt-in controls and a local conversation-like log of the pet's remarks. */
 public class UsageActivity extends Activity {
-    private TextView status,report,messages,selection;
+    private AlertDialog appDialog;private TextView status,report,messages,selection;
     private MetricChart usageChart;
     private CheckBox enabled;
     private boolean adjusting=false,loading=false;
@@ -55,10 +55,9 @@ public class UsageActivity extends Activity {
             for(ResolveInfo r:pm.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER),0)){String pkg=r.activityInfo.packageName;if(!pkg.equals(getPackageName()))found.put(pkg,r.loadLabel(pm).toString().replace('\n',' ').trim());}
             JSONObject old=UsageRepository.selected(this);Iterator<String> previous=old.keys();while(previous.hasNext()){String id=previous.next();if(!found.containsKey(id))found.put(id,old.optString(id,id));}
             ArrayList<String> ids=new ArrayList<>(found.keySet());ids.sort((a,b)->found.get(a).compareToIgnoreCase(found.get(b)));
-            String[] labels=new String[ids.size()];boolean[] selected=new boolean[ids.size()];for(int i=0;i<ids.size();i++){labels[i]=found.get(ids.get(i))+"\n"+ids.get(i);selected[i]=old.has(ids.get(i));}
-            ui.post(()->{if(isDestroyed())return;if(ids.isEmpty()){toast("Nenhum app com tela de abertura foi encontrado neste perfil.");return;}new AlertDialog.Builder(this).setTitle("Quais apps acompanhar? (até 20)").setMultiChoiceItems(labels,selected,(d,which,value)->selected[which]=value).setNegativeButton("Cancelar",null).setPositiveButton("Salvar",(d,w)->{
-                JSONObject next=new JSONObject();try{for(int i=0;i<ids.size();i++)if(selected[i])next.put(ids.get(i),found.get(ids.get(i)));if(next.length()>20){toast("Escolha no máximo 20 apps.");return;}android.content.SharedPreferences.Editor edit=prefs().edit().putString("apps",next.toString()).remove("snapshot");if(next.length()==0)edit.putBoolean("enabled",false);UsageRepository.change(this,edit);render();}catch(Exception e){toast(e.getMessage());}
-            }).show();});
+            ArrayList<AppPickerDialog.Entry> entries=new ArrayList<>();
+            for(String id:ids){android.graphics.drawable.Drawable icon;boolean available=true;try{icon=pm.getApplicationIcon(id);}catch(PackageManager.NameNotFoundException error){icon=pm.getDefaultActivityIcon();available=false;}entries.add(new AppPickerDialog.Entry(id,found.get(id),icon,available));}
+            ui.post(()->{if(isDestroyed())return;if(entries.isEmpty()){toast("Nenhum app com tela de abertura foi encontrado neste perfil.");return;}appDialog=AppPickerDialog.show(this,entries,old,next->{android.content.SharedPreferences.Editor edit=prefs().edit().putString("apps",next.toString()).remove("snapshot");if(next.length()==0)edit.putBoolean("enabled",false);UsageRepository.change(this,edit);render();});});
         });
     }
     private void sample(boolean summarize){if(loading){toast("Leitura em andamento.");return;}if(!UsageRepository.hasAccess(this)){toast("Autorize Acesso ao uso primeiro.");return;}loading=true;jobs.execute(()->{try{JSONObject s=UsageRepository.sample(this);if(summarize){String message=UsageRepository.summary(this,s);if(!Thread.currentThread().isInterrupted()){UsageRepository.record(this,message);PetService.assistantNotice(message,null);}}ui.post(()->{if(!isDestroyed()){loading=false;render();}});}catch(Exception e){ui.post(()->{if(!isDestroyed()){loading=false;toast(e.getMessage());}});}});}
@@ -78,5 +77,5 @@ public class UsageActivity extends Activity {
     }
     @Override protected void onResume(){super.onResume();PetService.usageSettingsChanged();ui.post(refresh);}
     @Override protected void onPause(){ui.removeCallbacks(refresh);super.onPause();}
-    @Override protected void onDestroy(){jobs.shutdownNow();ui.removeCallbacksAndMessages(null);super.onDestroy();}
+    @Override protected void onDestroy(){jobs.shutdownNow();ui.removeCallbacksAndMessages(null);if(appDialog!=null)appDialog.dismiss();super.onDestroy();}
 }

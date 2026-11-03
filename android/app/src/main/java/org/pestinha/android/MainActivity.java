@@ -76,6 +76,7 @@ public class MainActivity extends Activity {
         navigation(memoryCategory,"memory","Memória e cérebro","Estado e aprendizado de cada personagem",()->startActivity(new Intent(this,MemoryActivity.class)));
         LinearLayout play=Design.fold(this,layout,"play","Jogos e interações","Quebra-blocos, carinho, brinquedos e atividades",false);
         button(play,"Jogar Quebra-blocos • o pet é a plataforma",()->send("arcade"));
+        button(play,"Bandeiras e faixas • prévia",()->new AlertDialog.Builder(this).setTitle("Prévia do protesto").setItems(new String[]{"Cartaz","Faixa","Bandeira"},(d,n)->send("protest_demo:"+new String[]{"placard","banner","flag"}[n])).show());
         button(play,"Fazer carinho",()->send("caress"));
         button(play,"Mostrar / guardar bolinha",()->send("ball"));
         button(play,"Dormir / acordar",()->send("sleep"));
@@ -105,7 +106,7 @@ public class MainActivity extends Activity {
         button(physics,"Calibrar nesta posição",()->send("calibrate"));button(physics,"Restaurar gravidade natural",()->send("reset_tilt"));
         LinearLayout about=Design.fold(this,settings,"privacy","Privacidade e informações","Dados locais, permissões e licença",false);
         text(about,"A memória fica no aparelho. A internet consulta somente os feeds escolhidos, manualmente ou pelo radar opcional. Sem leitura de tela ou da agenda. O acompanhamento de apps usa estatísticas do Android somente se você autorizar e ativar. Sensores desligam com a tela apagada.",14,Design.MUTED);
-        text(about,"Pestinha Android • 0.21 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
+        text(about,"Pestinha Android • 0.22 experimental\nVisual baseado no desenho original de mille-okws/pestinha.",14,Design.MUTED);
         button(about,"Modo de teste • tempos curtos",()->send("fast"));
         button(about,"Licença e projeto original",()->new AlertDialog.Builder(this).setTitle("Pestinha • GPL-3.0-or-later").setMessage("Adaptação independente de mille-okws/pestinha. Código-fonte: github.com/duOCELOT/pestinha-duOCELOT, branch android.\n\n"+license()).setPositiveButton("Fechar",null).show());
         setContentView(scroll);Design.install(this,scroll);loadAppearance();updateStatus();

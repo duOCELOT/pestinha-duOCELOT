@@ -159,3 +159,19 @@ class ArcadeBrainTest(unittest.TestCase):
             self.assertFalse(loaded.gaming)
             self.assertEqual(1, loaded.counts['game_hit'])
             self.assertEqual(1, loaded.counts['game_win'])
+
+class ProtestArtworkProtocolTest(unittest.TestCase):
+    def test_protest_style_reaches_android_snapshot(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            brain = AndroidBrain(directory, DEFINITION)
+            brain.mischief = True
+            brain.next_mischief = 1e9
+            for stage, expected in [(1, 'placard'), (2, 'banner'), (3, 'banner'), (4, 'flag')]:
+                brain.protest.stage = stage
+                brain.last_sign = -100
+                with patch.object(brain.protest, 'update'):
+                    state = json.loads(brain.tick(.2))
+                self.assertEqual(state['action']['kind'], 'sign')
+                self.assertEqual(state['action']['style'], expected)
+                self.assertTrue(state['action']['text'])

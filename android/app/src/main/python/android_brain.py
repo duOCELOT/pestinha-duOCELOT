@@ -82,9 +82,9 @@ class AndroidBrain:
         self.snapshot = {}
         self.paused_at = None
 
-    def _action(self, kind, text=''):
+    def _action(self, kind, text='', **details):
         self.action_id += 1
-        self.action = dict(id=self.action_id, kind=kind, text=text)
+        self.action = dict(id=self.action_id, kind=kind, text=text, **details)
 
     def _note(self, force=None):
         if self.pending_thing is not None:
@@ -303,7 +303,8 @@ class AndroidBrain:
             self._action('sign', 'Saí do cantinho!')
         active = self.protest if self.protest.stage else self.sad
         if self.mischief and active.stage and self.elapsed-self.last_sign > 15:
-            self._action('sign', active.escolher_cartaz()['texto'])
+            sign = active.escolher_cartaz()
+            self._action('sign', sign['texto'], style='flag' if sign.get('bandeira') else 'banner' if sign.get('estilo') in ('march', 'strike') else 'placard')
             self.last_sign = self.elapsed
         if self.mischief and not self.gaming and not self.asleep and not self.corner and self.elapsed >= self.next_mischief:
             self._note()
