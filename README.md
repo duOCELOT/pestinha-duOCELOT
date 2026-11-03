@@ -45,6 +45,15 @@ Prévias da interface renderizadas em testes, com dados de exemplo. O campo do j
 - **Cuidados e guarda-roupa:** fome, saúde e clima fictícios; cores e acessórios por personagem.
 - **Memória e pausas conscientes:** gráficos do pet e acompanhamento opcional do tempo nos apps escolhidos.
 
+## Próximos passos
+
+- [ ] Avaliar Android de **32 bits (armeabi-v7a)**: conferir suporte do Python/Chaquopy e demais dependências, tamanho do APK e testes em aparelho compatível. Ainda sem suporte prometido.
+- [ ] Aproximar os cinco personagens das referências aprovadas, com arte detalhada, transparência e olhos animados.
+- [ ] Separar todos os acessórios da arte detalhada em camadas intercambiáveis, mantendo cores de borda e olhos independentes.
+- [ ] Testar consumo de memória, bateria e fluidez das novas artes em aparelhos reais.
+- [ ] Ampliar interações e personalidade dos pets.
+- [ ] Avaliar modelos locais leves para funções específicas, com ativação opcional.
+
 ## Precisa de ajuda?
 
 | Você procura | Abra |

@@ -17,7 +17,7 @@ final class Characters {
         JSONObject a=new JSONObject(definition(c,id).getJSONObject("aparencia").toString());
         android.content.SharedPreferences p=c.getSharedPreferences("appearance_"+normalize(id),0);
         for(String key:new String[]{"moldura","olho"}){String value=p.getString(key,"");if(value.matches("#[0-9a-fA-F]{6}"))a.put(key,value);}
-        String item=p.getString("item","original");if(!item.equals("original")){JSONObject items=new JSONObject();switch(item){case "laco":items.put("laco","#eb86bf");break;case "elmo_viking":items.put("elmo_viking","#77929c");break;case "oculos":items.put("oculos","#b3dce1");break;case "gravata":items.put("gravata","#b3261e");break;case "barba":items.put("barba","#e8e9e6");break;default:break;}a.put("acessorios",items);}return a;
+        String item=p.getString("item","original");if(!item.equals("original")){JSONObject items=new JSONObject();switch(item){case "laco":items.put("laco","#eb86bf");break;case "elmo_viking":items.put("elmo_viking","#77929c");break;case "oculos":items.put("oculos","#b3dce1");break;case "gravata":items.put("gravata","#b3261e");break;case "barba":items.put("barba","#e8e9e6");break;default:break;}a.put("acessorios",items);}a.put("arte",item.equals("original")?normalize(id):"bryan");return a;
     }
     static String name(Context context,String id){try{return definition(context,id).getString("nome");}catch(Exception e){String safe=normalize(id);return Character.toUpperCase(safe.charAt(0))+safe.substring(1);}}
     static String speak(Context c,String text){return MemoryActivity.petId(c).equals("lula")?"Companheiro, veja bem: "+text:text;}
